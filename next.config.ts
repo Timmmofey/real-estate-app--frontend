@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  "API_USER_SERVICE_URL" : "http://localhost:5251",
+  "API_AUTH_SERVICE_URL" : "http://localhost:5251"
 };
 
 export default nextConfig;
