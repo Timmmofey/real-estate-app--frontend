@@ -7,11 +7,13 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Trash2 } from 'lucide-react'
 import axiosUser from '@/lib/axiosUser'
-import { useAuthStore } from '@/stores/authStore'
 import { useEffect, useState } from 'react'
 import { Label } from './ui/label'
+import { AddressFields } from './address-fields'
+import { useTypedTranslations } from '@/lib/useTypedTranslations'
+import { useUserStore } from '@/stores/userStore'
 
-type FormValues = {
+interface FormValues  {
   Name: string
   Country: string
   Region: string
@@ -26,24 +28,43 @@ type FormValues = {
 }
 
 export default function EditCompanyProfileForm() {
-  const user = useAuthStore(s => s.user)
+  const user = useUserStore(s => s.user)
   const [preview, setPreview] = useState<string | null>(user?.mainPhotoUrl || null)
   const [loading, setLoading] = useState(false)
+  const t = useTypedTranslations("editCompanyProfileForm")
 
-  const { register, handleSubmit, watch, setValue } = useForm<FormValues>({
+  const { register, handleSubmit, watch, setValue, reset, clearErrors, formState: { errors }  } = useForm<FormValues>({
     defaultValues: {
-      Name: user?.name ?? '',
-      Country: user?.country ?? '',
-      Region: user?.region ?? '',
-      Settlement: user?.settlement ?? '',
-      ZipCode: user?.zipCode ?? '',
-      RegistrationAdress: user?.registrationAdress ?? '',
-      СompanyRegistrationNumber: user?.сompanyRegistrationNumber ?? '',
-      EstimatedAt: user?.estimatedAt.toString() ?? '',
-      Description: user?.description ?? '',
+      Name: '',
+      Country: '',
+      Region: '',
+      Settlement: '',
+      ZipCode: '',
+      RegistrationAdress: '',
+      СompanyRegistrationNumber: '',
+      EstimatedAt: '',
+      Description: '',
       DeleteMainPhoto: false
     }
   })
+
+  useEffect(() => {
+        if (user && user.userType === 'company') {
+        reset({
+            Name: user.name,
+            Country: user.country,
+            Region: user.region,
+            Settlement: user.settlement,
+            ZipCode: user.zipCode,
+            RegistrationAdress: user.registrationAdress,
+            СompanyRegistrationNumber: user.сompanyRegistrationNumber,
+            EstimatedAt: user.estimatedAt,
+            Description: user.description ?? '',
+            DeleteMainPhoto: false
+        })
+        setPreview(user.mainPhotoUrl || null)
+        }
+    }, [user, reset])
 
   const mainPhoto = watch('MainPhoto')
 
@@ -86,7 +107,7 @@ export default function EditCompanyProfileForm() {
     setLoading(true)
     try {
       await axiosUser.patch('/Users/edit-company-profile-main-info', formData)
-      await useAuthStore.getState().fetchProfile()
+      await useUserStore.getState().fetchProfile()
     } finally {
       setLoading(false)
     }
@@ -95,48 +116,40 @@ export default function EditCompanyProfileForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div className="grid gap-1">
-        <Label htmlFor="name">Company Name</Label>
+        <Label htmlFor="name">{t("nameLabel")}</Label>
         <Input id="name" placeholder="Company Name" {...register('Name')} />
       </div>
-      <div className="grid gap-1">
-        <Label htmlFor="country">Country</Label>
-        <Input id="country" {...register('Country')} />
-      </div>
-      <div className="grid gap-1">
-        <Label htmlFor="region">Region</Label>
-        <Input id="region" {...register('Region')} />
-      </div>
-      <div className="grid gap-1">
-        <Label htmlFor="settlement">Settlement</Label>
-        <Input id="settlement" {...register('Settlement')} />
-      </div>
-      <div className="grid gap-1">
-        <Label htmlFor="zipCode">ZIP Code</Label>
-        <Input id="zipCode" {...register('ZipCode')} />
-      </div>
-      <div className="grid gap-1">
-        <Label htmlFor="registrationAdress">Registration Address</Label>
+      <AddressFields
+          register={register}
+          watch={watch}
+          setValue={setValue}
+          clearErrors={clearErrors}
+          errors={errors}
+          userType="company"
+      />
+      {/* <div className="grid gap-1">
+        <Label htmlFor="registrationAdress">{t("registrationAddressLabel")}</Label>
         <Input id="registrationAdress" {...register('RegistrationAdress')} />
-      </div>
+      </div> */}
       <div className="grid gap-1">
-        <Label htmlFor="companyRegNum">Company Registration Number</Label>
+        <Label htmlFor="companyRegNum">{t("companyRegNumLabel")}</Label>
         <Input id="companyRegNum" {...register('СompanyRegistrationNumber')} />
       </div>
       <div className="grid gap-1">
-        <Label htmlFor="estimatedAt">Estimated At</Label>
+        <Label htmlFor="estimatedAt">{t("estimatedAtLabel")}</Label>
         <Input id="estimatedAt" type="date" {...register('EstimatedAt')} />
       </div>
       <div className="grid gap-1">
-        <Label htmlFor="description">Description</Label>
+        <Label htmlFor="description">{t("descriptionLabel")}</Label>
         <Textarea id="description" rows={4} {...register('Description')} />
       </div>
 
       <div className="space-y-2">
-        <Label className="text-sm font-medium">Company Photo</Label>
+        <Label className="text-sm font-medium">{t("companyPhotoLabel")}</Label>
         <div className="flex items-center gap-4">
           <Avatar className="w-16 h-16">
             {preview ? (
-              <AvatarImage src={preview} alt="Company Photo" />
+              <AvatarImage src={preview} alt={t("companyPhotoAlt")} />
             ) : (
               <AvatarFallback>{user.name[0]}</AvatarFallback>
             )}
@@ -147,7 +160,7 @@ export default function EditCompanyProfileForm() {
               variant="secondary"
               onClick={() => document.getElementById('upload-photo')?.click()}
             >
-              Choose new main photo
+              {t("choosePhoto")}
             </Button>
             <input
               id="upload-photo"
@@ -166,7 +179,7 @@ export default function EditCompanyProfileForm() {
             />
             {preview && (
               <Button type="button" variant="destructive" onClick={onDeletePhoto}>
-                <Trash2 className="w-4 h-4" /> Delete main photo
+                <Trash2 className="w-4 h-4" /> {t("deletePhoto")}
               </Button>
             )}
           </div>
@@ -176,7 +189,7 @@ export default function EditCompanyProfileForm() {
       <input type="hidden" {...register('DeleteMainPhoto')} />
 
       <Button type="submit" disabled={loading}>
-        {loading ? 'Saving...' : 'Save Changes'}
+        {loading ? t("saving") : t("save")}
       </Button>
     </form>
   )

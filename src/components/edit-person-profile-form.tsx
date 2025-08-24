@@ -6,9 +6,11 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Trash2 } from 'lucide-react'
 import axiosUser from '@/lib/axiosUser'
-import { useAuthStore } from '@/stores/authStore'
 import { useEffect, useState } from 'react'
 import { Label } from './ui/label'
+import { AddressFields } from './address-fields'
+import { useTypedTranslations } from '@/lib/useTypedTranslations'
+import { useUserStore } from '@/stores/userStore'
 
 type FormValues = {
     FirstName: string
@@ -22,21 +24,44 @@ type FormValues = {
 }
 
 export default function EditPersonProfileForm() {
-    const user = useAuthStore(state => state.user)
+    const {user, fetchProfile} = useUserStore()
     const [preview, setPreview] = useState<string | null>(user!.mainPhotoUrl || null)
     const [loading, setLoading] = useState(false)
+    const t = useTypedTranslations("editPersonProfileForm")
 
-    const { register, handleSubmit, watch, setValue } = useForm<FormValues>({
+    const { register, handleSubmit, watch, setValue, reset,  clearErrors, formState: { errors } } = useForm<FormValues>({
     defaultValues: {
-        FirstName: user!.firstName,
-        LastName:  user!.lastName,
-        Country:   user!.country ?? '',
-        Region:    user!.region ?? '',
-        Settlement:user!.settlement  ?? '',
-        ZipCode:   user!.zipCode   ?? '',
-        DeleteMainPhoto: false
+        FirstName: '',
+        LastName: '',
+        Country: '',
+        Region: '',
+        Settlement: '',
+        ZipCode: '',
+        DeleteMainPhoto: false,
     }
     })
+
+    useEffect(() => {
+        const loadProfile = async () => {
+          await fetchProfile()
+        }
+        loadProfile()
+      }, [fetchProfile])
+
+    useEffect(() => {
+        if (user && user.userType === 'person') {
+        reset({
+            FirstName: user.firstName,
+            LastName: user.lastName,
+            Country: user.country ?? '',
+            Region: user.region ?? '',
+            Settlement: user.settlement ?? '',
+            ZipCode: user.zipCode ?? '',
+            DeleteMainPhoto: false,
+        })
+        setPreview(user.mainPhotoUrl || null)
+        }
+    }, [user, reset])
 
     const mainPhoto = watch('MainPhoto')
 
@@ -48,23 +73,30 @@ export default function EditPersonProfileForm() {
         setValue('DeleteMainPhoto', false)
     }
     }, [mainPhoto, setValue])
+
     if (!user || user.userType !== 'person') {
         return <p>Not a person profile</p>
     }
 
     const onDeletePhoto = () => {
         setValue('DeleteMainPhoto', true)
+        setValue('MainPhoto', null as never)
         setPreview(null)
-        }
 
-        const onSubmit = async (data: FormValues) => {
+        const input = document.getElementById('upload-photo') as HTMLInputElement | null
+        if (input) {
+            input.value = ''
+        }
+    }
+
+    const onSubmit = async (data: FormValues) => {
         const formData = new FormData()
-        formData.append('FirstName', data.FirstName)
-        formData.append('LastName',  data.LastName)
-        formData.append('Country',   data.Country)
-        formData.append('Region',    data.Region)
-        formData.append('Settlement',data.Settlement)
-        formData.append('ZipCode',   data.ZipCode)
+        formData.append('FirstName',  data.FirstName)
+        formData.append('LastName',   data.LastName)
+        formData.append('Country',    data.Country || '__DELETE__')
+        formData.append('Region',     data.Region || '__DELETE__')
+        formData.append('Settlement', data.Settlement || '__DELETE__')
+        formData.append('ZipCode',    data.ZipCode || '__DELETE__')
 
         if (data.MainPhoto && data.MainPhoto.length > 0) {
             formData.append('MainPhoto', data.MainPhoto[0])
@@ -73,10 +105,15 @@ export default function EditPersonProfileForm() {
             formData.append('DeleteMainPhoto', 'true')
         }
 
+        console.log(
+            `settlement- ${data.Settlement}`,
+            `zipcode- ${data.ZipCode}`,
+        )
+
         setLoading(true)
         try {
             await axiosUser.patch('/Users/edit-person-profile-main-info', formData)
-            await useAuthStore.getState().fetchProfile()
+            await useUserStore.getState().fetchProfile()
         } finally {
             setLoading(false)
         }
@@ -85,39 +122,33 @@ export default function EditPersonProfileForm() {
 return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-2">
         <div className='grid gap-1'>
-            <Label htmlFor="firstName">First Name</Label>
+            <Label htmlFor="firstName">{t("firstNameLabel")}</Label>
             <Input id='firstName' placeholder="First Name" {...register('FirstName')} />
         </div>
         <div className='grid gap-1'>
-            <Label htmlFor="lastName">Last Name</Label>
+            <Label htmlFor="lastName">{t("lastNameLabel")}</Label>
             <Input id='lastName' placeholder="Last Name"  {...register('LastName')} />
         </div>
-        <div className='grid gap-1'>
-            <Label htmlFor="country">Country</Label>
-            <Input id='country' placeholder="Country"    {...register('Country')} />
-        </div>
-        <div className='grid gap-1'>
-            <Label htmlFor="region">Region</Label>
-            <Input id='region' placeholder="Region"     {...register('Region')} />
-        </div>
-        <div className='grid gap-1'>
-            <Label htmlFor="settlement">Settlement</Label>
-            <Input id='settlement' placeholder="Settlement" {...register('Settlement')} />
-        </div>
-        <div className='grid gap-1'>
-            <Label htmlFor="zipCode">ZIP Code</Label>
-            <Input id='zipCode' placeholder="ZIP Code"   {...register('ZipCode')} />
-        </div>
-
+         <AddressFields
+            register={register}
+            watch={watch}
+            setValue={setValue}
+            clearErrors={clearErrors}
+            errors={errors}
+            userType="person"
+        />
         <div className="space-y-2">
-            <Label className="text-sm font-medium">Profile Photo</Label>
+            <Label className="text-sm font-medium">{t("profilePhotoLabel")}</Label>
             <div className="flex items-center gap-4">
                 <Avatar className="w-16 h-16">
-                {preview ? (
-                    <AvatarImage src={preview} alt="Avatar preview" />
-                ) : (
-                    <AvatarFallback>{user.firstName[0]}</AvatarFallback>
-                )}
+                    <AvatarImage
+                        src={preview ?? undefined}           
+                        alt="Avatar preview"
+                        onError={() => setPreview(null)}  
+                    />
+                    <AvatarFallback>
+                        {user.firstName?.[0]?.toUpperCase() || '?'}
+                    </AvatarFallback>
                 </Avatar>
 
                 <div className="flex flex-col gap-2">
@@ -127,7 +158,7 @@ return (
                     onClick={() => document.getElementById('upload-photo')?.click()}
                     className="w-fit"
                 >
-                    Choose new main photo
+                    {t("choosePhoto")}
                 </Button>
 
                 <input
@@ -145,7 +176,7 @@ return (
                     onClick={onDeletePhoto}
                     >
                     <Trash2 className="w-4 h-4" />
-                        Delete main photo
+                        {t("deletePhoto")}
                     </Button>
                 )}
                 </div>
@@ -155,9 +186,8 @@ return (
         <input type="hidden" {...register('DeleteMainPhoto')} />
 
         <Button type="submit" disabled={loading}>
-        {loading ? 'Saving...' : 'Save Changes'}
+        {loading ? t("saving") : t("save")}
         </Button>
     </form>
 )
 }
-

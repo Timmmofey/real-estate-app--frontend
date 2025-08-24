@@ -12,7 +12,7 @@ const axiosUser = createApiClient({
       async (error) => {
         const originalRequest = error.config
 
-        if (error.response?.status === 401 && !originalRequest._retry) {
+        if ((error.response?.status === 401 || error.response?.status === 403) && !originalRequest._retry) {
           if (isRefreshing) return Promise.reject(error)
 
           originalRequest._retry = true

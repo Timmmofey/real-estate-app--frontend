@@ -7,6 +7,8 @@ import { Label } from '@/components/ui/label'
 import { toast } from 'sonner'
 import axiosUser from '@/lib/axiosUser'
 import { useRouter } from 'next/navigation'
+import { useTypedTranslations } from '@/lib/useTypedTranslations'
+import { AxiosError } from 'axios'
 
 export default function ResetPasswordPage() {
   const [step, setStep] = useState<1 | 2 | 3>(1)
@@ -15,15 +17,19 @@ export default function ResetPasswordPage() {
   const [newPassword, setNewPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const router = useRouter()
+  const t = useTypedTranslations("resetPasswordPage")
 
   const handleSendResetCode = async () => {
     setLoading(true)
     try {
       await axiosUser.post('/Users/start-password-reset-via-email', new URLSearchParams({ email }))
-      toast.success('Verification code sent to email')
+      toast.success(t("toastSendSuccess"))
       setStep(2)
     } catch (err: unknown) {
-      toast.error('Failed to send reset code')
+      if (err instanceof AxiosError) {
+        console.error(err.response?.data || err.message)
+      }
+      toast.error(t("toastSendError"))
     } finally {
       setLoading(false)
     }
@@ -33,10 +39,13 @@ export default function ResetPasswordPage() {
       setLoading(true)
       try {
           await axiosUser.post('/Users/get-password-reset-token-via-email', { email, verificationCode: code })
-          toast.success('Verification successful')
+          toast.success(t("toastVerifySuccess"))
           setStep(3)
       } catch (err: unknown) {
-          toast.error('Failed to verify code')
+        if (err instanceof AxiosError) {
+          console.error(err.response?.data || err.message)
+        }
+          toast.error(t("toastVerifyError"))
       } finally {
           setLoading(false)
       }
@@ -49,14 +58,17 @@ export default function ResetPasswordPage() {
         '/Users/complete-password-restoration-via-email',
         new URLSearchParams({ newPassword })
       )
-      toast.success('Password reset successfully!')
+      toast.success(t("toastVerifySuccess"))
       setStep(1)
       setEmail('')
       setCode('')
       setNewPassword('')
       router.push('/login')
     } catch (err: unknown) {
-      toast.error('Failed to reset password')
+      if (err instanceof AxiosError) {
+        console.error(err.response?.data || err.message)
+      }
+      toast.error(t("toastVerifyError"))
     } finally {
       setLoading(false)
     }
@@ -64,7 +76,7 @@ export default function ResetPasswordPage() {
 
   return (
     <div className="max-w-md w-full mx-auto mt-10 px-4">
-      <h1 className="text-2xl font-semibold mb-6 text-center">Reset Password</h1>
+      <h1 className="text-2xl font-semibold mb-6 text-center">{t("title")}</h1>
 
       {step === 1 && (
         <div className="space-y-4">
@@ -78,16 +90,16 @@ export default function ResetPasswordPage() {
             />
           </div>
           <Button onClick={handleSendResetCode} disabled={loading} className="w-full">
-            {loading ? 'Sending...' : 'Send Reset Code'}
+            {loading ? t("sendButtonLoading") : t("sendButton")}
           </Button>
         </div>
       )}
 
       {step === 2 && (
         <div className="space-y-4">
-          <p className="text-sm text-muted-foreground">Enter the verification code sent to your email.</p>
+          <p className="text-sm text-muted-foreground">{t("codeDescription")}</p>
           <div className="grid gap-1">
-            <Label>Verification Code</Label>
+            <Label>{t("verifyButton")}</Label>
             <Input
               value={code}
               onChange={(e) => setCode(e.target.value)}
@@ -95,7 +107,7 @@ export default function ResetPasswordPage() {
             />
           </div>
           <Button onClick={handleVerifyCode} disabled={loading} className="w-full">
-            {loading ? 'Verifying...' : 'Verify Code'}
+            {loading ?  t("verifyButtonLoading"): t("verifyButton")}
           </Button>
         </div>
       )}
@@ -103,7 +115,7 @@ export default function ResetPasswordPage() {
       {step === 3 && (
         <div className="space-y-4">
           <div className="grid gap-1">
-            <Label>New Password</Label>
+            <Label>{t("newPasswordLabel")}</Label>
             <Input
               type="password"
               value={newPassword}
@@ -112,7 +124,7 @@ export default function ResetPasswordPage() {
             />
           </div>
           <Button onClick={handleResetPassword} disabled={loading} className="w-full">
-            {loading ? 'Resetting...' : 'Reset Password'}
+            {loading ? t("resetButtonLoading") : t("resetButton")}
           </Button>
         </div>
       )}

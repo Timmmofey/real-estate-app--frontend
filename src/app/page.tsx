@@ -1,24 +1,33 @@
 "use client"
 import { useAuthStore } from "@/stores/authStore";
+import { useUserStore } from "@/stores/userStore";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function Home() {
-  const checkAuth = useAuthStore((state) => state.checkAuth)
-  const user = useAuthStore((state) => state.user)
+  const {checkAuth} = useAuthStore()
+  const {user, userLoading} = useUserStore();
   const router = useRouter();
 
   useEffect(() => {
-    checkAuth()
-      if (user !== null) {
-      router.push('/home');
-    } else {
-      router.push('/login');
+    const run = async () => {
+      await checkAuth();
+    };
+
+    run()
+
+    if (!userLoading) {
+      if (user) {
+        router.replace("/home");
+      } else {
+        router.replace("/login");
+      }
     }
-  }, [])
+  }, []);
 
   return (
     <>
+      
     </>
   );
 }

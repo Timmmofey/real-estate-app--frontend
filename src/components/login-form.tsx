@@ -15,6 +15,8 @@ import { useAuthStore } from "@/stores/authStore"
 import { useState } from "react"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
+import { useTypedTranslations } from "@/lib/useTypedTranslations"
+import { AxiosError } from "axios"
 
 export function LoginForm({
   className,
@@ -25,6 +27,8 @@ export function LoginForm({
   const [password, setPassword] = useState("")
   const [loading, setLoading] = useState(false)
   const router = useRouter();
+  const t = useTypedTranslations("loginForm")
+  
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -34,10 +38,11 @@ export function LoginForm({
       await login(emailOrPhone, password)
       toast.success("Logged in successfuly!")
       router.push('/home');
-    } catch (err: any) {
-      toast.error("Ошибка входа", {
-        description: err?.response?.data?.message || "Check your credentials",
-      })
+    } catch (err: unknown) {
+      if (err instanceof AxiosError) {
+              console.error(err.response?.data || err.message)
+            }
+      toast.error(t('toastErrorDescription'))
     } finally {
       setLoading(false)
     }
@@ -47,16 +52,16 @@ export function LoginForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader>
-          <CardTitle>Login to your account</CardTitle>
+          <CardTitle>{t('title')}</CardTitle>
           <CardDescription>
-            Enter your email below to login to your account
+            {t("description")}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit}>
             <div className="flex flex-col gap-6">
               <div className="grid gap-3">
-                <Label htmlFor="email">Phone or Email</Label>
+                <Label htmlFor="email">{t("emailLabel")}</Label>
                 <Input
                   id="email"
                   type="text"
@@ -68,12 +73,12 @@ export function LoginForm({
               </div>
               <div className="grid gap-3">
                 <div className="flex items-center">
-                  <Label htmlFor="password">Password</Label>
+                  <Label htmlFor="password">{t("passwordLabel")}</Label>
                   <a
                     href="/resetpassword"
                     className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
                   >
-                    Forgot your password?
+                    {t("forgotPassword")}
                   </a>
                 </div>
                 <Input
@@ -86,17 +91,17 @@ export function LoginForm({
               </div>
               <div className="flex flex-col gap-3">
                 <Button type="submit" className="w-full" disabled={loading}>
-                  {loading ? "Logging in..." : "Login"}
+                  {loading ? t("loginButtonLoading") : t("loginButton")}
                 </Button>
                 <Button variant="outline" className="w-full" disabled={loading}>
-                  Login with Google
+                  {t("loginGoogle")}
                 </Button>
               </div>
             </div>
             <div className="mt-4 text-center text-sm">
-              Don&apos;t have an account?{" "}
+              {t("signupPrompt")}{" "}
               <a href="/signup" className="underline underline-offset-4">
-                Sign up
+                {t("signupLink")}
               </a>
             </div>
           </form>
