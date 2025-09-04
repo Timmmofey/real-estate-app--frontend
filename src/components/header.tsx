@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Container } from './container'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -20,6 +20,13 @@ const Header: React.FC = () => {
   const {isLoggedIn} = useAuthStore()
   const{userLoading} = useUserStore()
   const t = useTypedTranslations("header");
+
+  const ref = useRef<HTMLDivElement>(null)
+
+  const lastScrollRef = useRef(0)
+  const offsetRef = useRef(0)
+  const [offset, setOffset] = useState(0)
+  const [height, setHeight] = useState(0)
   
   const links: NavLink[] = [
     {name: t("buyPage"), url: '/realestate'},
@@ -28,8 +35,42 @@ const Header: React.FC = () => {
     {name: t("listingsPage"), url: '/mylistings'}
   ]
 
+  useEffect(() => {
+    if (!ref.current) return
+    const updateHeight = () => setHeight(ref.current!.offsetHeight)
+    updateHeight()
+
+    const observer = new ResizeObserver(() => updateHeight())
+    observer.observe(ref.current)
+
+    return () => observer.disconnect()
+  }, [])
+
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScroll = window.scrollY
+      const delta = currentScroll - lastScrollRef.current
+
+      let nextOffset = offsetRef.current + delta
+      if (nextOffset < 0) nextOffset = 0
+      if (nextOffset > height) nextOffset = height
+
+      offsetRef.current = nextOffset
+      lastScrollRef.current = currentScroll
+      setOffset(nextOffset)
+    }
+
+    window.addEventListener("scroll", handleScroll, { passive: true })
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [height])
+
+
   return (
-    <header className='border-b'>
+     <header className='border-b sticky top-0 z-50 bg-background' ref={ref} style={{
+        transform: `translateY(-${offset}px)`,
+        transition: "transform 0.1s linear"
+      }}>
       <Container className='h-12 flex  justify-between items-center'>
         <div className=' w-full flex gap-15 items-center'>
           <MobileMenu links={links} className="sm:hidden"/>
