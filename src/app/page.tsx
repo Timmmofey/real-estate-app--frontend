@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function Home() {
-  const {checkAuth} = useAuthStore()
+  const {checkAuth, authLoading} = useAuthStore()
   const {user, userLoading} = useUserStore();
   const router = useRouter();
 

@@ -8,6 +8,7 @@ import Footer from "@/components/footer";
 import { ThemeProvider } from "@/components/theme-provider"
 import {NextIntlClientProvider} from "next-intl"
 import { getLocale, getMessages } from "next-intl/server";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
