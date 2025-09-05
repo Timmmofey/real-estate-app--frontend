@@ -44,7 +44,8 @@ export const en = {
         choosePhoto: "Choose new main photo",
         deletePhoto: "Delete main photo",
         save: "Save Changes",
-        saving: "Saving..."
+        saving: "Saving...",
+        successToast: "All changes succesfully apllied"
     },
     editCompanyProfileForm: {
         nameLabel: "Company Name",
@@ -58,7 +59,8 @@ export const en = {
         choosePhoto: "Choose new main photo",
         deletePhoto: "Delete main photo",
         save: "Save Changes",
-        saving: "Saving..."
+        saving: "Saving...",
+        successToast: "All changes succesfully apllied"
     },
     addressFields: {
         countryLabel: "Country",

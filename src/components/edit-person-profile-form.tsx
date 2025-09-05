@@ -11,6 +11,7 @@ import { Label } from './ui/label'
 import { AddressFields } from './address-fields'
 import { useTypedTranslations } from '@/lib/useTypedTranslations'
 import { useUserStore } from '@/stores/userStore'
+import { toast } from 'sonner'
 
 type FormValues = {
     FirstName: string
@@ -114,6 +115,7 @@ export default function EditPersonProfileForm() {
         try {
             await axiosUser.patch('/Users/edit-person-profile-main-info', formData)
             await useUserStore.getState().fetchProfile()
+            toast.success(t("successToast"))
         } finally {
             setLoading(false)
         }
