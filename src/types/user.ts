@@ -1,6 +1,8 @@
 export type UserType = "person" | "company"
 
 export interface BaseProfile {
+  email: string,
+  phoneNumer: string,
   isVerified: boolean
   country?: string
   region?: string

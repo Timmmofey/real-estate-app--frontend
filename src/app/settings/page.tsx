@@ -7,17 +7,21 @@ import { useUserStore } from "@/stores/userStore";
 import EditPersonProfileForm from "@/components/edit-person-profile-form";
 import EditCompanyProfileForm from "@/components/edit-company-profile-form";
 import { Separator } from "@/components/ui/separator";
-import { Mail, Phone } from "lucide-react";
 import { ContactCard } from "@/components/сontact-сard";
 import { useProfileLoader } from "@/hooks/useProfileLoader";
+import { DeviceAndActivitySection } from "@/components/device-and-activity-section";
+import { useAuthGuard } from "@/lib/useAuthGuard";
+import { Mail, Phone } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function SettingsPage() {
-    // useAuthGuard()
+    useAuthGuard()
     useProfileLoader()
     
     
     const user  = useUserStore(s => s.user)
     
+    if (!user) return <Skeleton className="h-40 w-full" />
 
     return(
         <Container>
@@ -53,16 +57,16 @@ export default function SettingsPage() {
                                 <ContactCard
                                     icon={<Mail />}
                                     label="Email"
-                                    value={user?.email ?? "email@email.com"}
-                                    copyText={user?.email ?? "email@email.com"}
+                                    value={user?.email}
+                                    copyText={user?.email}
                                     onEdit={() => console.log("Edit email")}
                                 />
 
                                 <ContactCard
                                     icon={<Phone />}
                                     label="Phone"
-                                    value={user?.phone ?? "88005553535"}
-                                    copyText={user?.phone ?? "88005553535"}
+                                    value={user?.phoneNumer}
+                                    copyText={user?.phoneNumer}
                                     onEdit={() => console.log("Edit phone")}
                                 />
 
@@ -72,6 +76,7 @@ export default function SettingsPage() {
 
                             <h2 className="text-lg font-semibold mb-5">Devices and activity</h2>
 
+                           <DeviceAndActivitySection/>
 
                         </TabsContent>
 

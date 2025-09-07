@@ -187,16 +187,17 @@ export default function RegisterUserForm() {
           <Label>{t("email")}</Label>
           <Input required type="email" {...register('Email', { required: true })} />
         </div>
+        
+        <div className="grid gap-1">
+          <Label>{t("phoneNumber")}</Label>
+          <Input required type="tel" {...register('PhoneNumber', { required: true })} />
+        </div>
 
         <div className="grid gap-1">
           <Label>{t("password")}</Label>
           <Input required type="password" {...register('Password', { required: true })} />
         </div>
 
-        <div className="grid gap-1">
-          <Label>{t("password")}</Label>
-          <Input required type="tel" {...register('PhoneNumber', { required: true })} />
-        </div>
 
         
         {/* Person Fields */}

@@ -8,8 +8,6 @@ import Footer from "@/components/footer";
 import { ThemeProvider } from "@/components/theme-provider"
 import {NextIntlClientProvider} from "next-intl"
 import { getLocale, getMessages } from "next-intl/server";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { useTheme } from "next-themes";
 import ScrollWrapper from "@/components/scroll-wrapper";
 
 const geistSans = Geist({
@@ -50,7 +48,7 @@ export default async function RootLayout({
             <NextIntlClientProvider messages={messages}>
               <AuthInitProvider />
               <Toaster position="top-center" closeButton/>
-              <ScrollWrapper className="flex-1">
+              <ScrollWrapper className="flex-1 h-full w-full">
                 <div className=" flex flex-col min-h-full">
                   <Header />
                   <main className="flex-1 bg-muted">

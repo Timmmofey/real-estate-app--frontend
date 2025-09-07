@@ -7,6 +7,7 @@ interface AuthStore {
   authLoading: boolean
   login: (emailOrPhone: string, password: string) => Promise<void>
   logout: () => void
+  logoutAll: () => void
   checkAuth: () => Promise<void>
 }
 
@@ -36,6 +37,17 @@ export const useAuthStore = create<AuthStore>((set) => ({
   logout: async () => {
     try {
       await axiosAuth.post("/Auth/logout")
+    } catch (err) {
+      console.warn("Logout failed or already invalidated", err)
+    }
+
+    set({ isLoggedIn: false })
+    useUserStore.getState().setUser(null)
+  },
+
+  logoutAll: async () => {
+    try {
+      await axiosAuth.post("/Auth/logout-all")
     } catch (err) {
       console.warn("Logout failed or already invalidated", err)
     }

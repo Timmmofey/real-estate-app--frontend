@@ -101,6 +101,23 @@ export const en = {
     mobileMenu:{
         Home: "Home"
     },
+    deviceAndActivitySection: {
+        currentSession: "Current session",
+        activeNow: "Active right now on this device",
+        otherSessions: "Other sessions",
+        noOtherSessions: "There are no other sessions",
+        activeAt: "Active at ",
+        showMore: "Show the rest sessions",
+        hide: "Hide",
+        totalSessions: "Total sessions",
+        deviceUsage: "Device usage",
+        locations: "Locations",
+        logoutAll: "Log out all sessions",
+        logoutConfirmTitle: "Are you sure you want to log out all sessions?",
+        logoutConfirmDescription: "This action cannot be undone. For further sessions you will need to log in again.",
+        logoutCancel: "Cancel",
+        logoutContinue: "Continue",
+    },
     
     /////////////
     //Constants
@@ -178,6 +195,13 @@ export const en = {
             NU: "Nunavut",
             YT: "Yukon",
         }
+    },
+    deviceTypes: {
+        Bot: "Bot",
+        Mobile: "Mobile",
+        Tablet: "Tablet",
+        Desktop: "Desktop",
+        SmartTv: "Smart Tv",
     },
 
     /////////////

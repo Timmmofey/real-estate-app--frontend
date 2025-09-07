@@ -7,7 +7,7 @@ import { Skeleton } from "./ui/skeleton"
 type ContactCardProps = {
   icon: ReactNode
   label: string
-  value: string
+  value?: string
   copyText?: string
   onEdit?: () => void
 }
@@ -18,7 +18,7 @@ export function ContactCard({ icon, label, value, copyText, onEdit }: ContactCar
     return (
         value ?
 
-        <div className="w-full flex items-center gap-4 p-2 border rounded">
+        <div className="w-full flex items-center gap-4 p-2 border-2 rounded">
             <div className="h-6 w-6 flex-shrink-0">{icon}</div>
 
             <div

@@ -10,7 +10,7 @@ export default function ScrollWrapper({ children, className }: { children: React
       options={{
         scrollbars: { autoHide: "scroll" },
       }}
-      className={cn("h-full flex flex-col" + className)}
+      className={cn("h-full flex flex-col", className)}
     >
       {children}
     </OverlayScrollbarsComponent>

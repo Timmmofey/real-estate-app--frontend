@@ -48,11 +48,11 @@ const Header: React.FC = () => {
 
 
   useEffect(() => {
-     const viewport = document.querySelector("[data-overlayscrollbars-viewport]") as HTMLElement | null
+    const viewport = document.querySelector("[data-overlayscrollbars-viewport]") as HTMLElement | null
       if (!viewport) return
 
     const handleScroll = () => {
-      const currentScroll = window.scrollY
+      const currentScroll = viewport.scrollTop
       const delta = currentScroll - lastScrollRef.current
 
       let nextOffset = offsetRef.current + delta

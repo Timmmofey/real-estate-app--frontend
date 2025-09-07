@@ -8,7 +8,6 @@ interface UserState {
   isLoggedIn: boolean
   fetchProfile: () => Promise<void>
   setUser: (user: UserProfile | null) => void
-  setUserPatch: (patch: Partial<UserProfile>) => void
 }
 
 export const useUserStore = create<UserState>((set) => ({
@@ -33,15 +32,5 @@ export const useUserStore = create<UserState>((set) => ({
         } finally{
         set({userLoading: false})
         }
-    },
-
-    setUserPatch: (patch) =>
-      set((state) => {
-        if (!state.user) {
-          return { user: patch as UserProfile }
-        }
-
-        const merged = { ...state.user, ...patch } as UserProfile
-        return { user: merged }}
-      ),
+    }
 }))

@@ -101,6 +101,24 @@ export const ru = {
     mobileMenu:{
         Home: "Главная"
     },
+    deviceAndActivitySection: {
+        currentSession: "Текущая сессия",
+        activeNow: "Активна прямо сейчас на этом устройстве",
+        otherSessions: "Другие сессии",
+        noOtherSessions: "Нет других сессий",
+        activeAt: "Активна ",
+        showMore: "Показать оставшиеся сессии",
+        hide: "Скрыть",
+        totalSessions: "Всего сессий",
+        deviceUsage: "Устройства",
+        locations: "Локации",
+        logoutAll: "Выйти из всех сессий",
+        logoutConfirmTitle: "Вы уверены, что хотите выйти из всех сессий?",
+        logoutConfirmDescription:
+        "Это действие нельзя отменить. Для последующих сессий нужно будет снова войти в систему.",
+        logoutCancel: "Отмена",
+        logoutContinue: "Продолжить"
+    },
 
     /////////////
     //Constants
@@ -178,6 +196,13 @@ export const ru = {
             NU: "Нунавут",
             YT: "Юкон",
         }
+    },
+    deviceTypes: {
+        Bot: "Бот",
+        Mobile: "Телефон",
+        Tablet: "Планшет",
+        Desktop: "Компьютер",
+        SmartTv: "Смарт ТВ",
     },
 
     /////////////
