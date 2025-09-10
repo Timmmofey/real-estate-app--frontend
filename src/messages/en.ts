@@ -118,6 +118,11 @@ export const en = {
         logoutCancel: "Cancel",
         logoutContinue: "Continue",
     },
+
+    contactCard: {
+        clipboard: "copied to clipboard",
+        edit: "Edit"
+    },
     
     /////////////
     //Constants

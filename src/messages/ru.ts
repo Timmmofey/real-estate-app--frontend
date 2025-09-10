@@ -120,6 +120,11 @@ export const ru = {
         logoutContinue: "Продолжить"
     },
 
+    contactCard: {
+        clipboard: "добавлен в буфер обмена",
+        edit: "Изменить"
+    },
+
     /////////////
     //Constants
     /////////////

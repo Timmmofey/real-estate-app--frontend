@@ -79,7 +79,7 @@ export default function ResetPasswordPage() {
       <h1 className="text-2xl font-semibold mb-6 text-center">{t("title")}</h1>
 
       {step === 1 && (
-        <form className="space-y-4">
+        <form onSubmit={e => e.preventDefault()} className="space-y-4">
           <div className="grid gap-1">
             <Label>Email</Label>
             <Input
@@ -96,7 +96,7 @@ export default function ResetPasswordPage() {
       )}
 
       {step === 2 && (
-        <form className="space-y-4">
+        <form onSubmit={e => e.preventDefault()} className="space-y-4">
           <p className="text-sm text-muted-foreground">{t("codeDescription")}</p>
           <div className="grid gap-1">
             <Label>{t("verifyButton")}</Label>
@@ -113,7 +113,7 @@ export default function ResetPasswordPage() {
       )}
 
       {step === 3 && (
-        <form className="space-y-4">
+        <form onSubmit={e => e.preventDefault()} className="space-y-4">
           <div className="grid gap-1">
             <Label>{t("newPasswordLabel")}</Label>
             <Input

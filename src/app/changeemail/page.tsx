@@ -28,8 +28,8 @@ export default function ChangeEmailPage(){
         } catch (err: unknown) {
         if (err instanceof AxiosError) {
             console.error(err.response?.data || err.message)
+            toast.error(t("step1_error"))
         }
-        toast.error(t("step1_error"))
         } finally {
             setLoading(false)
         }
@@ -88,7 +88,7 @@ export default function ChangeEmailPage(){
         try {
             await axiosUser.post('/Users/complete-email-change-via-email', {verificationCode: newEmailCofirmationCode})
             toast.success(t("step5_success"))
-            router.push("/settings")
+            router.back()
         } catch (err: unknown) {
             if (err instanceof AxiosError) {
                 console.error(err.response?.data || err.message)
@@ -105,7 +105,7 @@ export default function ChangeEmailPage(){
             <p>{t("step")}: {step} {t("of")} 5</p>
 
             {step === 1 && (
-                <form className="space-y-4">
+                <form onSubmit={e => e.preventDefault()} className="space-y-4">
                     <p className="text-sm text-muted-foreground">
                         {t("step1_description")}
                     </p>
@@ -116,7 +116,7 @@ export default function ChangeEmailPage(){
             )}
 
             {step === 2 && (
-                <form className="space-y-4">
+                <form onSubmit={e => e.preventDefault()} className="space-y-4">
                     <p className="text-sm text-muted-foreground">
                         {t("step2_description")}
                     </p>
@@ -130,13 +130,13 @@ export default function ChangeEmailPage(){
                         />
                     </div>
                     <Button onClick={handleConfirmOldEmail} disabled={loading} className="w-full">
-                        {loading ? t("step2_button") : t("step2_button_loading")}
+                        {loading ? t("step2_button_loading") : t("step2_button")}
                     </Button>
                 </form>
             )}
 
             {step === 3 && (
-                <form className="space-y-4">
+                <form onSubmit={e => e.preventDefault()} className="space-y-4">
                     <p className="text-sm text-muted-foreground">
                         {t("step3_description")}
                     </p>
@@ -150,13 +150,13 @@ export default function ChangeEmailPage(){
                         />
                     </div>
                     <Button onClick={sendConfirmationCodeToNewEmail} disabled={loading} className="w-full">
-                        {loading ? t("step3_button") : t("step3_button_loading")}
+                        {loading ? t("step3_button_loading") : t("step3_button")}
                     </Button>
                 </form>
             )}
 
             {step === 4 && (
-                <form className="space-y-4">
+                <form onSubmit={e => e.preventDefault()} className="space-y-4">
                     <p className="text-sm text-muted-foreground">
                         {t("step4_description")}
                     </p>
@@ -170,13 +170,13 @@ export default function ChangeEmailPage(){
                         />
                     </div>
                     <Button onClick={ConfirmNewEmail} disabled={loading} className="w-full">
-                        {loading ? t("step4_button") : t("step4_button_loading")}
+                        {loading ? t("step4_button_loading") : t("step4_button")}
                     </Button>
                 </form>
             )}
 
             {step === 5 && (
-                <form className="space-y-4">
+                <form onSubmit={e => e.preventDefault()} className="space-y-4">
                     <p className="text-sm text-muted-foreground">
                         {t("step5_description")}
                     </p>
