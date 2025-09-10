@@ -79,7 +79,7 @@ export default function ResetPasswordPage() {
       <h1 className="text-2xl font-semibold mb-6 text-center">{t("title")}</h1>
 
       {step === 1 && (
-        <div className="space-y-4">
+        <form className="space-y-4">
           <div className="grid gap-1">
             <Label>Email</Label>
             <Input
@@ -92,11 +92,11 @@ export default function ResetPasswordPage() {
           <Button onClick={handleSendResetCode} disabled={loading} className="w-full">
             {loading ? t("sendButtonLoading") : t("sendButton")}
           </Button>
-        </div>
+        </form>
       )}
 
       {step === 2 && (
-        <div className="space-y-4">
+        <form className="space-y-4">
           <p className="text-sm text-muted-foreground">{t("codeDescription")}</p>
           <div className="grid gap-1">
             <Label>{t("verifyButton")}</Label>
@@ -109,11 +109,11 @@ export default function ResetPasswordPage() {
           <Button onClick={handleVerifyCode} disabled={loading} className="w-full">
             {loading ?  t("verifyButtonLoading"): t("verifyButton")}
           </Button>
-        </div>
+        </form>
       )}
 
       {step === 3 && (
-        <div className="space-y-4">
+        <form className="space-y-4">
           <div className="grid gap-1">
             <Label>{t("newPasswordLabel")}</Label>
             <Input
@@ -126,7 +126,7 @@ export default function ResetPasswordPage() {
           <Button onClick={handleResetPassword} disabled={loading} className="w-full">
             {loading ? t("resetButtonLoading") : t("resetButton")}
           </Button>
-        </div>
+        </form>
       )}
     </div>
   )

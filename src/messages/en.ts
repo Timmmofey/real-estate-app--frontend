@@ -263,5 +263,47 @@ export const en = {
         personRegisteredToast: "Person registered",
         companyRegisteredToast: "Person registered",
         unexpectedErrorToast: "Registration failed"
+    },
+    changeEmailPage: {
+        title: "Change Email",
+        step: "Step",
+        of: "of",
+
+        step1_description: "We will send a confirmation code to your current email. Enter it in the next step to confirm that you are the account owner.",
+        step1_button: "Send code to old email",
+
+        step2_description: "Enter the code that was sent to your old email. This is required to confirm that you have access to it.",
+        step2_label: "Confirmation code",
+        step2_button: "Confirm",
+        step2_button_loading: "Checking...",
+
+        step3_description: "Now enter your new email, and we will send a confirmation code to it.",
+        step3_label: "New email",
+        step3_button: "Send code to new email",
+        step3_button_loading: "Sending...",
+
+        step4_description: "Enter the code that was sent to your new email so we can verify it belongs to you.",
+        step4_label: "New email confirmation code",
+        step4_button: "Confirm",
+        step4_button_loading: "Checking...",
+
+        step5_description: "All checks are complete. Now you can finish changing your email.",
+        step5_button: "Complete email change",
+
+        step1_success: "Code sent to your old email",
+        step1_error: "Failed to send code to old email",
+
+        step2_success: "Old email confirmed",
+        step2_error: "Invalid code for old email",
+
+        step3_success: "Code sent to your new email",
+        step3_error: "Failed to send code to new email",
+
+        step4_success: "New email confirmed",
+        step4_error: "Invalid code for new email",
+
+        step5_success: "Email successfully changed",
+        step5_error: "Failed to complete email change"
     }
+
 } as const

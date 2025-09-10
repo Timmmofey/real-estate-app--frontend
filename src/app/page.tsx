@@ -18,7 +18,7 @@ export default function Home() {
         try{
           await checkAuth();
         } finally {
-          setLoading(false);
+          // setLoading(false);
         }
       } finally {
         setLoading(false);

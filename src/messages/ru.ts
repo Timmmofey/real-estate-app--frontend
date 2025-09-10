@@ -262,5 +262,47 @@ export const ru = {
         personRegisteredToast: "Пользователь зарегистрирован",
         companyRegisteredToast: "Компания заргистрирована",
         unexpectedErrorToast: "Регистрация не удалась"
+    },
+    changeEmailPage: {
+        title: "Смена email",
+        step: "Шаг: {step} из 5",
+        of: "из",
+
+        step1_description: "Мы отправим код подтверждения на ваш текущий email. Введите его на следующем шаге, чтобы подтвердить, что именно вы владелец аккаунта.",
+        step1_button: "Отправить код на старый email",
+
+        step2_description: "Введите код, который пришёл на ваш старый email. Это нужно, чтобы подтвердить, что у вас есть доступ к нему.",
+        step2_label: "Код подтверждения",
+        step2_button: "Подтвердить",
+        step2_button_loading: "Проверяем...",
+
+        step3_description: "Теперь укажите новый email, на который мы отправим код подтверждения.",
+        step3_label: "Новый email",
+        step3_button: "Отправить код на новый email",
+        step3_button_loading: "Отправляем...",
+
+        step4_description: "Введите код, который пришёл на ваш новый email, чтобы мы убедились, что он принадлежит вам.",
+        step4_label: "Код подтверждения нового email",
+        step4_button: "Подтвердить",
+        step4_button_loading: "Проверяем...",
+
+        step5_description: "Все проверки пройдены. Теперь вы можете завершить смену почты.",
+        step5_button: "Завершить смену email",
+
+        step1_success: "Код отправлен на ваш старый email",
+        step1_error: "Не удалось отправить код на старый email",
+
+        step2_success: "Старый email подтверждён",
+        step2_error: "Неверный код для старого email",
+
+        step3_success: "Код отправлен на новый email",
+        step3_error: "Не удалось отправить код на новый email",
+
+        step4_success: "Новый email подтверждён",
+        step4_error: "Неверный код для нового email",
+
+        step5_success: "Email успешно изменён",
+        step5_error: "Не удалось завершить смену email"
     }
+
 }as const

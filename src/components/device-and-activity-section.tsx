@@ -25,8 +25,6 @@ type DeviceAndSessionResponceDto = {
     settlement?: string
 }
 
-
-
 export function DeviceAndActivitySection(){
     const [sessions, setSessions] = useState<DeviceAndSessionResponceDto[]>()
     const [loading, setLoading] = useState(true)
@@ -35,8 +33,6 @@ export function DeviceAndActivitySection(){
     const logoutAll = useAuthStore((s) => s.logoutAll)
     const t = useTypedTranslations("deviceAndActivitySection")
     const nt = useTranslations()
-
-
 
     const filteredSessions = sessions
         ?.filter((s) => !s.isCurrentSession)
@@ -58,7 +54,6 @@ export function DeviceAndActivitySection(){
             return acc;
     }, {}) ?? {};
 
-
     useEffect(()=>{
         const load = async () => {
             try{
@@ -77,7 +72,7 @@ export function DeviceAndActivitySection(){
         }
 
         load()
-    })
+    }, [])
 
     function setIcon(deviceType: DeviceType | null | undefined) {
         switch (deviceType) {
@@ -128,18 +123,18 @@ export function DeviceAndActivitySection(){
                 <h4 className="mb-2 font-semibold">{t("currentSession")}</h4>
                 {currentSession && (
                     <div className="w-full flex items-center gap-4 p-3 border-2 rounded ">
-                    <div className="h-6 w-6 flex-shrink-0">
-                        {setIcon(currentSession.deviceType)}
-                    </div>
-                    <div className="flex flex-col flex-grow select-none">
-                        <p className="text-sm font-medium">{currentSession.deviceName}</p>
-                        <p className="text-xs text-muted-foreground">
-                        {currentSession.country} {currentSession.settlement}
-                        </p>
-                        <p className="text-xs text-muted-foreground">
-                            {t("activeNow")}
-                        </p>
-                    </div>
+                        <div className="h-6 w-6 flex-shrink-0">
+                            {setIcon(currentSession.deviceType)}
+                        </div>
+                        <div className="flex flex-col flex-grow select-none">
+                            <p className="text-sm font-medium">{currentSession.deviceName}</p>
+                            <p className="text-xs text-muted-foreground">
+                            {currentSession.country} {currentSession.settlement}
+                            </p>
+                            <p className="text-xs text-muted-foreground">
+                                {t("activeNow")}
+                            </p>
+                        </div>
                     </div>
                 )}
 
@@ -154,7 +149,7 @@ export function DeviceAndActivitySection(){
                     ?.map((s) => (
                         <div
                         key={s.sessionId}
-                        className="flex items-center gap-4 p-2 border-2 rounded hover:shadow-sm transition"
+                        className="w-full flex items-center gap-4 p-3 border-2 rounded hover:shadow-sm transition"
                         >
                         <div className="h-6 w-6 flex-shrink-0">{setIcon(s.deviceType)}</div>
                         <div className="flex flex-col flex-grow select-none">
@@ -214,11 +209,10 @@ export function DeviceAndActivitySection(){
                     </div>
 
                     <Separator/>
-                    
-                    
+                                  
                     <AlertDialog>
                         <AlertDialogTrigger >
-                            <Button variant={"destructive"} className="flex gap-1 text-xs"> 
+                            <Button variant={"destructive"} className="flex gap-1 w-full text-xs"> 
                                 <OctagonX />
                                 {t("logoutAll")}
                             </Button>

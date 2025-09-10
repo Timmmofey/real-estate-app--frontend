@@ -62,8 +62,15 @@ export const useAuthStore = create<AuthStore>((set) => ({
       await useUserStore.getState().fetchProfile()
       set({ isLoggedIn: true })
     } catch {
-      set({ isLoggedIn: false })
-      useUserStore.getState().setUser(null)
+      // set({ isLoggedIn: false })
+      // useUserStore.getState().setUser(null)
+      try {
+        await useUserStore.getState().fetchProfile()
+        set({ isLoggedIn: true })
+      } catch {
+        set({ isLoggedIn: false })
+        useUserStore.getState().setUser(null)
+      } 
     } finally{
       set({authLoading: false})
     }

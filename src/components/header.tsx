@@ -64,8 +64,8 @@ const Header: React.FC = () => {
       setOffset(nextOffset)
     }
 
-    window.addEventListener("scroll", handleScroll, { passive: true })
-    return () => window.removeEventListener("scroll", handleScroll)
+    viewport.addEventListener("scroll", handleScroll, { passive: true })
+    return () => viewport.removeEventListener("scroll", handleScroll)
   }, [height])
 
 

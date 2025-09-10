@@ -13,10 +13,12 @@ import { DeviceAndActivitySection } from "@/components/device-and-activity-secti
 import { useAuthGuard } from "@/lib/useAuthGuard";
 import { Mail, Phone } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useRouter } from "next/navigation";
 
 export default function SettingsPage() {
     useAuthGuard()
     useProfileLoader()
+      const router = useRouter();
     
     
     const user  = useUserStore(s => s.user)
@@ -59,7 +61,7 @@ export default function SettingsPage() {
                                     label="Email"
                                     value={user?.email}
                                     copyText={user?.email}
-                                    onEdit={() => console.log("Edit email")}
+                                    onEdit={() => router.push("/changeemail")}
                                 />
 
                                 <ContactCard
