@@ -14,11 +14,13 @@ import { useAuthGuard } from "@/lib/useAuthGuard";
 import { Mail, Phone } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useRouter } from "next/navigation";
+import { useTypedTranslations } from "@/lib/useTypedTranslations";
 
 export default function SettingsPage() {
     useAuthGuard()
     useProfileLoader()
-      const router = useRouter();
+    const router = useRouter();
+    const t = useTypedTranslations("settingsPage")
     
     
     const user  = useUserStore(s => s.user)
@@ -28,21 +30,21 @@ export default function SettingsPage() {
     return(
         <Container>
             <Card className="max-w-xl mx-auto p-6 my-3">
-                <h1 className="text-2xl font-semibold">Settings</h1>
+                <h1 className="text-2xl font-semibold">{t("title")}</h1>
                     <Tabs defaultValue="account" className="w-full">
                         <ScrollArea className="w-full block">
                             <TabsList className="inline-flex w-max">
-                                <TabsTrigger value="account" className="shrink-0">Account</TabsTrigger>
-                                <TabsTrigger value="contacts" className="shrink-0">Contacts</TabsTrigger>
-                                <TabsTrigger value="security" className="shrink-0">Security</TabsTrigger>
-                                <TabsTrigger value="payments" className="shrink-0">Payments</TabsTrigger>
-                                <TabsTrigger value="subscriptions" className="shrink-0">Subscriptions</TabsTrigger>
+                                <TabsTrigger value="account" className="shrink-0">{t("account")}</TabsTrigger>
+                                <TabsTrigger value="contacts" className="shrink-0">{t("contacts")}</TabsTrigger>
+                                <TabsTrigger value="security" className="shrink-0">{t("security")}</TabsTrigger>
+                                <TabsTrigger value="payments" className="shrink-0">{t("payments")}</TabsTrigger>
+                                <TabsTrigger value="subscriptions" className="shrink-0">{t("subscriptions")}</TabsTrigger>
                             </TabsList>
                             <ScrollBar  orientation="horizontal" />
                         </ScrollArea>
 
                         <TabsContent value="account">
-                            <h2 className="text-lg font-semibold mb-5">Profile info</h2>
+                            <h2 className="text-lg font-semibold mb-5">{t("profileInfo")}</h2>
 
                             {user?.userType === "person" ? (
                                 <EditPersonProfileForm />
@@ -52,7 +54,7 @@ export default function SettingsPage() {
 
                             <Separator className="my-7"/>
 
-                            <h2 className="text-lg font-semibold mb-5">Contact info</h2>
+                            <h2 className="text-lg font-semibold mb-5">{t("contactInfo")}</h2>
 
                             <div className="flex flex-col sm:flex-row gap-3">
                                 
@@ -66,7 +68,7 @@ export default function SettingsPage() {
 
                                 <ContactCard
                                     icon={<Phone />}
-                                    label="Phone"
+                                    label={t("phone")}
                                     value={user?.phoneNumer}
                                     copyText={user?.phoneNumer}
                                     onEdit={() => console.log("Edit phone")}
@@ -76,9 +78,13 @@ export default function SettingsPage() {
 
                             <Separator className="my-7"/>
 
-                            <h2 className="text-lg font-semibold mb-5">Devices and activity</h2>
+                            <h2 className="text-lg font-semibold mb-5">{t("devicesAndActivity")}</h2>
 
                            <DeviceAndActivitySection/>
+                           
+                           <div>
+                                
+                           </div>
 
                         </TabsContent>
 

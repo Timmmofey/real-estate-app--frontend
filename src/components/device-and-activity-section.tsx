@@ -149,7 +149,7 @@ export function DeviceAndActivitySection(){
                     ?.map((s) => (
                         <div
                         key={s.sessionId}
-                        className="w-full flex items-center gap-4 p-3 border-2 rounded hover:shadow-sm transition"
+                        className="w-full flex items-center gap-4 p-3 border-2 rounded transition"
                         >
                         <div className="h-6 w-6 flex-shrink-0">{setIcon(s.deviceType)}</div>
                         <div className="flex flex-col flex-grow select-none">

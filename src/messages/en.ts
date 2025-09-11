@@ -309,6 +309,20 @@ export const en = {
 
         step5_success: "Email successfully changed",
         step5_error: "Failed to complete email change"
-    }
+    },
 
+    
+    settingsPage: {
+        title: "Settings",
+        account: "Account",
+        contacts: "Contacts",
+        security: "Security",
+        payments: "Payments",
+        subscriptions: "Subscriptions",
+        profileInfo: "Profile info",
+        contactInfo: "Contact info",
+        devicesAndActivity: "Devices and activity",
+        phone: "Phone",
+        edit: "Edit"
+    },
 } as const

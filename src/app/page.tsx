@@ -2,41 +2,27 @@
 import { useAuthStore } from "@/stores/authStore";
 import { useUserStore } from "@/stores/userStore";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export default function Home() {
   const checkAuth = useAuthStore(s => s.checkAuth)
   const user = useUserStore(s => s.user);
   const router = useRouter();
-  const [loading, setLoading] = useState(true)
+  const authLoading = useAuthStore(s => s.authLoading)
 
-  useEffect(() => {
-    const run = async () => {
-      try {
-        await checkAuth();
-      } catch {
-        try{
-          await checkAuth();
-        } finally {
-          // setLoading(false);
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    run();
+  useEffect(() => {    
+    checkAuth();      
   }, [checkAuth]);
 
   useEffect(() => {
-    if (!loading) {
+    if (!authLoading) {
       if (user) {
         router.replace("/home");
       } else {
         router.replace("/login");
       }
     }
-  }, [loading, user, router]);
+  }, [authLoading, user, router]);
 
   return null;
 }

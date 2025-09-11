@@ -125,6 +125,20 @@ export const ru = {
         edit: "Изменить"
     },
 
+    settingsPage: {
+        title: "Настройки",
+        account: "Аккаунт",
+        contacts: "Контакты",
+        security: "Безопасность",
+        payments: "Платежи",
+        subscriptions: "Подписки",
+        profileInfo: "Информация профиля",
+        contactInfo: "Контактная информация",
+        devicesAndActivity: "Устройства и активность",
+        phone: "Телефон",
+        edit: "Изменить"
+    },
+    
     /////////////
     //Constants
     /////////////
