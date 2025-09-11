@@ -125,6 +125,16 @@ export const ru = {
         edit: "Изменить"
     },
 
+    deleteAccountSection: {
+        succesToast: "Аккаунт успешно удален",
+        errorToast: "Возникла ошибка при удалении аккаунта",
+        deleteAccount: "Удвлить аккаунт",
+        deleteAccountConfirmTitle: "Вы уверены что хотите удалить аккаунт?",
+        deleteAccountConfirmDescription: "Ваш аккаунт будет полность удален через 6 месяцев без возможности восстановления, чтобы восстановить или полностью удалить аккаунт войдите в него через форму лоигна.",
+        cancelDelete: "Отмена",
+        submitDelete: "Удвлить аккаунт"
+    },
+
     settingsPage: {
         title: "Настройки",
         account: "Аккаунт",

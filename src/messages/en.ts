@@ -118,12 +118,20 @@ export const en = {
         logoutCancel: "Cancel",
         logoutContinue: "Continue",
     },
-
     contactCard: {
         clipboard: "copied to clipboard",
         edit: "Edit"
     },
-    
+    deleteAccountSection: {
+        succesToast: "Account has been deleted successfully",
+        errorToast: "Error occured while deleting account",
+        deleteAccount: "Delete account",
+        deleteAccountConfirmTitle: "Are you sure you want to delete your account?",
+        deleteAccountConfirmDescription: "You will have 6 month to restore your account via login or you can delete it permanantly",
+        cancelDelete: "Cancel",
+        submitDelete: "Delete account"
+    }
+
     /////////////
     //Constants
     /////////////

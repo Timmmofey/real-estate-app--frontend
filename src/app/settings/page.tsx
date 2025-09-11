@@ -80,11 +80,12 @@ export default function SettingsPage() {
 
                             <h2 className="text-lg font-semibold mb-5">{t("devicesAndActivity")}</h2>
 
-                           <DeviceAndActivitySection/>
-                           
-                           <div>
-                                
-                           </div>
+                            <DeviceAndActivitySection/>
+
+                            <Separator className="my-7"/>
+
+                            <h2 className="text-lg font-semibold mb-5">Delete account</h2>
+                            
 
                         </TabsContent>
 
