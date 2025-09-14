@@ -19,7 +19,8 @@ export default function ResetPasswordPage() {
   const router = useRouter()
   const t = useTypedTranslations("resetPasswordPage")
 
-  const handleSendResetCode = async () => {
+  const handleSendResetCode = async (e: React.FormEvent) => {
+    e.preventDefault()    
     setLoading(true)
     try {
       await axiosUser.post('/Users/start-password-reset-via-email', new URLSearchParams({ email }))
@@ -35,23 +36,25 @@ export default function ResetPasswordPage() {
     }
   }
 
-  const handleVerifyCode = async () => {
-      setLoading(true)
-      try {
-          await axiosUser.post('/Users/get-password-reset-token-via-email', { email, verificationCode: code })
-          toast.success(t("toastVerifySuccess"))
-          setStep(3)
-      } catch (err: unknown) {
-        if (err instanceof AxiosError) {
-          console.error(err.response?.data || err.message)
-        }
-          toast.error(t("toastVerifyError"))
-      } finally {
-          setLoading(false)
+  const handleVerifyCode = async (e: React.FormEvent) => {
+    e.preventDefault()    
+    setLoading(true)
+    try {
+        await axiosUser.post('/Users/get-password-reset-token-via-email', { email, verificationCode: code })
+        toast.success(t("toastVerifySuccess"))
+        setStep(3)
+    } catch (err: unknown) {
+      if (err instanceof AxiosError) {
+        console.error(err.response?.data || err.message)
       }
+        toast.error(t("toastVerifyError"))
+    } finally {
+        setLoading(false)
+    }
   }
 
-  const handleResetPassword = async () => {
+  const handleResetPassword = async (e: React.FormEvent) => {
+    e.preventDefault()    
     setLoading(true)
     try {
       await axiosUser.post(
@@ -79,7 +82,7 @@ export default function ResetPasswordPage() {
       <h1 className="text-2xl font-semibold mb-6 text-center">{t("title")}</h1>
 
       {step === 1 && (
-        <form onSubmit={e => e.preventDefault()} className="space-y-4">
+        <form onSubmit={handleSendResetCode} className="space-y-4">
           <div className="grid gap-1">
             <Label>Email</Label>
             <Input
@@ -89,14 +92,14 @@ export default function ResetPasswordPage() {
               required
             />
           </div>
-          <Button onClick={handleSendResetCode} disabled={loading} className="w-full">
+          <Button disabled={loading} className="w-full">
             {loading ? t("sendButtonLoading") : t("sendButton")}
           </Button>
         </form>
       )}
 
       {step === 2 && (
-        <form onSubmit={e => e.preventDefault()} className="space-y-4">
+        <form onSubmit={handleVerifyCode} className="space-y-4">
           <p className="text-sm text-muted-foreground">{t("codeDescription")}</p>
           <div className="grid gap-1">
             <Label>{t("verifyButton")}</Label>
@@ -106,14 +109,14 @@ export default function ResetPasswordPage() {
               required
             />
           </div>
-          <Button onClick={handleVerifyCode} disabled={loading} className="w-full">
+          <Button disabled={loading} className="w-full">
             {loading ?  t("verifyButtonLoading"): t("verifyButton")}
           </Button>
         </form>
       )}
 
       {step === 3 && (
-        <form onSubmit={e => e.preventDefault()} className="space-y-4">
+        <form onSubmit={handleResetPassword} className="space-y-4">
           <div className="grid gap-1">
             <Label>{t("newPasswordLabel")}</Label>
             <Input
@@ -123,7 +126,7 @@ export default function ResetPasswordPage() {
               required
             />
           </div>
-          <Button onClick={handleResetPassword} disabled={loading} className="w-full">
+          <Button disabled={loading} className="w-full">
             {loading ? t("resetButtonLoading") : t("resetButton")}
           </Button>
         </form>
