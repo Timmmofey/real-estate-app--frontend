@@ -5,7 +5,7 @@ import { useUserStore } from './userStore'
 interface AuthStore {
   isLoggedIn: boolean
   authLoading: boolean
-  login: (emailOrPhone: string, password: string) => Promise<void>
+  login: (emailOrPhone: string, password: string) => Promise<{restore: boolean}>
   logout: () => void
   logoutAll: () => void
   checkAuth: () => Promise<void>
@@ -18,17 +18,20 @@ export const useAuthStore = create<AuthStore>((set) => ({
   login: async (emailOrPhone, password) => {
     set({authLoading: true})
     try {
-      await axiosAuth.post("/Auth/login", {
+      const res = await axiosAuth.post("/Auth/login", {
         phoneOrEmail: emailOrPhone,
         password,
       })
 
+      if(res.data?.restore === true) return { restore: true }
+
       await useUserStore.getState().fetchProfile()
       set({ isLoggedIn: true })
 
+      return { restore: false }
     } catch (err) {
       console.error("Login error:", err)
-      throw err
+      return { restore: false }
     } finally{
       set({authLoading: false})
     }

@@ -119,12 +119,10 @@ export const ru = {
         logoutCancel: "Отмена",
         logoutContinue: "Продолжить"
     },
-
     contactCard: {
         clipboard: "добавлен в буфер обмена",
         edit: "Изменить"
     },
-
     deleteAccountSection: {
         succesToast: "Аккаунт успешно удален",
         errorToast: "Возникла ошибка при удалении аккаунта",
@@ -133,20 +131,6 @@ export const ru = {
         deleteAccountConfirmDescription: "Ваш аккаунт будет полность удален через 6 месяцев без возможности восстановления, чтобы восстановить или полностью удалить аккаунт войдите в него через форму лоигна.",
         cancelDelete: "Отмена",
         submitDelete: "Удвлить аккаунт"
-    },
-
-    settingsPage: {
-        title: "Настройки",
-        account: "Аккаунт",
-        contacts: "Контакты",
-        security: "Безопасность",
-        payments: "Платежи",
-        subscriptions: "Подписки",
-        profileInfo: "Информация профиля",
-        contactInfo: "Контактная информация",
-        devicesAndActivity: "Устройства и активность",
-        phone: "Телефон",
-        edit: "Изменить"
     },
     
     /////////////
@@ -332,6 +316,35 @@ export const ru = {
 
         step5_success: "Email успешно изменён",
         step5_error: "Не удалось завершить смену email"
-    }
+    },
+    settingsPage: {
+        title: "Настройки",
+        account: "Аккаунт",
+        contacts: "Контакты",
+        security: "Безопасность",
+        payments: "Платежи",
+        subscriptions: "Подписки",
+        profileInfo: "Информация профиля",
+        contactInfo: "Контактная информация",
+        devicesAndActivity: "Устройства и активность",
+        phone: "Телефон",
+        edit: "Изменить"
+    },
+    restoreAccountPage: {
+        title: "Восстановление аккаунта",
+        description: "Вы можете восстановить свой аккаунт или удалить его полностью.",
+        restoreButton: "Восстановить аккаунт",
+        restoreLoading: "Восстанавливаем...",
+        restoreSuccess: "Аккаунт успешно восстановлен",
+        restoreError: "Не удалось восстановить аккаунт",
 
+        deleteButton: "Удалить аккаунт навсегда",
+        deleteConfirmTitle: "Подтвердите удаление",
+        deleteConfirmDescription: "Вы уверены, что хотите удалить аккаунт? Это действие невозможно отменить.",
+        deleteConfirmButton: "Удалить аккаунт",
+        deleteLoading: "Удаляем...",
+        deleteSuccess: "Аккаунт успешно удалён",
+        deleteError: "Не удалось удалить аккаунт",
+        cancel: "Отмена"
+    }
 }as const

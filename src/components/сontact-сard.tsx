@@ -20,7 +20,7 @@ export function ContactCard({ icon, label, value, copyText, onEdit }: ContactCar
     return (
         value ?
 
-        <div className="relative w-full max-w-[50%] flex items-center gap-4 p-2 border-2 rounded">
+        <div className="relative w-full sm:max-w-[50%] flex items-center gap-4 p-2 border-2 rounded">
             <div className="h-6 w-6 flex-shrink-0">{icon}</div>
 
             <div

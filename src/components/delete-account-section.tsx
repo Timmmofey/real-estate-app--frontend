@@ -6,20 +6,19 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { Button } from "./ui/button";
 import { OctagonX } from "lucide-react";
 import { useTypedTranslations } from "@/lib/useTypedTranslations";
-
-
-
+import { useUserStore } from "@/stores/userStore";
 
 export default function DeleteAccountSection(){
     const router = useRouter();
     const t = useTypedTranslations("deleteAccountSection")
-    
+    const {setUser} = useUserStore()
     
     const handleDeleteAccount = async () => {
     try {
             await axiosUser.delete('/Users/delete-account')
             toast.success(t("succesToast"))
-            router.back()
+            setUser(null)
+            router.push("/")
         } catch (err: unknown) {
             if (err instanceof AxiosError) {
                 console.error(err.response?.data || err.message)

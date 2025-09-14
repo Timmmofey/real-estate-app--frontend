@@ -318,8 +318,6 @@ export const en = {
         step5_success: "Email successfully changed",
         step5_error: "Failed to complete email change"
     },
-
-    
     settingsPage: {
         title: "Settings",
         account: "Account",
@@ -333,4 +331,21 @@ export const en = {
         phone: "Phone",
         edit: "Edit"
     },
+    restoreAccountPage: {
+        title: "Account Recovery",
+        description: "You can restore your account or permanently delete it.",
+        restoreButton: "Restore Account",
+        restoreLoading: "Restoring...",
+        restoreSuccess: "Account successfully restored",
+        restoreError: "Failed to restore account",
+
+        deleteButton: "Delete Account Permanently",
+        deleteConfirmTitle: "Confirm Deletion",
+        deleteConfirmDescription: "Are you sure you want to delete your account? This action cannot be undone.",
+        deleteConfirmButton: "Delete Account",
+        deleteLoading: "Deleting...",
+        deleteSuccess: "Account successfully deleted",
+        deleteError: "Failed to delete account",
+        cancel: "Cancel"
+    }
 } as const

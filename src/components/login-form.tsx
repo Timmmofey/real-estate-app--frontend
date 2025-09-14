@@ -35,7 +35,14 @@ export function LoginForm({
     setLoading(true)
 
     try {
-      await login(emailOrPhone, password)
+      const res = await login(emailOrPhone, password)
+
+      if (res.restore) {
+        toast.info("Аккаунт в режиме восстановления")
+        router.push("/restoreaccount")
+        return
+      }
+
       toast.success("Logged in successfuly!")
       router.push('/home');
     } catch (err: unknown) {
