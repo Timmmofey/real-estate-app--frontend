@@ -130,7 +130,7 @@ export const en = {
         deleteAccountConfirmDescription: "You will have 6 month to restore your account via login or you can delete it permanantly",
         cancelDelete: "Cancel",
         submitDelete: "Delete account"
-    }
+    },
 
     /////////////
     //Constants

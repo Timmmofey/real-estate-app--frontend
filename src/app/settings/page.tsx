@@ -15,6 +15,7 @@ import { Mail, Phone } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useRouter } from "next/navigation";
 import { useTypedTranslations } from "@/lib/useTypedTranslations";
+import DeleteAccountSection from "@/components/delete-account-section";
 
 export default function SettingsPage() {
     useAuthGuard()
@@ -86,7 +87,7 @@ export default function SettingsPage() {
 
                             <h2 className="text-lg font-semibold mb-5">Delete account</h2>
                             
-
+                            <DeleteAccountSection/>
                         </TabsContent>
 
                         <TabsContent value="contacts">

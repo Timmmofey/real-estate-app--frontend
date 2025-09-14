@@ -71,7 +71,8 @@ export const useAuthStore = create<AuthStore>((set) => ({
         set({ isLoggedIn: false })
         useUserStore.getState().setUser(null)
       } 
-    } finally{
+    } 
+    finally{
       set({authLoading: false})
     }
   }

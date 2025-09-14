@@ -19,7 +19,8 @@ export default function ChangeEmailPage(){
     
     const t = useTypedTranslations("changeEmailPage")
     
-    const handleSetResetCodeToOldEmail= async () => {
+    const handleSetResetCodeToOldEmail= async (e: React.FormEvent) => {
+        e.preventDefault()
         setLoading(true)
         try {
             await axiosUser.post('/Users/start-email-change-via-email')
@@ -35,11 +36,12 @@ export default function ChangeEmailPage(){
         }
     }
 
-    const handleConfirmOldEmail= async () => {
+    const handleConfirmOldEmail= async (e: React.FormEvent) => {
+        e.preventDefault()
         setLoading(true)
         try {
             await axiosUser.post('/Users/confirm-old-email', {verificationCode: oldEmailCofirmationCode})
-            toast.success(t("step1_success"))
+            toast.success(t("step2_success"))
             setStep(3)
         } catch (err: unknown) {
         if (err instanceof AxiosError) {
@@ -51,7 +53,8 @@ export default function ChangeEmailPage(){
         }
     }
 
-    const sendConfirmationCodeToNewEmail= async ()=> {
+    const sendConfirmationCodeToNewEmail= async (e: React.FormEvent)=> {
+        e.preventDefault()    
         setLoading(true)
         try {
             await axiosUser.post('/Users/send-new-email-cofirmation-code', {email: newEmail})
@@ -67,7 +70,8 @@ export default function ChangeEmailPage(){
         }
     }
 
-    const ConfirmNewEmail= async ()=> {
+    const ConfirmNewEmail= async (e: React.FormEvent)=> {
+        e.preventDefault()
         setLoading(true)
         try {
             await axiosUser.post('/Users/confirm-new-email', {verificationCode: newEmailCofirmationCode})
@@ -83,7 +87,8 @@ export default function ChangeEmailPage(){
         }
     }
 
-    const CompleteEmailChange= async ()=>{
+    const CompleteEmailChange= async (e: React.FormEvent)=>{
+        e.preventDefault()
         setLoading(true)
         try {
             await axiosUser.post('/Users/complete-email-change-via-email', {verificationCode: newEmailCofirmationCode})
@@ -105,18 +110,18 @@ export default function ChangeEmailPage(){
             <p>{t("step")}: {step} {t("of")} 5</p>
 
             {step === 1 && (
-                <form onSubmit={e => e.preventDefault()} className="space-y-4">
+                <form onSubmit={handleSetResetCodeToOldEmail} className="space-y-4">
                     <p className="text-sm text-muted-foreground">
                         {t("step1_description")}
                     </p>
-                    <Button onClick={handleSetResetCodeToOldEmail}>
+                    <Button type="submit">
                         {t("step1_button")}
                     </Button>
                 </form>
             )}
 
             {step === 2 && (
-                <form onSubmit={e => e.preventDefault()} className="space-y-4">
+                <form onSubmit={handleConfirmOldEmail} className="space-y-4">
                     <p className="text-sm text-muted-foreground">
                         {t("step2_description")}
                     </p>
@@ -129,14 +134,14 @@ export default function ChangeEmailPage(){
                             required
                         />
                     </div>
-                    <Button onClick={handleConfirmOldEmail} disabled={loading} className="w-full">
+                    <Button type="submit" disabled={loading} className="w-full">
                         {loading ? t("step2_button_loading") : t("step2_button")}
                     </Button>
                 </form>
             )}
 
             {step === 3 && (
-                <form onSubmit={e => e.preventDefault()} className="space-y-4">
+                <form onSubmit={sendConfirmationCodeToNewEmail} className="space-y-4">
                     <p className="text-sm text-muted-foreground">
                         {t("step3_description")}
                     </p>
@@ -149,14 +154,14 @@ export default function ChangeEmailPage(){
                             required
                         />
                     </div>
-                    <Button onClick={sendConfirmationCodeToNewEmail} disabled={loading} className="w-full">
+                    <Button type="submit" disabled={loading} className="w-full">
                         {loading ? t("step3_button_loading") : t("step3_button")}
                     </Button>
                 </form>
             )}
 
             {step === 4 && (
-                <form onSubmit={e => e.preventDefault()} className="space-y-4">
+                <form onSubmit={ConfirmNewEmail} className="space-y-4">
                     <p className="text-sm text-muted-foreground">
                         {t("step4_description")}
                     </p>
@@ -169,18 +174,18 @@ export default function ChangeEmailPage(){
                             required
                         />
                     </div>
-                    <Button onClick={ConfirmNewEmail} disabled={loading} className="w-full">
+                    <Button type="submit" disabled={loading} className="w-full">
                         {loading ? t("step4_button_loading") : t("step4_button")}
                     </Button>
                 </form>
             )}
 
             {step === 5 && (
-                <form onSubmit={e => e.preventDefault()} className="space-y-4">
+                <form onSubmit={CompleteEmailChange} className="space-y-4">
                     <p className="text-sm text-muted-foreground">
                         {t("step5_description")}
                     </p>
-                    <Button onClick={CompleteEmailChange} className="w-full">
+                    <Button type="submit" className="w-full">
                         {t("step5_button")}
                     </Button>
                 </form>
