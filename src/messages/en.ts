@@ -347,5 +347,16 @@ export const en = {
         deleteSuccess: "Account successfully deleted",
         deleteError: "Failed to delete account",
         cancel: "Cancel"
+    },
+    twoFactorAuthPage: {
+      title: "Two factor authentication",
+      description: "Enter verification code sent to your Email",
+      formLabel: "Verification code",
+      button: "Send",
+      buttonLoading: "Sending",
+      emptyCodeError: "Please enter the verification code.",
+      successMessage: "Verification successful!",
+      invalidCodeMessage: "Invalid verification code.",
+      genericError: "Something went wrong. Please try again."
     }
 } as const

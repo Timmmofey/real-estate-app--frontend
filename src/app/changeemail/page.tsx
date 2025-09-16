@@ -40,7 +40,7 @@ export default function ChangeEmailPage(){
         e.preventDefault()
         setLoading(true)
         try {
-            await axiosUser.post('/Users/confirm-old-email', {verificationCode: oldEmailCofirmationCode})
+            await axiosUser.post('/Users/confirm-current-email', {verificationCode: oldEmailCofirmationCode})
             toast.success(t("step2_success"))
             setStep(3)
         } catch (err: unknown) {

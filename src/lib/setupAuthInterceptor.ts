@@ -69,7 +69,11 @@ export function setupAuthInterceptor(client: AxiosInstance = axiosUser) {
     async (error) => {
       const originalRequest = error.config as AxiosRequestConfig & { _retry?: boolean }
 
-      if (error.response?.status === 401 && !originalRequest._retry) {
+      const excludedPaths = ['/Auth/Login-via-two-factor-auth', '/Auth/Login']
+      const requestUrl = originalRequest.url || ''
+      const isExcluded = excludedPaths.some(path => requestUrl.includes(path))
+
+      if (error.response?.status === 401 && !originalRequest._retry && !isExcluded) {
         if (isRefreshing) {
           // пока идёт refresh — ставим запрос в очередь и дождёмся
           return new Promise((resolve, reject) => {

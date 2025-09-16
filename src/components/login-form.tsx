@@ -16,7 +16,6 @@ import { useState } from "react"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { useTypedTranslations } from "@/lib/useTypedTranslations"
-import { AxiosError } from "axios"
 
 export function LoginForm({
   className,
@@ -32,28 +31,60 @@ export function LoginForm({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+
+    if (loading) {
+      console.log("[login] submit ignored because loading is true")
+      return
+    }
+
     setLoading(true)
+    console.log("[login] started", { emailOrPhone })
 
     try {
       const res = await login(emailOrPhone, password)
+      console.log("[login] login() returned:", res)
 
-      if (res.restore) {
+      if (!res) {
+        toast.error("No response from login")
+        return
+      }
+
+      if ("error" in res) {
+        console.log("[login] server error message:", res.error)
+        toast.error(typeof res.error === "string" ? res.error : t("toastErrorDescription"))
+        return
+      }
+
+      if ("restore" in res && res.restore) {
         toast.info("Аккаунт в режиме восстановления")
         router.push("/restoreaccount")
         return
       }
 
-      toast.success("Logged in successfuly!")
-      router.push('/home');
-    } catch (err: unknown) {
-      if (err instanceof AxiosError) {
-              console.error(err.response?.data || err.message)
-            }
-      toast.error(t('toastErrorDescription'))
+      if ("twoFactorAuth" in res && res.twoFactorAuth) {
+        toast.info("Необходима двухфакторная аутентификация")
+        router.push("/twofactorauth")
+        return
+      }
+
+      if ("success" in res && res.success) {
+        toast.success("Logged in successfully!")
+        router.push("/home")
+        return
+      }
+
+      toast.error(t("toastErrorDescription"))
+    } catch (err) {
+      // НЕ ре-выбрасываем — просто логируем и показываем тост
+      console.error("[login] handleSubmit unexpected exception:", err)
+      toast.error("Unexpected error")
     } finally {
       setLoading(false)
+      console.log("[login] finished, loading set to false")
     }
   }
+
+
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>

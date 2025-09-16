@@ -346,5 +346,16 @@ export const ru = {
         deleteSuccess: "Аккаунт успешно удалён",
         deleteError: "Не удалось удалить аккаунт",
         cancel: "Отмена"
+    },
+    twoFactorAuthPage: {
+      title: "Двухфакторная аутентификация",
+      description: "Введите код подтверждения, отправленный на вашу почту",
+      formLabel: "Код подтверждения",
+      button: "Отправить",
+      buttonLoading: "Отправка",
+      emptyCodeError: "Пожалуйста, введите код подтверждения.",
+      successMessage: "Подтверждение прошло успешно!",
+      invalidCodeMessage: "Неверный код подтверждения.",
+      genericError: "Что-то пошло не так. Попробуйте еще раз."
     }
 }as const
