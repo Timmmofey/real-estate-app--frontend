@@ -10,8 +10,8 @@ import { useState, useEffect, useRef } from "react"
 import { toast } from "sonner"
 
 export default function TwoFactorAuthPage() {
-    const [loading, setLoading] = useState(false)
-    const [confirmationCode, setConfirmationCode] = useState("")
+    const [loading, setLoading] = useState<boolean>(false)
+    const [confirmationCode, setConfirmationCode] = useState<string>("")
     const t = useTypedTranslations("twoFactorAuthPage")
     const router = useRouter()
     const inputRef = useRef<HTMLInputElement>(null)

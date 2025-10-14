@@ -9,6 +9,8 @@ import { ThemeProvider } from "@/components/theme-provider"
 import {NextIntlClientProvider} from "next-intl"
 import { getLocale, getMessages } from "next-intl/server";
 import ScrollWrapper from "@/components/scroll-wrapper";
+import NextTopLoader from 'nextjs-toploader';
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -45,6 +47,7 @@ export default async function RootLayout({
             enableSystem
             disableTransitionOnChange
             >
+            <NextTopLoader />
             <NextIntlClientProvider messages={messages}>
               <AuthInitProvider />
               <Toaster position="top-center" closeButton/>
