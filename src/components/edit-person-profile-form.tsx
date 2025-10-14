@@ -106,90 +106,100 @@ export default function EditPersonProfileForm() {
             formData.append('DeleteMainPhoto', 'true')
         }
 
-        console.log(
-            `settlement- ${data.Settlement}`,
-            `zipcode- ${data.ZipCode}`,
-        )
-
+        console.log('[form] onSubmit called', { data })
         setLoading(true)
+
         try {
-            await axiosUser.patch('/Users/edit-person-profile-main-info', formData)
+            console.log('[form] about to call axiosUser.patch /Users/edit-person-profile-main-info')
+            const res = await axiosUser.patch('/Users/edit-person-profile-main-info', formData)
+            console.log('[form] axiosUser.patch response:', res && res.status, res && res.data)
             await useUserStore.getState().fetchProfile()
             toast.success(t("successToast"))
+        } catch (err) {
+            console.error('[form] axiosUser.patch FAILED:', err)
+            // покажем пользователю
+            const message =
+            err?.response?.data?.message ||
+            err?.response?.data?.Message ||
+            err?.message ||
+            'Request failed'
+            toast.error(String(message))
         } finally {
             setLoading(false)
+            console.log('[form] finished, loading=false')
         }
-    }
+        }
 
-return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-2">
-        <div className='grid gap-1'>
-            <Label htmlFor="firstName">{t("firstNameLabel")}</Label>
-            <Input id='firstName' placeholder="First Name" {...register('FirstName')} />
-        </div>
-        <div className='grid gap-1'>
-            <Label htmlFor="lastName">{t("lastNameLabel")}</Label>
-            <Input id='lastName' placeholder="Last Name"  {...register('LastName')} />
-        </div>
-         <AddressFields
-            register={register}
-            watch={watch}
-            setValue={setValue}
-            clearErrors={clearErrors}
-            errors={errors}
-            userType="person"
-        />
-        <div className="space-y-2">
-            <Label className="text-sm font-medium">{t("profilePhotoLabel")}</Label>
-            <div className="flex items-center gap-4">
-                <Avatar className="w-16 h-16">
-                    <AvatarImage
-                        src={preview ?? undefined}           
-                        alt="Avatar preview"
-                        onError={() => setPreview(null)}  
-                    />
-                    <AvatarFallback>
-                        {user.firstName?.[0]?.toUpperCase() || '?'}
-                    </AvatarFallback>
-                </Avatar>
 
-                <div className="flex flex-col gap-2">
-                <Button
-                    type="button"
-                    variant="secondary"
-                    onClick={() => document.getElementById('upload-photo')?.click()}
-                    className="w-fit"
-                >
-                    {t("choosePhoto")}
-                </Button>
+    return (
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-2">
+            <div className='grid gap-1'>
+                <Label htmlFor="firstName">{t("firstNameLabel")}</Label>
+                <Input id='firstName' placeholder="First Name" {...register('FirstName')} />
+            </div>
+            <div className='grid gap-1'>
+                <Label htmlFor="lastName">{t("lastNameLabel")}</Label>
+                <Input id='lastName' placeholder="Last Name"  {...register('LastName')} />
+            </div>
+            <AddressFields
+                register={register}
+                watch={watch}
+                setValue={setValue}
+                clearErrors={clearErrors}
+                errors={errors}
+                userType="person"
+            />
+            <div className="space-y-2">
+                <Label className="text-sm font-medium">{t("profilePhotoLabel")}</Label>
+                <div className="flex items-center gap-4">
+                    <Avatar className="w-16 h-16">
+                        <AvatarImage
+                            src={preview ?? undefined}           
+                            alt="Avatar preview"
+                            onError={() => setPreview(null)}  
+                        />
+                        <AvatarFallback>
+                            {user.firstName?.[0]?.toUpperCase() || '?'}
+                        </AvatarFallback>
+                    </Avatar>
 
-                <input
-                    id='upload-photo'
-                    type="file"
-                    accept="image/*"
-                    className='hidden'
-                    {...register('MainPhoto')}
-                />
-
-                {preview && (
+                    <div className="flex flex-col gap-2">
                     <Button
-                    type="button"
-                    variant="destructive"
-                    onClick={onDeletePhoto}
+                        type="button"
+                        variant="secondary"
+                        onClick={() => document.getElementById('upload-photo')?.click()}
+                        className="w-fit"
                     >
-                    <Trash2 className="w-4 h-4" />
-                        {t("deletePhoto")}
+                        {t("choosePhoto")}
                     </Button>
-                )}
+
+                    <input
+                        id='upload-photo'
+                        type="file"
+                        accept="image/*"
+                        className='hidden'
+                        {...register('MainPhoto')}
+                    />
+
+                    {preview && (
+                        <Button
+                        type="button"
+                        variant="destructive"
+                        onClick={onDeletePhoto}
+                        >
+                        <Trash2 className="w-4 h-4" />
+                            {t("deletePhoto")}
+                        </Button>
+                    )}
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <input type="hidden" {...register('DeleteMainPhoto')} />
+            <input type="hidden" {...register('DeleteMainPhoto')} />
 
-        <Button type="submit" disabled={loading}>
-        {loading ? t("saving") : t("save")}
-        </Button>
-    </form>
-)
+            <Button type="submit" disabled={loading}>
+                {loading ? t("saving") : t("save")}
+            </Button>
+        </form>
+    )
 }

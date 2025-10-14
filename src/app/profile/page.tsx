@@ -72,7 +72,7 @@ export default function ProfilePage() {
       <Card className="max-w-3xl mx-auto p-6 shadow rounded-xl space-y-6 mt-3.5">
         <div className="relative">
           <div className="flex items-center gap-4">
-            <div className={cn("relative group", user.mainPhotoUrl ? "cursor-pointer" : "cursor-auto")} onClick={() => setAvatarToggler(!avatarToggler)}>
+            <div className={cn("relative group", user.mainPhotoUrl ? "cursor-pointer" : "cursor-auto")} onClick={user.mainPhotoUrl ? () => setAvatarToggler(!avatarToggler) : ()=>{return 0}}>
               <Avatar className="w-25 h-25 sm:w-40 sm:h-40 shadow-lg">
                 <AvatarImage src={user.mainPhotoUrl ?? undefined} />
                 <AvatarFallback className="text-4xl">

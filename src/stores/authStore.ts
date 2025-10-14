@@ -38,7 +38,6 @@ export const useAuthStore = create<AuthStore>((set) => ({
         return { twoFactorAuth: true }
       }
 
-      // Если fetchProfile выбросит — мы попадём в catch и вернём { error }
       await useUserStore.getState().fetchProfile()
       set({ isLoggedIn: true })
 
@@ -48,7 +47,6 @@ export const useAuthStore = create<AuthStore>((set) => ({
       console.warn("[authStore] login catch", err)
 
       if (axios.isAxiosError(err)) {
-        // читаем сообщение из тела ответа, если есть
         const message = err.response?.data?.message ?? err.message ?? "Login failed"
         console.log("[authStore] returning error object:", message)
         return { error: message }
@@ -88,16 +86,18 @@ export const useAuthStore = create<AuthStore>((set) => ({
     try {
       await useUserStore.getState().fetchProfile()
       set({ isLoggedIn: true })
-    } catch {
-      // set({ isLoggedIn: false })
-      // useUserStore.getState().setUser(null)
-      try {
-        await useUserStore.getState().fetchProfile()
-        set({ isLoggedIn: true })
-      } catch {
-        set({ isLoggedIn: false })
-        useUserStore.getState().setUser(null)
-      } 
+    } 
+    catch {
+      set({ isLoggedIn: false })
+      useUserStore.getState().setUser(null)
+      // try {
+      //   await useUserStore.getState().fetchProfile()
+      //   set({ isLoggedIn: true })
+      // } 
+      // catch {
+      //   set({ isLoggedIn: false })
+      //   useUserStore.getState().setUser(null)
+      // } 
     } 
     finally{
       set({authLoading: false})

@@ -22,15 +22,13 @@ export const useUserStore = create<UserState>((set) => ({
     fetchProfile: async () => {
         set({userLoading: true})
         try {
-        const res = await axiosUser.get("/Users/get-users-info")
-        const data = res.data
-        const userType: UserType = 'firstName' in data ? 'person' : 'company'
+            const res = await axiosUser.get("/Users/get-users-info")
+            const data = res.data
+            const userType: UserType = 'firstName' in data ? 'person' : 'company'
 
-        set({ user: { ...data, userType }, isLoggedIn: true })
-
-        
+            set({ user: { ...data, userType }, isLoggedIn: true })
         } finally{
-        set({userLoading: false})
+            set({userLoading: false})
         }
     }
 }))

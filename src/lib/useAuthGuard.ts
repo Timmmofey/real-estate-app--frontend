@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import { useUserStore } from '@/stores/userStore'
 
 export function useAuthGuard() {
-  const { checkAuth } = useAuthStore()
+  const { checkAuth, authLoading } = useAuthStore()
   const { user } = useUserStore()
   const router = useRouter()
 
@@ -18,17 +18,21 @@ export function useAuthGuard() {
     const verifyAuth = async () => {
       try {
         await checkAuth()
-
-        if (!useUserStore.getState().user) {
+      } 
+      catch {
+        try {
+          await checkAuth()
+          if (!user && !authLoading) {
+            sendToLogin()
+          }
+        } catch {
           sendToLogin()
         }
-      } catch {
-        sendToLogin()
       }
     }
 
     if (!useUserStore.getState().user) {
       verifyAuth()
     }
-  }, [user, checkAuth, sendToLogin])
+  }, [user, checkAuth, sendToLogin, authLoading])
 }

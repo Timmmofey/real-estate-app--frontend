@@ -13,6 +13,7 @@ import { useAuthStore } from "@/stores/authStore";
 import { DeviceType } from "@/constants/deviceType";
 import { useTypedTranslations } from "@/lib/useTypedTranslations";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 
 type DeviceAndSessionResponceDto = {
     sessionId: string,
@@ -30,6 +31,7 @@ export function DeviceAndActivitySection(){
     const [loading, setLoading] = useState(true)
     const [locale, setLocale] = useState("en-US");
     const [showAllOtherSessions, setShowAllOtherSessions] = useState(false);
+    const router = useRouter()
     const logoutAll = useAuthStore((s) => s.logoutAll)
     const t = useTypedTranslations("deviceAndActivitySection")
     const nt = useTranslations()
@@ -72,7 +74,7 @@ export function DeviceAndActivitySection(){
         }
 
         load()
-    }, [])
+    }, [locale])
 
     function setIcon(deviceType: DeviceType | null | undefined) {
         switch (deviceType) {
@@ -106,6 +108,7 @@ export function DeviceAndActivitySection(){
     async function handleLogoutAllSessions(){
         try{
             logoutAll()
+            router.replace("/login")
         }
         catch{
             toast.error("Failer to logout all sessions")

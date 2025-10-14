@@ -18,7 +18,7 @@ export default function DeleteAccountSection(){
             await axiosUser.delete('/Users/delete-account')
             toast.success(t("succesToast"))
             setUser(null)
-            router.push("/")
+            router.push("/login")
         } catch (err: unknown) {
             if (err instanceof AxiosError) {
                 console.error(err.response?.data || err.message)
@@ -29,7 +29,7 @@ export default function DeleteAccountSection(){
 
     return(
         <AlertDialog>
-            <AlertDialogTrigger >
+            <AlertDialogTrigger>
                 <Button variant={"destructive"} className="flex gap-1 w-full text-xs"> 
                     <OctagonX />
                     {t("deleteAccount")}

@@ -35,10 +35,10 @@ export function AddressFields({ register, watch, setValue, clearErrors, errors, 
       <div className="grid gap-1">
         <Label>{t("countryLabel")}</Label>
         <Select
-          value={country || 'none'}
+          value={country || '__DELETE__'}
           onValueChange={(val) => {
             setValue('Country', val)
-            setValue('Region', '')
+            setValue('Region', '__DELETE__')
             setValue('Settlement', '')
             setValue('ZipCode', '')
             setValue('RegistrationAdress', '')
@@ -54,7 +54,7 @@ export function AddressFields({ register, watch, setValue, clearErrors, errors, 
                 {c.name}
               </SelectItem>
             ))}
-            <SelectItem className='text-muted-foreground' value="none">{t("none")}</SelectItem>
+            <SelectItem className='text-muted-foreground' value="__DELETE__">{t("none")}</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -62,7 +62,7 @@ export function AddressFields({ register, watch, setValue, clearErrors, errors, 
       <div className="grid gap-1">
         <Label>{t("regionLabel")}</Label>
         <Select
-          value={region || 'none'}
+          value={region || '__DELETE__'}
           disabled={!country || !REGIONS_BY_COUNTRY[country]}
           onValueChange={(val) => {
             setValue('Region', val)
@@ -81,7 +81,7 @@ export function AddressFields({ register, watch, setValue, clearErrors, errors, 
                 {r.name}
               </SelectItem>
             ))}
-            <SelectItem className='text-muted-foreground' value='none'>{t("none")}</SelectItem>
+            <SelectItem className='text-muted-foreground' value='__DELETE__'>{t("none")}</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -97,7 +97,7 @@ export function AddressFields({ register, watch, setValue, clearErrors, errors, 
           setValue('RegistrationAdress', '')
         }}
         placeholder={t("settlementPlaceholder")}
-        disabled={region == "none"}
+        disabled={region == "__DELETE__"}
       />
 
       {userType === 'company' && (

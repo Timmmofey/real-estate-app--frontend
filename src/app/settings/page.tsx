@@ -91,7 +91,25 @@ export default function SettingsPage() {
                         </TabsContent>
 
                         <TabsContent value="contacts">
-                            
+                               <div className="flex flex-col sm:flex-row gap-3">
+                                
+                                <ContactCard
+                                    icon={<Mail />}
+                                    label="Email"
+                                    value={user?.email}
+                                    copyText={user?.email}
+                                    onEdit={() => router.push("/changeemail")}
+                                />
+
+                                <ContactCard
+                                    icon={<Phone />}
+                                    label={t("phone")}
+                                    value={user?.phoneNumer}
+                                    copyText={user?.phoneNumer}
+                                    onEdit={() => console.log("Edit phone")}
+                                />
+
+                            </div>
                         </TabsContent>
                     </Tabs>
             </Card>
