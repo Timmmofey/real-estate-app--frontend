@@ -12,6 +12,7 @@ import { AddressFields } from './address-fields'
 import { useTypedTranslations } from '@/lib/useTypedTranslations'
 import { useUserStore } from '@/stores/userStore'
 import { toast } from 'sonner'
+import { Skeleton } from './ui/skeleton'
 
 type FormValues = {
     FirstName: string
@@ -25,44 +26,32 @@ type FormValues = {
 }
 
 export default function EditPersonProfileForm() {
-    const {user, fetchProfile} = useUserStore()
+    const user = useUserStore(state => state.user)
+    const isLoading = useUserStore(state => state.userLoading)
+
     const [preview, setPreview] = useState<string | null>(user!.mainPhotoUrl || null)
-    const [loading, setLoading] = useState(false)
     const t = useTypedTranslations("editPersonProfileForm")
 
-    const { register, handleSubmit, watch, setValue, reset,  clearErrors, formState: { errors } } = useForm<FormValues>({
-    defaultValues: {
-        FirstName: '',
-        LastName: '',
-        Country: '',
-        Region: '',
-        Settlement: '',
-        ZipCode: '',
-        DeleteMainPhoto: false,
-    }
-    })
-
-    useEffect(() => {
-        const loadProfile = async () => {
-          await fetchProfile()
-        }
-        loadProfile()
-      }, [fetchProfile])
-
-    useEffect(() => {
-        if (user && user.userType === 'person') {
-        reset({
-            FirstName: user.firstName,
-            LastName: user.lastName,
-            Country: user.country ?? '',
-            Region: user.region ?? '',
-            Settlement: user.settlement ?? '',
-            ZipCode: user.zipCode ?? '',
+    const { register, handleSubmit, watch, setValue,  clearErrors, formState: { errors } } = useForm<FormValues>({
+        defaultValues: user && user.userType === 'person' ? {
+            FirstName: user.firstName || '',
+                LastName: user.lastName || '',
+                Country: user.country || '',
+                Region: user.region || '',
+                Settlement: user.settlement || '',
+                ZipCode: user.zipCode || '',
+                DeleteMainPhoto: false,
+        } :
+        {
+            FirstName: '',
+            LastName: '',
+            Country: '',
+            Region: '',
+            Settlement: '',
+            ZipCode: '',
             DeleteMainPhoto: false,
-        })
-        setPreview(user.mainPhotoUrl || null)
         }
-    }, [user, reset])
+    })
 
     const mainPhoto = watch('MainPhoto')
 
@@ -107,7 +96,6 @@ export default function EditPersonProfileForm() {
         }
 
         console.log('[form] onSubmit called', { data })
-        setLoading(true)
 
         try {
             console.log('[form] about to call axiosUser.patch /Users/edit-person-profile-main-info')
@@ -115,9 +103,9 @@ export default function EditPersonProfileForm() {
             console.log('[form] axiosUser.patch response:', res && res.status, res && res.data)
             await useUserStore.getState().fetchProfile()
             toast.success(t("successToast"))
-        } catch (err) {
+        } catch (err: unknown) {
             console.error('[form] axiosUser.patch FAILED:', err)
-            // покажем пользователю
+            
             const message =
             err?.response?.data?.message ||
             err?.response?.data?.Message ||
@@ -125,12 +113,22 @@ export default function EditPersonProfileForm() {
             'Request failed'
             toast.error(String(message))
         } finally {
-            setLoading(false)
             console.log('[form] finished, loading=false')
         }
         }
 
+    if (!user || user.userType !== 'person' || isLoading) {
+        return (
+            <div className="space-y-4">
+                <Skeleton className="h-10 w-full" />
+                <Skeleton className="h-10 w-full" />
+                <Skeleton className="h-10 w-full" />
+            </div>
+        )
+    }
 
+
+    console.log("[editForm] rendered")
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-2">
             <div className='grid gap-1'>
@@ -197,8 +195,8 @@ export default function EditPersonProfileForm() {
 
             <input type="hidden" {...register('DeleteMainPhoto')} />
 
-            <Button type="submit" disabled={loading}>
-                {loading ? t("saving") : t("save")}
+            <Button type="submit" disabled={isLoading}>
+                {isLoading ? t("saving") : t("save")}
             </Button>
         </form>
     )
