@@ -10,7 +10,10 @@ interface AuthStore {
   logout: () => void
   logoutAll: () => void
   checkAuth: () => Promise<void>
+  setIsLoggedIn: (state: boolean) => void
 }
+
+
 
 export const useAuthStore = create<AuthStore>((set) => ({
   isLoggedIn: false,
@@ -85,22 +88,23 @@ export const useAuthStore = create<AuthStore>((set) => ({
     set({authLoading: true})
     try {
       await useUserStore.getState().fetchProfile()
-      set({ isLoggedIn: true })
+      const user = useUserStore.getState().user
+      if(user){
+        set({ isLoggedIn: true })
+      }
+      console.log("[checkAuth ok]")
     } 
     catch {
       set({ isLoggedIn: false })
       useUserStore.getState().setUser(null)
-      // try {
-      //   await useUserStore.getState().fetchProfile()
-      //   set({ isLoggedIn: true })
-      // } 
-      // catch {
-      //   set({ isLoggedIn: false })
-      //   useUserStore.getState().setUser(null)
-      // } 
+      console.log("[checkAuth not ok]")
     } 
     finally{
       set({authLoading: false})
     }
+  },
+
+  setIsLoggedIn: (state: boolean) => {
+    set({isLoggedIn: state})
   }
 }))

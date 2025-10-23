@@ -9,20 +9,25 @@ export default function Home() {
   const user = useUserStore(s => s.user);
   const router = useRouter();
   const authLoading = useAuthStore(s => s.authLoading)
-
-  useEffect(() => {    
-    checkAuth();      
-  }, [checkAuth]);
+  const isLoggedIn = useAuthStore(s => s.isLoggedIn)
 
   useEffect(() => {
+    console.log("[/redirect called]")
+    if(!user || !isLoggedIn){
+      checkAuth()
+    }
+  }, []);
+
+  useEffect(() => {
+    console.log("[/redirect called 2]")
     if (!authLoading) {
-      if (user) {
+      if (isLoggedIn) {
         router.replace("/home");
       } else {
         router.replace("/login");
       }
     }
-  }, [authLoading, user, router]);
+  }, [isLoggedIn, authLoading, router]);
 
   return null;
 }
