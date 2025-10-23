@@ -1,9 +1,7 @@
-import axiosUser from "@/lib/axiosUser"
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner"
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "./ui/alert-dialog";
-import { Button } from "./ui/button";
 import { OctagonX } from "lucide-react";
 import { useTypedTranslations } from "@/lib/useTypedTranslations";
 import { useUserStore } from "@/stores/userStore";
@@ -11,14 +9,13 @@ import { useUserStore } from "@/stores/userStore";
 export default function DeleteAccountSection(){
     const router = useRouter();
     const t = useTypedTranslations("deleteAccountSection")
-    const {setUser} = useUserStore()
+    const deleteAccount = useUserStore(state => state.deleteAccount)
     
     const handleDeleteAccount = async () => {
     try {
-            await axiosUser.delete('/Users/delete-account')
+            deleteAccount()
+            router.replace("/login")
             toast.success(t("succesToast"))
-            setUser(null)
-            router.push("/login")
         } catch (err: unknown) {
             if (err instanceof AxiosError) {
                 console.error(err.response?.data || err.message)
@@ -29,11 +26,9 @@ export default function DeleteAccountSection(){
 
     return(
         <AlertDialog>
-            <AlertDialogTrigger>
-                <Button variant={"destructive"} className="flex gap-1 w-full text-xs"> 
-                    <OctagonX />
-                    {t("deleteAccount")}
-                </Button>
+            <AlertDialogTrigger className="items-center justify-center whitespace-nowrap rounded-md font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60 flex gap-1 w-full text-xs h-9 px-4 py-2 has-[>svg]:px-3 ">
+                <OctagonX />
+                {t("deleteAccount")}
             </AlertDialogTrigger>
             <AlertDialogContent>
                 <AlertDialogHeader>
