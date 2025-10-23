@@ -1,13 +1,12 @@
 import type { AxiosInstance } from "axios"
 import axiosAuth from "./axiosAuth";
 
-
 export function createSetupAuthInterceptor() {
   return function setupAuthInterceptor(client: AxiosInstance) {
     let isRefreshing = false
     let failedQueue: Array<{ resolve: () => void; reject: (err: unknown) => void }> = []
 
-    const processQueue = (error = null) => {
+    const processQueue = (error?: unknown) => {
       failedQueue.forEach(p => {
         if (error) p.reject(error)
         else p.resolve()
@@ -51,7 +50,7 @@ export function createSetupAuthInterceptor() {
             return client(originalRequest)
           } catch (err) {
             console.error("[interceptor] refresh failed", err)
-            processQueue()
+            processQueue(err)
             return Promise.reject(err)
           } finally {
             isRefreshing = false

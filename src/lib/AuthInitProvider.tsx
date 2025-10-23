@@ -6,15 +6,14 @@ import { useUserStore } from '@/stores/userStore'
 
 export default function AuthInitProvider() {
   const { checkAuth } = useAuthStore()
-  const { user, fetchProfile } = useUserStore()
+  const { user } = useUserStore()
 
 
   useEffect(() => {
     if (!user) {
         checkAuth()
-        fetchProfile() 
     }
-  }, [checkAuth, fetchProfile, user])
+  }, [checkAuth, user])
 
   return null
 }
