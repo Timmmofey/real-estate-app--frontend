@@ -16,9 +16,12 @@ import { useUserStore } from '@/stores/userStore'
 import { NavLink } from '@/types/navLink'
 
 
+
 const Header: React.FC = () => {
-  const {isLoggedIn} = useAuthStore()
-  const{userLoading} = useUserStore()
+  const isLoggedIn = useAuthStore(state => state.isLoggedIn)
+  const authLoading = useAuthStore(state => state.authLoading)
+  const userLoading = useUserStore(state => state.userLoading)
+
   const t = useTypedTranslations("header");
 
   const ref = useRef<HTMLDivElement>(null)
@@ -29,8 +32,8 @@ const Header: React.FC = () => {
   const [height, setHeight] = useState(0)
   
   const links: NavLink[] = [
-    {name: t("buyPage"), url: '/realestate'},
-    {name: t("rentPage"), url: '/realestate'},
+    {name: t("buyPage"), url: '/test'},
+    {name: t("rentPage"), url: '/test2'},
     {name: t("salePage"), url: '/addlisting'},
     {name: t("listingsPage"), url: '/mylistings'}
   ]
@@ -49,7 +52,7 @@ const Header: React.FC = () => {
 
   useEffect(() => {
     const viewport = document.querySelector("[data-overlayscrollbars-viewport]") as HTMLElement | null
-      if (!viewport) return
+    if (!viewport) return
 
     const handleScroll = () => {
       const currentScroll = viewport.scrollTop
@@ -101,7 +104,7 @@ const Header: React.FC = () => {
            {isLoggedIn ? (
               <UserSidebar/>
             ) : (
-              userLoading ?
+              (userLoading || authLoading) ?
                 <Skeleton className="w-8 h-8 rounded-full self-center"/>
               :
               <div className='flex flex-row gap-3'>
