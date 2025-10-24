@@ -3,8 +3,6 @@ import { Bot, CircleQuestionMark, Monitor, OctagonX, Smartphone, Tablet, Tv } fr
 import { useEffect, useState } from "react";
 import { Skeleton } from "./ui/skeleton";
 import { Separator } from "./ui/separator";
-import { Languages } from "@/constants/languages";
-import Cookies from "js-cookie";
 import { toast } from "sonner";
 import { AlertDialog } from "@radix-ui/react-alert-dialog";
 import { AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "./ui/alert-dialog";
@@ -28,12 +26,12 @@ type DeviceAndSessionResponceDto = {
 export function DeviceAndActivitySection(){
     const [sessions, setSessions] = useState<DeviceAndSessionResponceDto[]>()
     const [loading, setLoading] = useState(true)
-    const [locale, setLocale] = useState("en-US");
     const [showAllOtherSessions, setShowAllOtherSessions] = useState(false);
     const router = useRouter()
     const logoutAll = useAuthStore((s) => s.logoutAll)
     const t = useTypedTranslations("deviceAndActivitySection")
     const nt = useTranslations()
+    const locale = typeof navigator !== "undefined" ? navigator.language : "en-US";
 
     const filteredSessions = sessions
         ?.filter((s) => !s.isCurrentSession)
@@ -58,11 +56,6 @@ export function DeviceAndActivitySection(){
     useEffect(()=>{
         const load = async () => {
             try{
-                const storedLocale = Cookies.get("classified_app_locale") as Languages | undefined;
-                
-                const locale = storedLocale === Languages.EN ? "en-US" : "ru-RU";
-                setLocale(locale);
-
                 const res = await axiosAuth.get("Auth/get-users-sessions")
                 setSessions(res.data)
             } catch{
@@ -73,7 +66,7 @@ export function DeviceAndActivitySection(){
         }
 
         load()
-    }, [locale])
+    }, [])
 
     function setIcon(deviceType: DeviceType | null | undefined) {
         switch (deviceType) {
@@ -108,9 +101,10 @@ export function DeviceAndActivitySection(){
         try{
             logoutAll()
             router.replace("/login")
+            toast.success(t("toastSuccesLogOutAllSessions"))
         }
         catch{
-            toast.error("Failer to logout all sessions")
+            toast.error(t("toastFailedToLogOutAllSessions"))
         }
     }
 

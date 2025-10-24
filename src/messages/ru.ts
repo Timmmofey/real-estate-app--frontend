@@ -114,10 +114,11 @@ export const ru = {
         locations: "Локации",
         logoutAll: "Выйти из всех сессий",
         logoutConfirmTitle: "Вы уверены, что хотите выйти из всех сессий?",
-        logoutConfirmDescription:
-        "Это действие нельзя отменить. Для последующих сессий нужно будет снова войти в систему.",
+        logoutConfirmDescription:"Это действие нельзя отменить. Для последующих сессий нужно будет снова войти в систему.",
         logoutCancel: "Отмена",
-        logoutContinue: "Продолжить"
+        logoutContinue: "Продолжить",
+        toastFailedToLogOutAllSessions: "Не удалось выйти из всех сессий",
+        toastSuccesLogOutAllSessions: "Все сессии успешно закрыты"
     },
     contactCard: {
         clipboard: "добавлен в буфер обмена",

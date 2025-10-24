@@ -1,7 +1,7 @@
 'use client'
 
 import { useAuthStore } from '@/stores/authStore'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
@@ -10,7 +10,7 @@ import { Separator } from '@/components/ui/separator'
 import { Card } from '@/components/ui/card'
 import { Tooltip, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { TooltipContent } from '@radix-ui/react-tooltip'
-import { useAuthGuard } from '@/lib/useAuthGuard'
+import { useAuthGuard } from '@/hooks/useAuthGuard'
 import { Container } from '@/components/container'
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error
@@ -20,21 +20,16 @@ import { cn } from '@/lib/utils'
 import { useTypedTranslations } from '@/lib/useTypedTranslations'
 import {useUserLocationTranslation} from '@/hooks/useUserLocationTranslation'
 import { useUserStore } from '@/stores/userStore'
+import { useProfileLoader } from '@/hooks/useProfileLoader'
 
 export default function ProfilePage() {
   useAuthGuard()
+  useProfileLoader()
   
   const { isLoggedIn, authLoading } = useAuthStore()
-  const { user, fetchProfile, userLoading } = useUserStore()
+  const { user, userLoading } = useUserStore()
   const [avatarToggler, setAvatarToggler] = useState(false)
   const t = useTypedTranslations("profilePage")
-  
-  useEffect(() => {
-    const loadProfile = async () => {
-      await fetchProfile()
-    }
-    loadProfile()
-  }, [fetchProfile])
   
   const {countryName, regionName, translatedSettlement} = useUserLocationTranslation()
   
@@ -118,7 +113,7 @@ export default function ProfilePage() {
           </div>
           <Link href="/editprofile" className='absolute -bottom-3 -right-1 sm:top-1 sm:right-1'>
             <Button variant="ghost" className=" text-muted-foreground">
-                {t("edit")}
+              {t("edit")}
               <PencilLine />
             </Button>
           </Link>

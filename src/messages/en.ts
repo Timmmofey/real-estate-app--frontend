@@ -117,6 +117,8 @@ export const en = {
         logoutConfirmDescription: "This action cannot be undone. For further sessions you will need to log in again.",
         logoutCancel: "Cancel",
         logoutContinue: "Continue",
+        toastFailedToLogOutAllSessions: "Failer to logout all sessions",
+        toastSuccesLogOutAllSessions: "All sessions has been logged out"
     },
     contactCard: {
         clipboard: "copied to clipboard",
