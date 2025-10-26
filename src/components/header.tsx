@@ -24,6 +24,13 @@ const Header: React.FC = () => {
 
   const t = useTypedTranslations("header");
 
+  const links: NavLink[] = [
+    {name: t("buyPage"), url: '/test'},
+    {name: t("rentPage"), url: '/test2'},
+    {name: t("salePage"), url: '/addlisting'},
+    {name: t("listingsPage"), url: '/mylistings'}
+  ]
+  
   const ref = useRef<HTMLDivElement>(null)
 
   const lastScrollRef = useRef(0)
@@ -31,12 +38,6 @@ const Header: React.FC = () => {
   const [offset, setOffset] = useState(0)
   const [height, setHeight] = useState(0)
   
-  const links: NavLink[] = [
-    {name: t("buyPage"), url: '/test'},
-    {name: t("rentPage"), url: '/test2'},
-    {name: t("salePage"), url: '/addlisting'},
-    {name: t("listingsPage"), url: '/mylistings'}
-  ]
 
   useEffect(() => {
     if (!ref.current) return
@@ -79,7 +80,7 @@ const Header: React.FC = () => {
       }}>
       <Container className='h-12 flex  justify-between items-center'>
         <div className=' w-full flex gap-15 items-center'>
-          <MobileMenu links={links} className="sm:hidden"/>
+          <MobileMenu links={links} className="sm:hidden mx-0"/>
           <Link href="/">
             <Image
                 className=''
