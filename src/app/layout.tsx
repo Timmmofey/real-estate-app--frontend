@@ -10,6 +10,7 @@ import {NextIntlClientProvider} from "next-intl"
 import { getLocale, getMessages } from "next-intl/server";
 import ScrollWrapper from "@/components/scroll-wrapper";
 import NextTopLoader from 'nextjs-toploader';
+import LocaleProvider from "@/components/locale-provider";
 
 
 const geistSans = Geist({
@@ -46,16 +47,17 @@ export default async function RootLayout({
             defaultTheme="system"
             enableSystem
             disableTransitionOnChange
-            >
-            <NextTopLoader />
+          >
+            <NextTopLoader showSpinner={false}/>
             <NextIntlClientProvider messages={messages}>
+              <LocaleProvider locale={locale} />
               <AuthInitProvider />
               <Toaster position="top-center" closeButton/>
               <ScrollWrapper className="flex-1 h-full w-full">
                 <div className=" flex flex-col min-h-full">
                   <Header />
                   <main className="flex-1 bg-muted">
-                    {children}
+                      {children}
                   </main>
                   <Footer />
                 </div>

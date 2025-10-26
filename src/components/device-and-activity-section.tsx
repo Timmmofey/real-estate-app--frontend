@@ -1,16 +1,18 @@
-import axiosAuth from "@/lib/axiosAuth";
-import { Bot, CircleQuestionMark, Monitor, OctagonX, Smartphone, Tablet, Tv } from "lucide-react";
-import { useEffect, useState } from "react";
-import { Skeleton } from "./ui/skeleton";
-import { Separator } from "./ui/separator";
-import { toast } from "sonner";
-import { AlertDialog } from "@radix-ui/react-alert-dialog";
-import { AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "./ui/alert-dialog";
-import { useAuthStore } from "@/stores/authStore";
-import { DeviceType } from "@/constants/deviceType";
-import { useTypedTranslations } from "@/lib/useTypedTranslations";
-import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import axiosAuth from "@/lib/axiosAuth"
+import { Bot, CircleQuestionMark, Monitor, OctagonX, Smartphone, Tablet, Tv } from "lucide-react"
+import { useEffect, useState } from "react"
+import { Skeleton } from "./ui/skeleton"
+import { Separator } from "./ui/separator"
+import { toast } from "sonner"
+import { useAuthStore } from "@/stores/authStore"
+import { DeviceType } from "@/constants/deviceType"
+import { useTypedTranslations } from "@/lib/useTypedTranslations"
+import { useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog"
+import { buttonVariants } from "./ui/button"
+import { cn } from "@/lib/utils"
+import { useLocaleStore } from "@/stores/localeStore"
 
 type DeviceAndSessionResponceDto = {
     sessionId: string,
@@ -26,38 +28,19 @@ type DeviceAndSessionResponceDto = {
 export function DeviceAndActivitySection(){
     const [sessions, setSessions] = useState<DeviceAndSessionResponceDto[]>()
     const [loading, setLoading] = useState(true)
-    const [showAllOtherSessions, setShowAllOtherSessions] = useState(false);
+    const [showAllOtherSessions, setShowAllOtherSessions] = useState(false)
     const router = useRouter()
     const logoutAll = useAuthStore((s) => s.logoutAll)
+    const checkAuth = useAuthStore(state => state.checkAuth)
     const t = useTypedTranslations("deviceAndActivitySection")
     const nt = useTranslations()
-    const locale = typeof navigator !== "undefined" ? navigator.language : "en-US";
-
-    const filteredSessions = sessions
-        ?.filter((s) => !s.isCurrentSession)
-        .sort((a, b) => new Date(b.lastActivity).getTime() - new Date(a.lastActivity).getTime());
-
-    const displayedSessions = showAllOtherSessions
-        ? filteredSessions
-        : filteredSessions?.slice(0, 3);
-    
-    const deviceCounts = sessions?.reduce<Record<string, number>>((acc, s) => {
-        const type = s.deviceType ?? "Unknown";
-        acc[type] = (acc[type] || 0) + 1;
-            return acc;
-    }, {}) ?? {};
-
-    const countriesCounts = sessions?.reduce<Record<string, number>>((acc, s) => {
-        const country = s.country ?? "Unknown";
-        acc[country] = (acc[country] || 0) + 1;
-            return acc;
-    }, {}) ?? {};
-
+    const locale = useLocaleStore(state => state.locale)
     useEffect(()=>{
         const load = async () => {
             try{
                 const res = await axiosAuth.get("Auth/get-users-sessions")
                 setSessions(res.data)
+                console.log("[sessions DeviceAndActivitySection]", !!sessions)
             } catch{
 
             } finally{
@@ -67,6 +50,32 @@ export function DeviceAndActivitySection(){
 
         load()
     }, [])
+
+    if (!sessions && !loading){
+        console.log("[sessions DeviceAndActivitySection] checkAuth called")
+        checkAuth()
+        return
+    }
+
+    const filteredSessions = sessions
+        ?.filter((s) => !s.isCurrentSession)
+        .sort((a, b) => new Date(b.lastActivity).getTime() - new Date(a.lastActivity).getTime())
+
+    const displayedSessions = showAllOtherSessions
+        ? filteredSessions
+        : filteredSessions?.slice(0, 3)
+    
+    const deviceCounts = sessions?.reduce<Record<string, number>>((acc, s) => {
+        const type = s.deviceType ?? "Unknown"
+        acc[type] = (acc[type] || 0) + 1
+            return acc
+    }, {}) ?? {}
+
+    const countriesCounts = sessions?.reduce<Record<string, number>>((acc, s) => {
+        const country = s.country ?? "Unknown"
+        acc[country] = (acc[country] || 0) + 1
+            return acc
+    }, {}) ?? {}
 
     function setIcon(deviceType: DeviceType | null | undefined) {
         switch (deviceType) {
@@ -86,7 +95,7 @@ export function DeviceAndActivitySection(){
     }
 
     function formatLastActivity(lastActivity: string) {
-        const date = new Date(lastActivity);
+        const date = new Date(lastActivity)
 
         return new Date(date).toLocaleDateString(locale, {
             year: "numeric",
@@ -94,7 +103,7 @@ export function DeviceAndActivitySection(){
             day: "numeric",
             hour: "2-digit",
             minute: "2-digit",
-        });
+        })
     }
 
     async function handleLogoutAllSessions(){
@@ -141,11 +150,10 @@ export function DeviceAndActivitySection(){
                     {
                         displayedSessions?.length === 0 && <p className="text-sm text-center text-muted-foreground">{t("noOtherSessions")}</p>
                     }
-                    {displayedSessions
-                    ?.map((s) => (
+                    {displayedSessions?.map((s) => (
                         <div
-                        key={s.sessionId}
-                        className="w-full flex items-center gap-4 p-3 border-2 rounded transition"
+                            key={s.sessionId}
+                            className="w-full flex items-center gap-4 p-3 border-2 rounded transition"
                         >
                         <div className="h-6 w-6 flex-shrink-0">{setIcon(s.deviceType)}</div>
                         <div className="flex flex-col flex-grow select-none">
@@ -205,25 +213,40 @@ export function DeviceAndActivitySection(){
                     </div>
 
                     <Separator/>
-                                  
-                    <AlertDialog>
-                        <AlertDialogTrigger className="items-center justify-center whitespace-nowrap rounded-md font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60 flex gap-1 w-full text-xs h-9 px-4 py-2 has-[>svg]:px-3">
+                
+                    <Dialog>
+                        <DialogTrigger
+                            className={cn(
+                                buttonVariants({variant: "destructive"})
+                            )}
+                        >
                             <OctagonX />
                             {t("logoutAll")}
-                        </AlertDialogTrigger>
-                        <AlertDialogContent>
-                            <AlertDialogHeader>
-                            <AlertDialogTitle>{t("logoutConfirmTitle")}</AlertDialogTitle>
-                            <AlertDialogDescription>
+                        </DialogTrigger>
+
+                        <DialogContent>
+                            <DialogHeader>
+                            <DialogTitle>{t("logoutConfirmTitle")}</DialogTitle>
+                            <DialogDescription>
                                 {t("logoutConfirmDescription")}
-                            </AlertDialogDescription>
-                            </AlertDialogHeader>
-                            <AlertDialogFooter>
-                            <AlertDialogCancel>{t("logoutCancel")}</AlertDialogCancel>
-                            <AlertDialogAction onClick={handleLogoutAllSessions}>{t("logoutContinue")}</AlertDialogAction>
-                            </AlertDialogFooter>
-                        </AlertDialogContent>
-                    </AlertDialog>
+                            </DialogDescription>
+                            </DialogHeader>
+
+                            <DialogFooter>
+                            <DialogClose
+                                className={buttonVariants({ variant: "outline" })}
+                            >
+                                {t("logoutCancel")}
+                            </DialogClose>
+                            <DialogClose
+                                onClick={handleLogoutAllSessions}
+                                className={buttonVariants({ variant: "destructive" })}
+                            >
+                                {t("logoutContinue")}
+                            </DialogClose>
+                            </DialogFooter>
+                        </DialogContent>
+                    </Dialog>
                 </div>
             </div>
         </div>
