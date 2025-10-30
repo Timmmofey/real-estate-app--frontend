@@ -133,7 +133,32 @@ export const en = {
         cancelDelete: "Cancel",
         submitDelete: "Delete account"
     },
-
+    twoFactorAuthSection: {
+        currentStatus: "Current status",
+        enabled: "Enabled",
+        disabled: "Disabled",
+        enable: "Enable",
+        disable: "Disable",
+        infoText: "Two-factor authentication (2FA) increases your account security by requiring confirmation via a code sent to your email or phone. Enabling 2FA helps protect your data from unauthorized access.",
+        enableTitle: "Enable 2FA",
+        disableTitle: "Disable 2FA",
+        enableDescription: "You are about to enable two-factor authentication. This will enhance your account's security.",
+        disableDescription: "You are about to disable two-factor authentication. Your account will become less protected.",
+        requestCode: "Request code",
+        requesting: "Requesting...",
+        cancel: "Cancel",
+        codeLabel: "Verification code",
+        enterCodePlaceholder: "Enter the code",
+        confirm: "Confirm",
+        confirming: "Confirming...",
+        back: "Back",
+        codeSentToast: "Code has been sent. Enter it below.",
+        requestErrorToast: "Error requesting code.",
+        emptyCodeToast: "Please enter the code.",
+        enabledSuccessToast: "Two-factor authentication has been enabled.",
+        disabledSuccessToast: "Two-factor authentication has been disabled.",
+        confirmErrorToast: "Error confirming code."
+    },
     /////////////
     //Constants
     /////////////
@@ -274,7 +299,7 @@ export const en = {
         remove: "Remove",
         register: "Register",
         registering: "Registering...",
-
+        
         personRegisteredToast: "Person registered",
         companyRegisteredToast: "Person registered",
         unexpectedErrorToast: "Registration failed"
@@ -331,7 +356,9 @@ export const en = {
         contactInfo: "Contact info",
         devicesAndActivity: "Devices and activity",
         phone: "Phone",
-        edit: "Edit"
+        edit: "Edit",
+        twoFactorAuth: "Two-Factor Authentication",
+        deleteAccount: "Delete account"
     },
     restoreAccountPage: {
         title: "Account Recovery",

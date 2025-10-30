@@ -133,7 +133,32 @@ export const ru = {
         cancelDelete: "Отмена",
         submitDelete: "Удвлить аккаунт"
     },
-    
+    twoFactorAuthSection: {
+        currentStatus: "Текущий статус",
+        enabled: "Включена",
+        disabled: "Отключена",
+        enable: "Включить",
+        disable: "Отключить",
+        infoText: "Двухфакторная аутентификация (2FA) повышает безопасность вашего аккаунта, требуя подтверждение входа через код, отправленный на почту или телефон. Включите 2FA, чтобы защитить данные от несанкционированного доступа.",
+        enableTitle: "Включить 2FA",
+        disableTitle: "Отключить 2FA",
+        enableDescription: "Вы собираетесь включить двухфакторную аутентификацию. Это повысит безопасность вашего аккаунта.",
+        disableDescription: "Вы собираетесь отключить двухфакторную аутентификацию. Ваш аккаунт станет менее защищённым.",
+        requestCode: "Запросить код",
+        requesting: "Запрос...",
+        cancel: "Отмена",
+        codeLabel: "Код подтверждения",
+        enterCodePlaceholder: "Введите код",
+        confirm: "Подтвердить",
+        confirming: "Подтверждение...",
+        back: "Назад",
+        codeSentToast: "Код отправлен. Введите его ниже.",
+        requestErrorToast: "Ошибка при запросе кода.",
+        emptyCodeToast: "Пожалуйста, введите код.",
+        enabledSuccessToast: "Двухфакторная аутентификация включена.",
+        disabledSuccessToast: "Двухфакторная аутентификация отключена.",
+        confirmErrorToast: "Ошибка при подтверждении кода."
+    },
     /////////////
     //Constants
     /////////////
@@ -222,6 +247,7 @@ export const ru = {
     /////////////
     //Pages
     /////////////
+
     homePage : {
         welcome: "Добро пожаловать",
         homeMessage: "Сюда будет добавлен классный контетнет, но позже :)"
@@ -273,13 +299,14 @@ export const ru = {
         remove: "Удалить",
         register: "Зарегистрироваться",
         registering: "Регистрация...",
+        
         personRegisteredToast: "Пользователь зарегистрирован",
         companyRegisteredToast: "Компания заргистрирована",
         unexpectedErrorToast: "Регистрация не удалась"
     },
     changeEmailPage: {
         title: "Смена email",
-        step: "Шаг: {step} из 5",
+        step: "Шаг",
         of: "из",
 
         step1_description: "Мы отправим код подтверждения на ваш текущий email. Введите его на следующем шаге, чтобы подтвердить, что именно вы владелец аккаунта.",
@@ -329,7 +356,9 @@ export const ru = {
         contactInfo: "Контактная информация",
         devicesAndActivity: "Устройства и активность",
         phone: "Телефон",
-        edit: "Изменить"
+        edit: "Изменить",
+        twoFactorAuth: "Двухфакторная аутентификация",
+        deleteAccount: "Удаление аккаунта"
     },
     restoreAccountPage: {
         title: "Восстановление аккаунта",
