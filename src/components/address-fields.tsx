@@ -13,7 +13,8 @@ import {
   UseFormClearErrors,
   UseFormWatch,
 } from 'react-hook-form'
-import { useTypedTranslations } from '@/lib/useTypedTranslations'
+import { useTypedTranslations } from '@/hooks/useTypedTranslations'
+import { useTranslations } from 'next-intl'
 
 type Props = {
   register: UseFormRegister<any>
@@ -29,7 +30,11 @@ export function AddressFields({ register, watch, setValue, clearErrors, errors, 
   const region = watch('Region') ?? ''
   const settlement = watch('Settlement') ?? ''
   const t = useTypedTranslations("addressFields")
+  const nt = useTranslations()
   
+  
+  console.log("[adress field]", country, region, settlement)
+
   return (
     <>
       <div className="grid gap-1">
@@ -51,7 +56,7 @@ export function AddressFields({ register, watch, setValue, clearErrors, errors, 
           <SelectContent>
             {COUNTRIES.map((c) => (
               <SelectItem key={c.code} value={c.code}>
-                {c.name}
+                {nt(`countries.${c.code}`)}
               </SelectItem>
             ))}
             <SelectItem className='text-muted-foreground' value="__DELETE__">{t("none")}</SelectItem>
@@ -78,7 +83,7 @@ export function AddressFields({ register, watch, setValue, clearErrors, errors, 
           <SelectContent>
             {(REGIONS_BY_COUNTRY[country] || []).map((r) => (
               <SelectItem key={r.code} value={r.code}>
-                {r.name}
+                {nt(`regions.${country}.${r.code}`)}
               </SelectItem>
             ))}
             <SelectItem className='text-muted-foreground' value='__DELETE__'>{t("none")}</SelectItem>

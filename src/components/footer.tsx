@@ -1,4 +1,4 @@
-import { useTypedTranslations } from "@/lib/useTypedTranslations";
+import { useTypedTranslations } from "@/hooks/useTypedTranslations";
 
 export default function Footer() {
   const t = useTypedTranslations()

@@ -17,6 +17,7 @@ const nextConfig: NextConfig = {
   images: {
     domains: ['mos.us-south-1.sufybkt.com'],
   },
+  reactStrictMode: false
 };
 
 export default withNextIntl(nextConfig);

@@ -1,8 +1,8 @@
 'use client'
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { useAuthGuard } from '@/lib/useAuthGuard'
-import { useTypedTranslations } from '@/lib/useTypedTranslations'
+import { useAuthGuard } from '@/hooks/useAuthGuard'
+import { useTypedTranslations } from '@/hooks/useTypedTranslations'
 import { useUserStore } from '@/stores/userStore'
 
 
@@ -13,7 +13,7 @@ export default function HomePage() {
     useAuthGuard()
 
     return (
-        <div className="flex h-full items-center justify-center px-4 bg-muted">
+        <div className="flex h-full items-center justify-center px-4 bg-muted mt-5">
             <Card className="w-full max-w-md">
                 <CardHeader>
                 <CardTitle className="text-center text-2xl">

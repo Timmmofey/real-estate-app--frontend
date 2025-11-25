@@ -9,10 +9,11 @@ import axiosUser from '@/lib/axiosUser'
 import { useEffect, useState } from 'react'
 import { Label } from './ui/label'
 import { AddressFields } from './address-fields'
-import { useTypedTranslations } from '@/lib/useTypedTranslations'
+import { useTypedTranslations } from '@/hooks/useTypedTranslations'
 import { useUserStore } from '@/stores/userStore'
 import { toast } from 'sonner'
 import { Skeleton } from './ui/skeleton'
+import axios, { AxiosError } from 'axios'
 
 type FormValues = {
     FirstName: string
@@ -101,13 +102,22 @@ export default function EditPersonProfileForm() {
             await axiosUser.patch('/Users/edit-person-profile-main-info', formData)
             await useUserStore.getState().fetchProfile()
             toast.success(t("successToast"))
-        } catch (err: unknown) {
+        } catch (err) {
             console.error('[form] axiosUser.patch FAILED:', err)
-            const message =
-                err?.response?.data?.message ||
-                err?.response?.data?.Message ||
-                err?.message ||
+
+            let message = 'Request failed'
+
+            if (axios.isAxiosError(err)) {
+                const data = err.response?.data as AxiosError
+
+                message =
+                data?.message ||    
+                err.message ||      
                 'Request failed'
+            } else if (err instanceof Error) {
+                message = err.message
+            }
+
             toast.error(String(message))
         } finally {
             setIsSubmitting(false)
@@ -227,9 +237,7 @@ export default function EditPersonProfileForm() {
 
             <Button type="submit" disabled={isLoading || isSubmitting}>
                 {isSubmitting ? (
-                    <>
-                        {t("saving")}
-                    </>
+                    t("saving")
                 ) : (
                     t("save")
                 )}

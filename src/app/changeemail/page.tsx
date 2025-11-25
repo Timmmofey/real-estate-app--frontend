@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import axiosUser from "@/lib/axiosUser";
-import { useTypedTranslations } from "@/lib/useTypedTranslations";
+import { useTypedTranslations } from "@/hooks/useTypedTranslations";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";

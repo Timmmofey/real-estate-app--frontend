@@ -23,5 +23,5 @@ export function useAuthGuard() {
     verifyAuth()
     }
 
-  }, [])
+  }, [isLoggedIn, checkAuth, router])
 }

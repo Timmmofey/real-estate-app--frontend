@@ -85,7 +85,12 @@ html, body, #__next {
 }
 
 .dark {
-  --background: oklch(0.147 0.004 49.25);
+  /* --background: oklch(0.147 0.004 49.25); */
+  /* --background: oklch(21.857% 0.00885 42.957); */
+  /* --background: oklch(18% 0.00412 49.1); */
+  /* --background: oklch(0.28 0.01 0.44); */
+  /* --background: oklch(23.729% 0.00855 351.438); */
+  --background: oklch(19.849% 0.00374 345.295);
   --foreground: oklch(0.985 0.001 106.423);
   --card: oklch(0.216 0.006 56.043);
   --card-foreground: oklch(0.985 0.001 106.423);
@@ -116,7 +121,7 @@ html, body, #__next {
   --sidebar-accent-foreground: oklch(0.985 0.001 106.423);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.553 0.013 58.071);
-}
+} 
 
 @layer base {
   * {

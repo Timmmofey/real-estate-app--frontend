@@ -11,6 +11,6 @@ export function useTypedTranslations<N extends Namespace | undefined = undefined
 
   return ((key: N extends undefined ? string : KeyOf<N>) => {
     const fullKey = namespace ? `${namespace}.${key}` : key
-    return t(fullKey as any)
+    return t(fullKey as never)
   }) as (key: N extends undefined ? string : KeyOf<N>) => string
 }

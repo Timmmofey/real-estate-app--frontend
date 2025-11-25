@@ -15,7 +15,7 @@ import { useAuthStore } from "@/stores/authStore"
 import { useState } from "react"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
-import { useTypedTranslations } from "@/lib/useTypedTranslations"
+import { useTypedTranslations } from "@/hooks/useTypedTranslations"
 
 export function LoginForm({
   className,
@@ -25,7 +25,7 @@ export function LoginForm({
   const [emailOrPhone, setEmailOrPhone] = useState("")
   const [password, setPassword] = useState("")
   const [loading, setLoading] = useState(false)
-  const router = useRouter();
+  const router = useRouter()
   const t = useTypedTranslations("loginForm")
   
 
@@ -45,39 +45,33 @@ export function LoginForm({
       console.log("[login] login() returned:", res)
 
       if (!res) {
-        toast.error("No response from login")
-        return
-      }
-
-      if ("error" in res) {
-        console.log("[login] server error message:", res.error)
-        toast.error(typeof res.error === "string" ? res.error : t("toastErrorDescription"))
+        toast.error(t("toastNoReasponse"))
         return
       }
 
       if ("restore" in res && res.restore) {
-        toast.info("Аккаунт в режиме восстановления")
+        toast.info(t("toastResorationMode"))
         router.push("/restoreaccount")
         return
       }
 
       if ("twoFactorAuth" in res && res.twoFactorAuth) {
-        toast.info("Необходима двухфакторная аутентификация")
+        toast.info(t("toast2FA"))
         router.push("/twofactorauth")
         return
       }
 
       if ("success" in res && res.success) {
-        toast.success("Logged in successfully!")
+        toast.success(t("toastLoginSuccess"))
         router.push("/home")
         return
       }
 
-      toast.error(t("toastErrorDescription"))
     } catch (err) {
-      // НЕ ре-выбрасываем — просто логируем и показываем тост
-      console.error("[login] handleSubmit unexpected exception:", err)
-      toast.error("Unexpected error")
+      const message = err instanceof Error ? err.message : t("toastErrorDescription")
+    
+      console.log('[login error]', message)
+      toast.error(message)
     } finally {
       setLoading(false)
       console.log("[login] finished, loading set to false")

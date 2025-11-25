@@ -6,7 +6,7 @@ import { Separator } from "./ui/separator"
 import { toast } from "sonner"
 import { useAuthStore } from "@/stores/authStore"
 import { DeviceType } from "@/constants/deviceType"
-import { useTypedTranslations } from "@/lib/useTypedTranslations"
+import { useTypedTranslations } from "@/hooks/useTypedTranslations"
 import { useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog"
@@ -35,6 +35,7 @@ export function DeviceAndActivitySection(){
     const t = useTypedTranslations("deviceAndActivitySection")
     const nt = useTranslations()
     const locale = useLocaleStore(state => state.locale)
+    
     useEffect(()=>{
         const load = async () => {
             try{
@@ -224,7 +225,7 @@ export function DeviceAndActivitySection(){
                             {t("logoutAll")}
                         </DialogTrigger>
 
-                        <DialogContent>
+                        <DialogContent >
                             <DialogHeader>
                             <DialogTitle>{t("logoutConfirmTitle")}</DialogTitle>
                             <DialogDescription>

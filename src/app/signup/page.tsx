@@ -12,7 +12,7 @@ import axiosUser from '@/lib/axiosUser'
 import { toast } from 'sonner'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { AddressFields } from '@/components/address-fields'
-import { useTypedTranslations } from '@/lib/useTypedTranslations'
+import { useTypedTranslations } from '@/hooks/useTypedTranslations'
 import { Card } from '@/components/ui/card'
 import { AxiosError } from 'axios'
 import { UserType } from '@/types/user'
@@ -144,14 +144,17 @@ export default function RegisterUserForm() {
       reset()
       router.push('/login')
     } catch (err: unknown) {
-      let message = 'Unexpected error occurred'
-
+      let message = t("unexpectedErrorToast")
       if (err instanceof AxiosError) {
-        message =
-          (err.response?.data)?.error ||
-          (err.response?.data)?.message ||
-          message
-        console.error(err.response?.data || err.message)
+        const data = err.response?.data
+
+        if (data?.message && typeof data.message === 'object' && 'value' in data.message) {
+          message = data.message.value
+        } else {
+          message = data?.error || data?.message || message
+        }
+
+        console.error(data || err.message)
       } else if (err instanceof Error) {
         message = err.message
         console.error(err)
@@ -159,7 +162,7 @@ export default function RegisterUserForm() {
         console.error(err)
       }
 
-      toast.error(t("unexpectedErrorToast"), { description: message })
+      toast.error( message )
     } finally {
       setLoading(false)
     }

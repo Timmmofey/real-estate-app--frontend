@@ -31,7 +31,11 @@ export const en = {
         signupLink: "Sign up",
         toastSuccess: "Logged in successfully!",
         toastErrorTitle: "Login error",
-        toastErrorDescription: "Check your credentials"
+        toastErrorDescription: "Check your credentials",
+        toast2FA: "Two factor authentication is required",
+        toastLoginSuccess: "Logged in successfully!",
+        toastResorationMode: "Account in resotoration mode",
+        toastNoReasponse: "No response from login"
     },
     editPersonProfileForm: {
         notPersonProfile: "Not a person profile",
@@ -78,6 +82,8 @@ export const en = {
     },
     settlementAutocomplete:{
         settlement: "Settlement",
+        clear: "Clear",
+        chooseFromTheList: "Or choose from the list",
         loading: "Loading...",
         error: "Failed to load settlements",
         noResults: "No settlements found.",
@@ -159,6 +165,25 @@ export const en = {
         disabledSuccessToast: "Two-factor authentication has been disabled.",
         confirmErrorToast: "Error confirming code."
     },
+    changePasswordSection: {
+        changePasswordTitle: "Change password",
+        changePassword: "Change password",
+        changePasswordHint: "Use a strong password and don't share it with anyone.",
+        oldPasswordLabel: "Current password",
+        oldPasswordPlaceholder: "Enter your current password",
+        newPasswordLabel: "New password",
+        newPasswordPlaceholder: "Enter a new password",
+        confirmPasswordLabel: "Confirm new password",
+        confirmPasswordPlaceholder: "Repeat new password",
+        cancel: "Cancel",
+        changing: "Changing...",
+        successToast: "Password has been changed successfully",
+        errorToast: "Error while changing password",
+        emptyFieldsToast: "Please fill in all fields",
+        passwordMismatchToast: "Passwords do not match",
+        forgotPassword: "Forgot password"
+    },
+
     /////////////
     //Constants
     /////////////
@@ -358,7 +383,8 @@ export const en = {
         phone: "Phone",
         edit: "Edit",
         twoFactorAuth: "Two-Factor Authentication",
-        deleteAccount: "Delete account"
+        deleteAccount: "Delete account",
+        changePassword: "Change password"
     },
     restoreAccountPage: {
         title: "Account Recovery",

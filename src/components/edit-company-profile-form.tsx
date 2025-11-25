@@ -10,7 +10,7 @@ import axiosUser from '@/lib/axiosUser'
 import { useEffect, useState } from 'react'
 import { Label } from './ui/label'
 import { AddressFields } from './address-fields'
-import { useTypedTranslations } from '@/lib/useTypedTranslations'
+import { useTypedTranslations } from '@/hooks/useTypedTranslations'
 import { useUserStore } from '@/stores/userStore'
 
 interface FormValues  {

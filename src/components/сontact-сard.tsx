@@ -3,7 +3,7 @@ import { Copy, PencilLine } from "lucide-react"
 import { toast } from "sonner"
 import { ReactNode } from "react"
 import { Skeleton } from "./ui/skeleton"
-import { useTypedTranslations } from "@/lib/useTypedTranslations"
+import { useTypedTranslations } from "@/hooks/useTypedTranslations"
 
 type ContactCardProps = {
   icon: ReactNode

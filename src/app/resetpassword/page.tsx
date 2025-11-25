@@ -7,12 +7,15 @@ import { Label } from '@/components/ui/label'
 import { toast } from 'sonner'
 import axiosUser from '@/lib/axiosUser'
 import { useRouter } from 'next/navigation'
-import { useTypedTranslations } from '@/lib/useTypedTranslations'
+import { useTypedTranslations } from '@/hooks/useTypedTranslations'
 import { AxiosError } from 'axios'
+import { useUserStore } from '@/stores/userStore'
 
 export default function ResetPasswordPage() {
+  const user = useUserStore(state => state.user)
+
   const [step, setStep] = useState<1 | 2 | 3>(1)
-  const [email, setEmail] = useState('')
+  const [email, setEmail] = useState(user?.email ?? "")
   const [code, setCode] = useState('')
   const [newPassword, setNewPassword] = useState('')
   const [loading, setLoading] = useState(false)

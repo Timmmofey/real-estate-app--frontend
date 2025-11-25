@@ -11,7 +11,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { useTypedTranslations } from "@/lib/useTypedTranslations"
+import { useTypedTranslations } from "@/hooks/useTypedTranslations"
 
 export function ModeSelect() {
   const { setTheme } = useTheme()

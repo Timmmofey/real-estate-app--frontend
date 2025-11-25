@@ -1,37 +1,37 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import Header from "@/components/header";
+import type { Metadata } from "next"
+import { Geist, Geist_Mono } from "next/font/google"
+import "./globals.css"
+import Header from "@/components/header"
 import { Toaster } from 'sonner'
-import AuthInitProvider from "@/lib/AuthInitProvider";
-import Footer from "@/components/footer";
+import Footer from "@/components/footer"
 import { ThemeProvider } from "@/components/theme-provider"
 import {NextIntlClientProvider} from "next-intl"
-import { getLocale, getMessages } from "next-intl/server";
-import ScrollWrapper from "@/components/scroll-wrapper";
-import NextTopLoader from 'nextjs-toploader';
-import LocaleProvider from "@/components/locale-provider";
+import { getLocale, getMessages } from "next-intl/server"
+import ScrollWrapper from "@/components/scroll-wrapper"
+import NextTopLoader from 'nextjs-toploader'
+import LocaleProvider from "@/components/locale-provider"
+import AuthInitProvider from "@/components/auth-init-provider"
 
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
-});
+})
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
-});
+})
 
 export const metadata: Metadata = {
   title: "Classified",
   description: "Real estate app in development",
-};
+}
 
 export default async function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   const messages = await getMessages()
   const locale = await getLocale()
@@ -66,5 +66,5 @@ export default async function RootLayout({
           </ThemeProvider>
       </body>
     </html>
-  );
+  )
 }

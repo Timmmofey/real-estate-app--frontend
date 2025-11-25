@@ -26,7 +26,7 @@ import { useRouter } from 'next/navigation'
 import { Separator } from "@/components/ui/separator"
 import { useMediaQuery } from "react-responsive"
 import { useUserLocationTranslation } from '@/hooks/useUserLocationTranslation'
-import { useTypedTranslations } from '@/lib/useTypedTranslations'
+import { useTypedTranslations } from '@/hooks/useTypedTranslations'
 import { LocaleSelect } from './language-select'
 import { ModeSelect } from './mode-select'
 import { useUserStore } from '@/stores/userStore'
@@ -164,7 +164,6 @@ export default function UserSidebar({className}: UserSidebarProps) {
             <ModeSelect/>
           </div>
 
-          {/* Logout button fixed to bottom */}
           <div className="pt-4 border-t mt-6">
             <Button
               variant="ghost"

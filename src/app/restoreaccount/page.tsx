@@ -1,21 +1,24 @@
 "use client"
 import axiosUser from "@/lib/axiosUser"
-import { useTypedTranslations } from "@/lib/useTypedTranslations"
+import { useTypedTranslations } from "@/hooks/useTypedTranslations"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog"
+import { useRouter } from "next/navigation"
 
 export default function RestoreAccountPage() {
     const t = useTypedTranslations("restoreAccountPage")
     const [loading, setLoading] = useState(false)
     const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false)
+    const router = useRouter()
 
     const handleRestoreAccount = async () => {
         setLoading(true)
         try {
             await axiosUser.post("/Users/restore-deleted-account")
             toast.success(t("restoreSuccess"))
+            router.replace("/login")
         } catch (err) {
             console.error(err)
             toast.error(t("restoreError"))
@@ -29,6 +32,7 @@ export default function RestoreAccountPage() {
         try {
             await axiosUser.post("/Users/permanantly-delete-account")
             toast.success(t("deleteSuccess"))
+            router.replace("/login")
         } catch (err) {
             console.error(err)
             toast.error(t("deleteError"))

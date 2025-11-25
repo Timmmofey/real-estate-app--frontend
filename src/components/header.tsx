@@ -9,7 +9,7 @@ import UserSidebar from './user-sidebar'
 import { ModeSelect } from './mode-select'
 import { Button } from './ui/button'
 import { LocaleSelect } from './language-select'
-import { useTypedTranslations } from '@/lib/useTypedTranslations'
+import { useTypedTranslations } from '@/hooks/useTypedTranslations'
 import { MobileMenu } from './mobile-menu'
 import { Skeleton } from './ui/skeleton'
 import { useUserStore } from '@/stores/userStore'
@@ -22,7 +22,7 @@ const Header: React.FC = () => {
   const authLoading = useAuthStore(state => state.authLoading)
   const userLoading = useUserStore(state => state.userLoading)
 
-  const t = useTypedTranslations("header");
+  const t = useTypedTranslations("header")
 
   const links: NavLink[] = [
     {name: t("buyPage"), url: '/test'},
@@ -81,7 +81,7 @@ const Header: React.FC = () => {
       <Container className='h-12 flex  justify-between items-center'>
         <div className=' w-full flex gap-15 items-center'>
           <MobileMenu links={links} className="sm:hidden mx-0"/>
-          <Link href="/">
+          <Link href={isLoggedIn ? "/home" : "/login"  }>
             <Image
                 className=''
                 width={30}

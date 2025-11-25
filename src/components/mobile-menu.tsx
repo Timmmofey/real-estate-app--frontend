@@ -16,7 +16,7 @@ import { Separator } from "@/components/ui/separator"
 import { NavLink } from '@/types/navLink'
 import { LocaleSelect } from './language-select'
 import { ModeSelect } from './mode-select'
-import { useTypedTranslations } from '@/lib/useTypedTranslations'
+import { useTypedTranslations } from '@/hooks/useTypedTranslations'
 import { Container } from './container'
 
 type Props = {
@@ -37,7 +37,7 @@ export  function MobileMenu({links, className }: Props) {
                     Panel for accessing user profile and settings
                 </SheetDescription>
                 </SheetHeader>
-            <SheetTrigger asChild>
+            <SheetTrigger  asChild>
                 <Menu/>
             </SheetTrigger>
 

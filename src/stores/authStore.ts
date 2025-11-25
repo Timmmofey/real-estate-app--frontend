@@ -50,12 +50,15 @@ export const useAuthStore = create<AuthStore>((set) => ({
       console.warn("[authStore] login catch", err)
 
       if (axios.isAxiosError(err)) {
-        const message = err.response?.data?.message ?? err.message ?? "Login failed"
-        console.log("[authStore] returning error object:", message)
-        return { error: message }
+        const errorMessage = err.response?.data?.message?.value;
+        
+        const message = errorMessage || err.message || "Login failed";
+        
+        console.log("[authStore] throwing error with message:", message)
+        throw new Error(message)
       }
 
-      return { error: "Unexpected error" }
+      throw new Error("Unexpected error")
     } finally {
       set({ authLoading: false })
       console.log("[authStore] authLoading false (finally)")
@@ -76,12 +79,11 @@ export const useAuthStore = create<AuthStore>((set) => ({
   logoutAll: async () => {
     try {
       await axiosAuth.post("/Auth/logout-all")
+      set({ isLoggedIn: false })
+      useUserStore.getState().setUser(null)
     } catch (err) {
       console.warn("Logout failed or already invalidated", err)
     }
-
-    set({ isLoggedIn: false })
-    useUserStore.getState().setUser(null)
   },
 
   checkAuth: async () => {
@@ -91,6 +93,8 @@ export const useAuthStore = create<AuthStore>((set) => ({
       const user = useUserStore.getState().user
       if(user){
         set({ isLoggedIn: true })
+      } else{
+        set({ isLoggedIn: false })
       }
       console.log("[checkAuth ok]")
     } 

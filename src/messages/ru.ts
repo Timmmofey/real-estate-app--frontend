@@ -31,7 +31,11 @@ export const ru = {
         signupLink: "Зарегистрироваться",
         toastSuccess: "Вы успешно вошли!",
         toastErrorTitle: "Ошибка входа",
-        toastErrorDescription: "Проверьте правильность данных"
+        toastErrorDescription: "Проверьте правильность данных",
+        toast2FA: "Необходима двухфакторная аутентификация",
+        toastLoginSuccess: "Добро пожаловать!",
+        toastResorationMode: "Аккаунт в режиме восстановления",
+        toastNoReasponse: "Нет ответа от сервиса входа"
     }, 
     editPersonProfileForm: {
         notPersonProfile: "Не профиль пользователя",
@@ -78,6 +82,8 @@ export const ru = {
     },
     settlementAutocomplete:{
         settlement: "Населённый пункт",
+        clear: "Очистить",
+        chooseFromTheList: "Или выберете из списка",
         loading: "Загрузка...",
         error: "Не удалось загрузить список",
         noResults: "Населённых пунктов не найдено",
@@ -127,7 +133,7 @@ export const ru = {
     deleteAccountSection: {
         succesToast: "Аккаунт успешно удален",
         errorToast: "Возникла ошибка при удалении аккаунта",
-        deleteAccount: "Удвлить аккаунт",
+        deleteAccount: "Удалить аккаунт",
         deleteAccountConfirmTitle: "Вы уверены что хотите удалить аккаунт?",
         deleteAccountConfirmDescription: "Ваш аккаунт будет полность удален через 6 месяцев без возможности восстановления, чтобы восстановить или полностью удалить аккаунт войдите в него через форму лоигна.",
         cancelDelete: "Отмена",
@@ -159,6 +165,25 @@ export const ru = {
         disabledSuccessToast: "Двухфакторная аутентификация отключена.",
         confirmErrorToast: "Ошибка при подтверждении кода."
     },
+    changePasswordSection: {
+        changePasswordTitle: "Смена пароля",
+        changePassword: "Сменить пароль",
+        changePasswordHint: "Используйте надёжный пароль и не сообщайте его другим.",
+        oldPasswordLabel: "Текущий пароль",
+        oldPasswordPlaceholder: "Введите текущий пароль",
+        newPasswordLabel: "Новый пароль",
+        newPasswordPlaceholder: "Введите новый пароль",
+        confirmPasswordLabel: "Подтвердите новый пароль",
+        confirmPasswordPlaceholder: "Повторите новый пароль",
+        cancel: "Отмена",
+        changing: "Смена...",
+        successToast: "Пароль успешно изменён",
+        errorToast: "Ошибка при смене пароля",
+        emptyFieldsToast: "Пожалуйста, заполните все поля",
+        passwordMismatchToast: "Пароли не совпадают",
+        forgotPassword: "Не помню пароль"
+    },
+
     /////////////
     //Constants
     /////////////
@@ -358,7 +383,8 @@ export const ru = {
         phone: "Телефон",
         edit: "Изменить",
         twoFactorAuth: "Двухфакторная аутентификация",
-        deleteAccount: "Удаление аккаунта"
+        deleteAccount: "Удаление аккаунта",
+        changePassword: "Изменить пароль"
     },
     restoreAccountPage: {
         title: "Восстановление аккаунта",

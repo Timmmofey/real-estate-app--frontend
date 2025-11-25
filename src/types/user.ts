@@ -1,9 +1,10 @@
 export type UserType = "person" | "company"
 
 export interface BaseProfile {
-  email: string,
-  phoneNumer: string,
+  email: string
+  phoneNumer: string
   isVerified: boolean
+  isTwoFactorEnabled: boolean
   country?: string
   region?: string
   settlement?: string
