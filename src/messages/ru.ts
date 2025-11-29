@@ -12,7 +12,7 @@ export const ru = {
         rentPage: "Аренда",
         salePage: "Продажа",
         listingsPage: "Мои объявления",
-        signInUp: "Вход/Регистрация"
+        signInUp: "Войти"
     },
     footer: {
         allRightsReserved: "Все права защищены"

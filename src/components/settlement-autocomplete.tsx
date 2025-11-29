@@ -9,6 +9,7 @@ import { useTypedTranslations } from '@/hooks/useTypedTranslations'
 import { useLocaleStore } from '@/stores/localeStore'
 import { BrushCleaning } from 'lucide-react'
 import { SettlementDto } from '@/types/settlementDto'
+import { Separator } from './ui/separator'
 
 type Option = {
   label: string
@@ -58,6 +59,24 @@ export function SettlementAutocomplete({
   
   useEffect(() => {
     const v = normalize(value)
+    committedValueRef.current = v
+
+    const match = options.find(o => o.value === v)
+    if (match) {
+      setInput(match.label)
+    } else {
+      setInput(v)
+    }
+
+    if (!v) {
+      setOpen(false)
+      setOptions([])
+      setHighlighted(-1)
+    }
+  }, [value])
+
+  useEffect(() => {
+    const v = normalize(value)
 
     if (locale == "en" ) return
 
@@ -70,15 +89,13 @@ export function SettlementAutocomplete({
     if (initLocaleDoneRef.current) return
     initLocaleDoneRef.current = true
 
-    let cancelled = false
 
     const loadInitialLabel = async () => {
       try {
         const { data } = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_GEO_SERVICE_URL}/Geo/suggestsettlements?query=${v}&countryCode=${country}&regionCode=${region}`
+          `${process.env.NEXT_PUBLIC_API_GEO_SERVICE_URL}/Geo/suggestsettlements?query=${v}&countryCode=${country}&regionCode=${region}&type=city`
         )
 
-        if (cancelled) return
 
         const r: SettlementDto | undefined = data?.[0]
         if (!r) return
@@ -118,10 +135,6 @@ export function SettlementAutocomplete({
 
     loadInitialLabel()
 
-    return () => {
-      cancelled = true
-    }
-
   }, [])
 
 
@@ -156,14 +169,14 @@ export function SettlementAutocomplete({
     const fetchSettlements = async () => {
       setLoading(true)
       setError(null)
-      try {
-        const {data} = await axios.get(`${process.env.NEXT_PUBLIC_API_GEO_SERVICE_URL}/Geo/suggestsettlements?query=${debouncedInput}&countryCode=${country}&regionCode=${region}`)
-        
-        if (cancelled) return
+      
+      if (cancelled || !region) return
 
+      try {
+        const {data} = await axios.get(`${process.env.NEXT_PUBLIC_API_GEO_SERVICE_URL}/Geo/suggestsettlements?query=${debouncedInput}&countryCode=${country}&regionCode=${region}&type=city`)
         
         console.log(data)
-        const results = data ?? [];
+        const results = data ?? []
         console.log(results)
 
         const mapped: Option[] = results.map((r: SettlementDto, i: number) => {
@@ -190,7 +203,7 @@ export function SettlementAutocomplete({
           setError(t('error'))
         }
       } finally {
-        if (!cancelled) setLoading(false)
+        setLoading(false)
       }
     }
 
@@ -211,7 +224,6 @@ export function SettlementAutocomplete({
     document.addEventListener('mousedown', onDocClick)
     return () => document.removeEventListener('mousedown', onDocClick)
   }, [])
-
 
   useEffect(() => {
     if (!open) {
@@ -325,7 +337,28 @@ export function SettlementAutocomplete({
           {error && <div className="p-2 text-center text-sm text-red-600">{error}</div>}
 
           {!loading && !error && options.length === 0 && (
-            <div className="p-2 text-sm text-center text-muted-foreground">{t('noResults')}</div>
+            <div>
+              {input.length > 0 && 
+              <div>
+                <div
+                  key="__clear__"
+                  role="option"
+                  aria-selected={false}
+                  onMouseDown={(e) => {
+                    e.preventDefault()
+                    selectOption(null)
+                  }}
+                  className="flex gap-3 cursor-pointer px-3 py-2 text-sm text-destructive hover:bg-secondary"
+                >
+                  <BrushCleaning />
+                  {t("clear")}
+                </div>
+                <Separator/>
+              </div>
+              }
+              <div className="p-2 text-sm text-center text-muted-foreground">{t('noResults')}</div>
+            </div>
+            
           )}
 
           {!loading && !error && options.length > 0 && (
@@ -358,7 +391,10 @@ export function SettlementAutocomplete({
                     onMouseEnter={() => setHighlighted(idx)}
                     className={`cursor-pointer px-3 py-2 text-sm ${isHighlighted ? 'bg-secondary' : ''}`}
                   >
-                    <div className="font-medium text-sm">{opt.label}</div>
+                    <div className='flex gap-1.5'>
+                      <div className="font-medium text-sm">{opt.label}</div>
+                      {opt.label != opt.value && <div className="text-sm text-muted-foreground"> ({opt.value})</div>}
+                    </div>
                     <div className="text-xs text-muted-foreground">{opt.formatted}</div>
                   </li>
                 )

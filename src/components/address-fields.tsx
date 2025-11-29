@@ -50,16 +50,16 @@ export function AddressFields({ register, watch, setValue, clearErrors, errors, 
             clearErrors?.(['Region', 'Settlement', 'ZipCode'])
           }}
         >
-          <SelectTrigger className="w-full">
+          <SelectTrigger className="w-full text-lg sm:text-sm">
             <SelectValue placeholder="Country" />
           </SelectTrigger>
           <SelectContent>
             {COUNTRIES.map((c) => (
-              <SelectItem key={c.code} value={c.code}>
+              <SelectItem key={c.code} value={c.code} className='text-lg sm:text-sm'>
                 {nt(`countries.${c.code}`)}
               </SelectItem>
             ))}
-            <SelectItem className='text-muted-foreground' value="__DELETE__">{t("none")}</SelectItem>
+            <SelectItem className='text-muted-foreground text-lg sm:text-sm' value="__DELETE__">{t("none")}</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -77,16 +77,27 @@ export function AddressFields({ register, watch, setValue, clearErrors, errors, 
             clearErrors?.(['Settlement', 'ZipCode'])
           }}
         >
-          <SelectTrigger className="w-full">
+          <SelectTrigger className="w-full text-lg sm:text-sm">
             <SelectValue placeholder={t("regionPlaceholder")} />
           </SelectTrigger>
           <SelectContent>
-            {(REGIONS_BY_COUNTRY[country] || []).map((r) => (
-              <SelectItem key={r.code} value={r.code}>
+            <SelectItem className='text-muted-foreground text-lg sm:text-sm' value='__DELETE__'>{t("none")}</SelectItem>
+            {/* {(REGIONS_BY_COUNTRY[country] || []).map((r) => (
+              <SelectItem key={r.code} value={r.code} className='text-lg sm:text-sm'>
                 {nt(`regions.${country}.${r.code}`)}
               </SelectItem>
-            ))}
-            <SelectItem className='text-muted-foreground' value='__DELETE__'>{t("none")}</SelectItem>
+            ))} */}
+            {(REGIONS_BY_COUNTRY[country] || [])
+              .sort((a, b) =>
+                nt(`regions.${country}.${a.code}`).localeCompare(
+                  nt(`regions.${country}.${b.code}`)
+                )
+              )
+              .map((r) => (
+                <SelectItem key={r.code} value={r.code} className='text-lg sm:text-sm'>
+                  {nt(`regions.${country}.${r.code}`)}
+                </SelectItem>
+              ))}
           </SelectContent>
         </Select>
       </div>

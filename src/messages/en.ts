@@ -12,7 +12,7 @@ export const en = {
         rentPage: "Rent",
         salePage: "Sale",
         listingsPage: "My listings",
-        signInUp: "Sign in/up"
+        signInUp: "Sign in"
     },
     footer: {
         allRightsReserved: "All rights reserved"
