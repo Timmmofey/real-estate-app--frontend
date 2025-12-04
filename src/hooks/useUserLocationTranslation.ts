@@ -4,6 +4,7 @@ import { useMemo } from 'react'
 import { useAutoTranslate } from '@/hooks/useAutoTranslate'
 import { useUserStore } from '@/stores/userStore'
 import { useTranslations, useLocale } from 'next-intl'
+import { Languages } from '@/constants/languages'
 
 export function useUserLocationTranslation() {
   const nt = useTranslations()
@@ -36,8 +37,11 @@ export function useUserLocationTranslation() {
 
   const { translated: translatedSettlement, loading: settlementLoading } = useAutoTranslate(
     user?.settlement ?? null,
-    locale ?? null
+    locale ?? null,
+    locale === Languages.EN
   )
+
+  console.log(`doNotTranslate = ${locale === Languages.EN}`)
 
   return useMemo(() => ({
     countryName: countryName || user?.country || '',

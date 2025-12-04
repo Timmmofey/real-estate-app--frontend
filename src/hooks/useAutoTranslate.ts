@@ -3,15 +3,26 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
 
-export function useAutoTranslate(text?: string | null, targetLang: string = "en") {
+export function useAutoTranslate(text?: string | null, targetLang: string = "en", doNotTranslate: boolean = false) {
   const [translated, setTranslated] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     if (!text) {
-      // setTranslated(null)
       return
+    }
+
+    if (!text || doNotTranslate) {
+      setTranslated(text || null)
+      setLoading(false)
+      return
+    }
+
+    if (doNotTranslate) {
+      setTranslated(text)
+      setLoading(false)
+      return 
     }
 
     let cancelled = false
@@ -22,21 +33,18 @@ export function useAutoTranslate(text?: string | null, targetLang: string = "en"
 
       try {
         const { data } = await axios.get(
-          "https://translate.googleapis.com/translate_a/single",
+          "http://localhost:5229/api/Translation/translate",
           {
-            params: {
-              client: "gtx",
-              sl: "auto",
-              tl: targetLang,
-              dt: "t",
-              q: text,
-            },
+            params:{
+              text: text,
+              targetLanguage: targetLang
+            }
           }
         )
         console.log("Api called")
 
         if (!cancelled) {
-          setTranslated(data[0][0][0])
+          setTranslated(data)
         }
       } catch (e) {
         if (!cancelled) {
