@@ -461,9 +461,9 @@ export function SettlementAutocomplete({
   const t = useTypedTranslations('settlementAutocomplete')
   
   const lastQueryRef = useRef<string | null>(null)
-  const initLocaleDoneRef = useRef(false)
   
   const committedValueRef = useRef<string>(normalize(value))
+  const committedLabelRef = useRef<string>('')
   const selectionMadeRef = useRef(false) 
   
   useEffect(() => {
@@ -483,69 +483,6 @@ export function SettlementAutocomplete({
       setHighlighted(-1)
     }
   }, [value])
-
-  useEffect(() => {
-    const v = normalize(value)
-
-    if (locale == "en" ) return
-
-    if (!v) {
-      setInput('')
-      return
-    }
-
-    // защита от двойного вызова в React Strict Mode
-    if (initLocaleDoneRef.current) return
-    initLocaleDoneRef.current = true
-
-
-    const loadInitialLabel = async () => {
-      try {
-        const { data } = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_GEO_SERVICE_URL}/Geo/suggestsettlements?query=${v}&countryCode=${country}&regionCode=${region}&type=city`
-        )
-
-
-        const r: SettlementDto | undefined = data?.[0]
-        if (!r) return
-
-        const englishName = r.settlement || v
-
-        let localizedLabel = englishName
-        let formatted = r.displayName || englishName
-
-        if (locale !== 'en') {
-          localizedLabel =
-            r.other_Settlement_Names[locale] ||
-            r.other_Settlement_Names[locale.split('-')[0]] ||
-            englishName
-
-          formatted =
-            r.other_DisplayName_Names[locale] ||
-            r.other_DisplayName_Names[locale.split('-')[0]] ||
-            formatted
-        }
-
-        setInput(localizedLabel)
-
-        setOptions([
-          {
-            label: localizedLabel,
-            value: englishName,
-            formatted,
-          },
-        ])
-
-        committedValueRef.current = englishName
-      } catch (e) {
-        console.error(e)
-      }
-    }
-
-    loadInitialLabel()
-
-  }, [])
-
 
   useEffect(() => {
     if (disabled) {
@@ -642,13 +579,78 @@ export function SettlementAutocomplete({
         return
       }
 
-      // откатываем к committedValueRef (ищем метку в options, иначе показываем само значение)
       const committed = committedValueRef.current
+
+      // 1) пробуем найти перевод в options
       const match = options.find(o => o.value === committed)
-      const label = match ? match.label : committed
+
+      // 2) если options пуст — используем сохранённую локализованную метку
+      const label =
+        match?.label ||
+        committedLabelRef.current ||
+        committed
+
       setInput(label)
     }
   }, [open, options])
+
+  useEffect(() => {
+    const committed = committedValueRef.current
+    if (!committed) {
+      setInput('')
+      committedLabelRef.current = ''
+      return
+    }
+
+    // если текущий locale = en — просто показываем английское название
+    if (locale === 'en') {
+      setInput(committed)
+      committedLabelRef.current = committed
+      return
+    }
+
+    // пробуем найти перевод в options (если dropdown открыт или был загружен)
+    const match = options.find(o => o.value === committed)
+    if (match) {
+      setInput(match.label)
+      committedLabelRef.current = match.label
+      return
+    }
+
+    // иначе — подгружаем перевод с API
+    const loadTranslatedLabel = async () => {
+      try {
+        const { data } = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_GEO_SERVICE_URL}/Geo/suggestsettlements`,
+          {
+            params: {
+              query: committed,
+              countryCode: country,
+              regionCode: region,
+              type: 'city',
+            },
+          }
+        )
+
+        const r: SettlementDto | undefined = data?.[0]
+        if (!r) return
+
+        const englishName = r.settlement || committed
+
+        const localizedLabel =
+          r.other_Settlement_Names[locale] ||
+          r.other_Settlement_Names[locale.split('-')[0]] ||
+          englishName
+
+        setInput(localizedLabel)
+        committedLabelRef.current = localizedLabel
+      } catch (e) {
+        console.error(e)
+      }
+    }
+
+    loadTranslatedLabel()
+  }, [locale])
 
 
   const selectOption = (opt: Option | null) => {
@@ -656,8 +658,8 @@ export function SettlementAutocomplete({
 
     if (opt === null) {
       committedValueRef.current = ''
+      committedLabelRef.current = ''
       setInput('')
-      // оставляем options пустым
       setOptions([])
       setHighlighted(-1)
       onChange('')
@@ -666,6 +668,7 @@ export function SettlementAutocomplete({
     }
 
     committedValueRef.current = opt.value
+    committedLabelRef.current = opt.label
     setInput(opt.label)
 
     // важно: сохраняем выбранную опцию, чтобы эффект по value смог найти соответствие
