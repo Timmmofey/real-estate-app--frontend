@@ -1,5 +1,5 @@
 import axiosUser from "@/lib/axiosUser"
-import { UserProfile, UserType } from "@/types/user"
+import { UserProfile, UserRole } from "@/types/user"
 import axios from "axios"
 import { create } from "zustand"
 import { useAuthStore } from "./authStore"
@@ -35,8 +35,8 @@ export const useUserStore = create<UserState>((set) => ({
         try {
             const res = await axiosUser.get("/Users/get-users-info")
             const data = res.data
-            const userType: UserType = 'firstName' in data ? 'person' : 'company'
-            set({ user: { ...data, userType }})
+            const userRole: UserRole = 'firstName' in data ? 'Person' : 'Company'
+            set({ user: { ...data, userRole }})
         } catch (err) {
             if (axios.isAxiosError(err) && err.response?.status === 401) {
                 set({ user: null})

@@ -1,4 +1,4 @@
-export type UserType = "person" | "company"
+export type UserRole = "Person" | "Company"
 
 export interface BaseProfile {
   email: string
@@ -13,13 +13,13 @@ export interface BaseProfile {
 }
 
 export interface PersonProfile extends BaseProfile {
-  userType: "person"
+  userRole: "Person"
   firstName: string
   lastName: string
 }
 
 export interface CompanyProfile extends BaseProfile {
-  userType: "company"
+  userRole: "Company"
   name: string
   registrationAdress?: string
   сompanyRegistrationNumber?: string

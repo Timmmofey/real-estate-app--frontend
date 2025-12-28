@@ -35,7 +35,7 @@ export default function EditPersonProfileForm() {
     const t = useTypedTranslations("editPersonProfileForm")
 
     const { register, handleSubmit, watch, setValue, clearErrors, formState: { errors } } = useForm<FormValues>({
-        defaultValues: user && user.userType === 'person' ? {
+        defaultValues: user && user.userRole === 'Person' ? {
             FirstName: user.firstName || '',
             LastName: user.lastName || '',
             Country: user.country || '',
@@ -65,7 +65,7 @@ export default function EditPersonProfileForm() {
         }
     }, [mainPhoto, setValue])
 
-    if (!user || user.userType !== 'person') {
+    if (!user || user.userRole !== 'Person') {
         return <p>Not a person profile</p>
     }
 
@@ -124,7 +124,7 @@ export default function EditPersonProfileForm() {
         }
     }
 
-    if (!isSubmitting && (!user || user.userType !== 'person' || isLoading)) {
+    if (!isSubmitting && (!user || user.userRole !== 'Person' || isLoading)) {
         return (
             <div className="space-y-4">
                 <div className='grid gap-1'>
@@ -184,7 +184,7 @@ export default function EditPersonProfileForm() {
                 setValue={setValue}
                 clearErrors={clearErrors}
                 errors={errors}
-                userType="person"
+                userRole="Person"
             />
 
             <div className="space-y-2">

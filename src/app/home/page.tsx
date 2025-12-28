@@ -17,7 +17,7 @@ export default function HomePage() {
             <Card className="w-full max-w-md">
                 <CardHeader>
                 <CardTitle className="text-center text-2xl">
-                    {t('welcome')}, {user?.userType === 'person'
+                    {t('welcome')}, {user?.userRole === 'Person'
                     ? `${user.firstName} ${user.lastName}`
                     : user?.name || 'User'}
                 </CardTitle>

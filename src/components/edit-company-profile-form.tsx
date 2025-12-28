@@ -49,7 +49,7 @@ export default function EditCompanyProfileForm() {
   })
 
   useEffect(() => {
-        if (user && user.userType === 'company') {
+        if (user && user.userRole === 'Company') {
         reset({
             Name: user.name,
             Country: user.country,
@@ -76,7 +76,7 @@ export default function EditCompanyProfileForm() {
     }
   }, [mainPhoto, setValue])
 
-  if (!user || user.userType !== 'company') {
+  if (!user || user.userRole !== 'Company') {
     return <p>Not a company profile</p>
   }
 
@@ -125,7 +125,7 @@ export default function EditCompanyProfileForm() {
           setValue={setValue}
           clearErrors={clearErrors}
           errors={errors}
-          userType="company"
+          userRole="Company"
       />
       {/* <div className="grid gap-1">
         <Label htmlFor="registrationAdress">{t("registrationAddressLabel")}</Label>

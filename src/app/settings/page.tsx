@@ -52,7 +52,7 @@ export default function SettingsPage() {
                     <TabsContent value="account">
                         <h2 className="text-lg font-semibold mb-5">{t("profileInfo")}</h2>
 
-                        {user?.userType === "person" ? (
+                        {user?.userRole === "Person" ? (
                             <EditPersonProfileForm />
                         ) : (
                             <EditCompanyProfileForm />

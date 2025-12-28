@@ -44,9 +44,9 @@ export function useUserLocationTranslation() {
   console.log(`doNotTranslate = ${locale === Languages.EN}`)
 
   return useMemo(() => ({
-    countryName: countryName || user?.country || '',
-    regionName: regionName || user?.region || '',
-    translatedSettlement: translatedSettlement || user?.settlement || '',
+    countryName: user?.country ? countryName : '',
+    regionName: user?.region ? regionName : '',
+    translatedSettlement: user?.settlement ? translatedSettlement : '',
     settlementLoading,
   }), [countryName, regionName, translatedSettlement, settlementLoading, user?.country, user?.region, user?.settlement])
 }

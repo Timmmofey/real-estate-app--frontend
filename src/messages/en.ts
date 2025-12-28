@@ -124,7 +124,7 @@ export const en = {
         logoutCancel: "Cancel",
         logoutContinue: "Continue",
         toastFailedToLogOutAllSessions: "Failer to logout all sessions",
-        toastSuccesLogOutAllSessions: "All sessions has been logged out"
+        toastSuccesLogOutAllSessions: "All sessions have been logged out"
     },
     contactCard: {
         clipboard: "copied to clipboard",
@@ -335,9 +335,9 @@ export const en = {
         of: "of",
 
         step1_description: "We will send a confirmation code to your current email. Enter it in the next step to confirm that you are the account owner.",
-        step1_button: "Send code to old email",
+        step1_button: "Send code to current email",
 
-        step2_description: "Enter the code that was sent to your old email. This is required to confirm that you have access to it.",
+        step2_description: "Enter the code that was sent to your current email. This is required to confirm that you have access to it.",
         step2_label: "Confirmation code",
         step2_button: "Confirm",
         step2_button_loading: "Checking...",
@@ -355,11 +355,11 @@ export const en = {
         step5_description: "All checks are complete. Now you can finish changing your email.",
         step5_button: "Complete email change",
 
-        step1_success: "Code sent to your old email",
-        step1_error: "Failed to send code to old email",
+        step1_success: "Code sent to your current email",
+        step1_error: "Failed to send code to current email",
 
-        step2_success: "Old email confirmed",
-        step2_error: "Invalid code for old email",
+        step2_success: "Current email confirmed",
+        step2_error: "Invalid code for current email",
 
         step3_success: "Code sent to your new email",
         step3_error: "Failed to send code to new email",

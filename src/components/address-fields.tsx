@@ -15,6 +15,7 @@ import {
 } from 'react-hook-form'
 import { useTypedTranslations } from '@/hooks/useTypedTranslations'
 import { useTranslations } from 'next-intl'
+import { UserRole } from '@/types/user'
 
 type Props = {
   register: UseFormRegister<any>
@@ -22,10 +23,10 @@ type Props = {
   setValue: UseFormSetValue<any>
   clearErrors?: UseFormClearErrors<any>
   errors?: FieldErrors
-  userType?: 'person' | 'company'
+  userRole?: UserRole
 }
 
-export function AddressFields({ register, watch, setValue, clearErrors, errors, userType }: Props) {
+export function AddressFields({ register, watch, setValue, clearErrors, errors, userRole }: Props) {
   const country = watch('Country') ?? ''
   const region = watch('Region') ?? ''
   const settlement = watch('Settlement') ?? ''
@@ -50,7 +51,7 @@ export function AddressFields({ register, watch, setValue, clearErrors, errors, 
             clearErrors?.(['Region', 'Settlement', 'ZipCode'])
           }}
         >
-          <SelectTrigger className="w-full text-lg sm:text-sm">
+          <SelectTrigger className="w-full text-md sm:text-sm">
             <SelectValue placeholder="Country" />
           </SelectTrigger>
           <SelectContent>
@@ -77,16 +78,11 @@ export function AddressFields({ register, watch, setValue, clearErrors, errors, 
             clearErrors?.(['Settlement', 'ZipCode'])
           }}
         >
-          <SelectTrigger className="w-full text-lg sm:text-sm">
+          <SelectTrigger className="w-full text-md sm:text-sm">
             <SelectValue placeholder={t("regionPlaceholder")} />
           </SelectTrigger>
           <SelectContent>
             <SelectItem className='text-muted-foreground text-lg sm:text-sm' value='__DELETE__'>{t("none")}</SelectItem>
-            {/* {(REGIONS_BY_COUNTRY[country] || []).map((r) => (
-              <SelectItem key={r.code} value={r.code} className='text-lg sm:text-sm'>
-                {nt(`regions.${country}.${r.code}`)}
-              </SelectItem>
-            ))} */}
             {(REGIONS_BY_COUNTRY[country] || [])
               .sort((a, b) =>
                 nt(`regions.${country}.${a.code}`).localeCompare(
@@ -113,10 +109,10 @@ export function AddressFields({ register, watch, setValue, clearErrors, errors, 
           setValue('RegistrationAdress', '')
         }}
         placeholder={t("settlementPlaceholder")}
-        disabled={region == "__DELETE__"}
+        disabled={region == "__DELETE__" || region == ""}
       />
 
-      {userType === 'company' && (
+      {userRole === 'Company' && (
         <div className="grid gap-1">
           <Label> {t("streetLabel")}</Label>
           <Input disabled={!settlement} placeholder={t("streetPlaceholder")} {...register('RegistrationAdress', { required: true })} />
@@ -129,7 +125,7 @@ export function AddressFields({ register, watch, setValue, clearErrors, errors, 
           disabled={!settlement}
           placeholder={t("zipPlaceholder")}
           {...register('ZipCode', {
-            required: userType === 'company' ? 'Required' : false,
+            required: userRole === 'Company' ? 'Required' : false,
             validate: (val) => {
               if (!val) return true
               if (!country) return true

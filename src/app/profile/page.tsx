@@ -71,7 +71,7 @@ export default function ProfilePage() {
               <Avatar className="w-25 h-25 sm:w-40 sm:h-40 shadow-lg">
                 <AvatarImage src={user.mainPhotoUrl ?? undefined} />
                 <AvatarFallback className="text-4xl">
-                  {user.userType === 'person'
+                  {user.userRole === 'Person'
                     ? user.firstName[0]?.toUpperCase()
                     : user.name[0]?.toUpperCase()}
                 </AvatarFallback>
@@ -83,7 +83,7 @@ export default function ProfilePage() {
 
             <div className='flex flex-col'>
               <div className='flex'>
-                {user.userType === 'person' ? (
+                {user.userRole === 'Person' ? (
                   <h1 className="text-xl sm:text-2xl font-bold flex">
                     {user.firstName} {user.lastName} 
                   </h1>
@@ -99,7 +99,7 @@ export default function ProfilePage() {
                         <Check className="translate-y-1 translate-x-1.5 cursor-pointer" />
                       </TooltipTrigger>
                         <TooltipContent side="top">
-                          <p>{user.userType === "person" ? t("verifiedUser") : t("verifiedCompany")}</p>
+                          <p>{user.userRole === "Person" ? t("verifiedUser") : t("verifiedCompany")}</p>
                         </TooltipContent>
                     </Tooltip>
                   </TooltipProvider>

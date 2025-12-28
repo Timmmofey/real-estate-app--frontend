@@ -23,7 +23,7 @@ export default function EditProfilePage() {
     <Container>
       <Card className="max-w-xl mx-auto p-6 space-y-6 my-3">
         <h1 className="text-2xl font-semibold">{t("title")}</h1>
-        {user.userType === "person" ? (
+        {user.userRole === "Person" ? (
           <EditPersonProfileForm />
         ) : (
           <EditCompanyProfileForm />

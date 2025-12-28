@@ -78,6 +78,23 @@ export function LoginForm({
     }
   }
 
+  const handleGoogleLogin = () => {
+  if (loading) return
+
+  setLoading(true)
+
+  const authBaseUrl = process.env.NEXT_PUBLIC_API_AUTH_SERVICE_URL
+
+  if (!authBaseUrl) {
+    toast.error("Auth service URL is not configured")
+    setLoading(false)
+    return
+  }
+
+  // ВАЖНО: обычный redirect, не axios
+  window.location.href = `${authBaseUrl}/auth/google`
+}
+
 
 
   return (
@@ -125,7 +142,7 @@ export function LoginForm({
                 <Button type="submit" className="w-full" disabled={loading}>
                   {loading ? t("loginButtonLoading") : t("loginButton")}
                 </Button>
-                <Button variant="outline" className="w-full" disabled={loading}>
+                <Button onClick={handleGoogleLogin} variant="outline" className="w-full" disabled={loading}>
                   {t("loginGoogle")}
                 </Button>
               </div>

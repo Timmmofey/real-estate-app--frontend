@@ -12,14 +12,14 @@ import { toast } from "sonner";
 export default function ChangeEmailPage(){
     const [step, setStep] = useState<1 | 2 | 3 | 4 | 5>(1)
     const [loading, setLoading] = useState<boolean>(false)
-    const [oldEmailCofirmationCode, setOldEmailCofirmationCode] = useState<string>("")
+    const [currentEmailCofirmationCode, setCurrentEmailCofirmationCode] = useState<string>("")
     const [newEmail, setNewEmail] = useState<string>("")
     const [newEmailCofirmationCode, setNewEmailCofirmationCode] = useState<string>("")
     const router = useRouter();
     
     const t = useTypedTranslations("changeEmailPage")
     
-    const handleSetResetCodeToOldEmail= async (e: React.FormEvent) => {
+    const handleSendResetCodeToCurrnetEmail= async (e: React.FormEvent) => {
         e.preventDefault()
         setLoading(true)
         try {
@@ -36,11 +36,11 @@ export default function ChangeEmailPage(){
         }
     }
 
-    const handleConfirmOldEmail= async (e: React.FormEvent) => {
+    const handleConfirmCurrentEmail= async (e: React.FormEvent) => {
         e.preventDefault()
         setLoading(true)
         try {
-            await axiosUser.post('/Users/confirm-current-email', {verificationCode: oldEmailCofirmationCode})
+            await axiosUser.post('/Users/confirm-current-email', {verificationCode: currentEmailCofirmationCode})
             toast.success(t("step2_success"))
             setStep(3)
         } catch (err: unknown) {
@@ -110,7 +110,7 @@ export default function ChangeEmailPage(){
             <p>{t("step")}: {step} {t("of")} 5</p>
 
             {step === 1 && (
-                <form onSubmit={handleSetResetCodeToOldEmail} className="space-y-4">
+                <form onSubmit={handleSendResetCodeToCurrnetEmail} className="space-y-4">
                     <p className="text-sm text-muted-foreground">
                         {t("step1_description")}
                     </p>
@@ -121,7 +121,7 @@ export default function ChangeEmailPage(){
             )}
 
             {step === 2 && (
-                <form onSubmit={handleConfirmOldEmail} className="space-y-4">
+                <form onSubmit={handleConfirmCurrentEmail} className="space-y-4">
                     <p className="text-sm text-muted-foreground">
                         {t("step2_description")}
                     </p>
@@ -129,8 +129,8 @@ export default function ChangeEmailPage(){
                         <Label>{t("step2_label")}</Label>
                         <Input
                             type="text"
-                            value={oldEmailCofirmationCode}
-                            onChange={(e) => setOldEmailCofirmationCode(e.target.value)}
+                            value={currentEmailCofirmationCode}
+                            onChange={(e) => setCurrentEmailCofirmationCode(e.target.value)}
                             required
                         />
                     </div>

@@ -66,12 +66,12 @@ export default function UserSidebar({className}: UserSidebarProps) {
             <Avatar>
               <AvatarImage
                 src={user?.mainPhotoUrl}
-                alt={user?.userType === "person"
+                alt={user?.userRole === "Person"
                   ? `${user.firstName} ${user.lastName}`
                   : user?.name || "User"}
               />
               <AvatarFallback>
-                {user?.userType === "person"
+                {user?.userRole === "Person"
                   ? `${user.firstName?.[0] ?? "?"}${user.lastName?.[0] ?? ""}`
                   : user?.name?.[0] ?? "?"}
               </AvatarFallback>
@@ -92,14 +92,14 @@ export default function UserSidebar({className}: UserSidebarProps) {
                   <Avatar className="w-14 h-14">
                     <AvatarImage src={user.mainPhotoUrl} alt="User avatar" />
                     <AvatarFallback>
-                      {user.userType === 'person'
+                      {user.userRole === 'Person'
                         ? `${user.firstName?.[0]}${user.lastName?.[0]}`
                         : user.name?.[0]}
                     </AvatarFallback>
                   </Avatar>
                   <div className='pt-1.5'>
                     <p className="font-semibold text-lg leading-tight">
-                      {user.userType === 'person'
+                      {user.userRole === 'Person'
                         ? `${user.firstName} ${user.lastName}`
                         : user.name}
                     </p>
