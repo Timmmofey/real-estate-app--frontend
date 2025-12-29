@@ -109,7 +109,7 @@ export function AddressFields({ register, watch, setValue, clearErrors, errors, 
           setValue('RegistrationAdress', '')
         }}
         placeholder={t("settlementPlaceholder")}
-        disabled={region == "__DELETE__" || region == ""}
+        disabled={region == "__DELETE__" || region == "" || region == null}
       />
 
       {userRole === 'Company' && (

@@ -470,6 +470,7 @@ export function SettlementAutocomplete({
     const v = normalize(value)
     committedValueRef.current = v
 
+
     const match = options.find(o => o.value === v)
     if (match) {
       setInput(match.label)
@@ -480,6 +481,7 @@ export function SettlementAutocomplete({
     if (!v) {
       setOpen(false)
       setOptions([])
+      committedLabelRef.current = ""
       setHighlighted(-1)
     }
   }, [value])

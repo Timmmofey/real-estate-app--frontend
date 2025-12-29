@@ -30,7 +30,7 @@ export default function RestoreAccountPage() {
     const handleCompletelyDeleteAccount = async () => {
         setLoading(true)
         try {
-            await axiosUser.post("/Users/permanantly-delete-account")
+            await axiosUser.delete("/Users/permanantly-delete-account", { withCredentials: true })
             toast.success(t("deleteSuccess"))
             router.replace("/login")
         } catch (err) {

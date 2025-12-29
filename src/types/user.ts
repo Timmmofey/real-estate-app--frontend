@@ -5,6 +5,7 @@ export interface BaseProfile {
   phoneNumer: string
   isVerified: boolean
   isTwoFactorEnabled: boolean
+  isOAuthOnly: boolean
   country?: string
   region?: string
   settlement?: string

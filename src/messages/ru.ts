@@ -183,6 +183,10 @@ export const ru = {
         passwordMismatchToast: "Пароли не совпадают",
         forgotPassword: "Не помню пароль"
     },
+    createPasswordSection: {
+        createPasswordHint: "Вы можете добавить дополнительный способ входа через пароль, создав его",
+        createPassword: "Создать пароль"
+    },
 
     /////////////
     //Constants
@@ -277,8 +281,10 @@ export const ru = {
         welcome: "Добро пожаловать",
         homeMessage: "Сюда будет добавлен классный контетнет, но позже :)"
     },
-    resetPasswordPage: {
-        title: "Сброс пароля",
+    setPasswordMultiStepFormwordPage: {
+        resetPasswordTitle: "Сброс пароля",
+        createPasswordTitle: "Создание пароля",
+        sendVerificationCodeHint: "Для подтверждения владения аккаунтом на вашу почту будет отправлен верификационный код",
         emailLabel: "Эл. почта",
         sendButton: "Отправить код",
         sendButtonLoading: "Отправка...",
@@ -294,7 +300,9 @@ export const ru = {
         toastVerifySuccess: "Код подтверждён",
         toastVerifyError: "Не удалось подтвердить код",
         toastResetSuccess: "Пароль успешно сброшен!",
+        toastCreationSuccess: "Пароль успешно создан!",
         toastResetError: "Не удалось сбросить пароль",
+        toastCreationError: "Не удалось создать пароль",
     },
     profilePage:{
         notAuthorized: "Вы не авторизованы",
@@ -384,7 +392,8 @@ export const ru = {
         edit: "Изменить",
         twoFactorAuth: "Двухфакторная аутентификация",
         deleteAccount: "Удаление аккаунта",
-        changePassword: "Изменить пароль"
+        changePassword: "Изменить пароль",
+        createPassword: "Создать пароль"
     },
     restoreAccountPage: {
         title: "Восстановление аккаунта",

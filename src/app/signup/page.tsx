@@ -482,7 +482,7 @@ export default function RegisterUserForm() {
           className="flex gap-2"
         >
           <ToggleGroupItem value="Person">{t("person")}</ToggleGroupItem>
-          <ToggleGroupItem value="company">{t("company")}</ToggleGroupItem>
+          <ToggleGroupItem value="Company">{t("company")}</ToggleGroupItem>
         </ToggleGroup>
 
         {/* Shared Fields */}

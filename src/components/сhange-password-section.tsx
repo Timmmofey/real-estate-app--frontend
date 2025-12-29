@@ -68,15 +68,11 @@ export default function ChangePasswordSection() {
   return (
     <>
       <div className="flex items-center justify-between gap-5 max-w-lg">
-        <div>
           <p className="text-xs text-muted-foreground">{t("changePasswordHint")}</p>
-        </div>
 
-        <div>
           <Button onClick={openModal} className="min-w-[140px]">
             {t("changePassword")}
           </Button>
-        </div>
       </div>
 
       <Dialog open={open} onOpenChange={setOpen}>

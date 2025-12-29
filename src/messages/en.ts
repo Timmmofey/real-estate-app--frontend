@@ -183,6 +183,10 @@ export const en = {
         passwordMismatchToast: "Passwords do not match",
         forgotPassword: "Forgot password"
     },
+    createPasswordSection: {
+        createPasswordHint: "You can create additional way to sign in via password",
+        createPassword: "Create password"
+    },
 
     /////////////
     //Constants
@@ -277,10 +281,12 @@ export const en = {
         welcome: "Welcome",
         homeMessage: "Some very cool features that will be created here but later :)"
     },  
-    resetPasswordPage: {
-        title: "Reset Password",
+    setPasswordMultiStepFormwordPage: {
+        resetPasswordTitle: "Reset Password",
+        createPasswordTitle: "Create Password",
+        sendVerificationCodeHint: "To cofirm you are the account owner verification code will be sent to your email",
         emailLabel: "Email",
-        sendButton: "Send Reset Code",
+        sendButton: "Send Verification Code",
         sendButtonLoading: "Sending...",
         codeLabel: "Verification Code",
         codeDescription: "Enter the verification code sent to your email.",
@@ -294,7 +300,9 @@ export const en = {
         toastVerifySuccess: "Verification successful",
         toastVerifyError: "Failed to verify code",
         toastResetSuccess: "Password reset successfully!",
+        toastCreationSuccess: "Password created successfully!",
         toastResetError: "Failed to reset password",
+        toastCreationError: "Failed to create password",
     },
     profilePage:{
         notAuthorized: "You are not authorized",
@@ -384,7 +392,8 @@ export const en = {
         edit: "Edit",
         twoFactorAuth: "Two-Factor Authentication",
         deleteAccount: "Delete account",
-        changePassword: "Change password"
+        changePassword: "Change password",
+        createPassword: "Create password"
     },
     restoreAccountPage: {
         title: "Account Recovery",

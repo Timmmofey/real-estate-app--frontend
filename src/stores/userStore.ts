@@ -33,7 +33,7 @@ export const useUserStore = create<UserState>((set) => ({
     currentFetchProfile = (async () => {
         set({ userLoading: true })
         try {
-            const res = await axiosUser.get("/Users/get-users-info")
+            const res = await axiosUser.get("/Users/get-current-user-info")
             const data = res.data
             const userRole: UserRole = 'firstName' in data ? 'Person' : 'Company'
             set({ user: { ...data, userRole }})

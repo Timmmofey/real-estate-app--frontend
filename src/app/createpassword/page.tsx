@@ -5,6 +5,6 @@ export default function ResetPasswordPage() {
   
 
   return (
-    <SetPasswordMultiStepForm formType='ResetPassword'/>
+    <SetPasswordMultiStepForm formType='CreatePassword'/>
   )
 }

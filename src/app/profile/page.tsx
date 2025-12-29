@@ -33,6 +33,7 @@ export default function ProfilePage() {
   
   const {countryName, regionName, translatedSettlement} = useUserLocationTranslation()
   
+  console.log(user)
   if (userLoading || !user) {
     return (
       <Container>

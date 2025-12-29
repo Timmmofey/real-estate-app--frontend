@@ -18,6 +18,7 @@ import { useTypedTranslations } from "@/hooks/useTypedTranslations"
 import DeleteAccountSection from "@/components/delete-account-section"
 import TwoFactorAuthSection from "@/components/two-factor-auth-section"
 import ChangePasswordSection from "@/components/сhange-password-section"
+import CreatePasswordSection from "@/components/create-password-section"
 
 
 
@@ -120,11 +121,9 @@ export default function SettingsPage() {
                     <TabsContent value="security">
                         <div className="flex items-center gap-2 mb-5">
                             <RotateCcwKey className="h-5 w-5" />
-                            <h2 className="text-lg font-semibold">{t("changePassword")}</h2>
+                            <h2 className="text-lg font-semibold">{user.isOAuthOnly ? t("createPassword") : t("changePassword")}</h2>
                         </div>
-
-                        <ChangePasswordSection />
-
+                            { user.isOAuthOnly ? <CreatePasswordSection /> : <ChangePasswordSection /> }
                         <Separator className="my-7"/>
 
                         <div className="flex items-center gap-2 mb-5">

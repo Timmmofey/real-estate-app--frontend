@@ -39,7 +39,7 @@ export function DeviceAndActivitySection(){
     useEffect(()=>{
         const load = async () => {
             try{
-                const res = await axiosAuth.get("Auth/get-users-sessions")
+                const res = await axiosAuth.get("Auth/get-current-user-sessions")
                 setSessions(res.data)
                 console.log("[sessions DeviceAndActivitySection]", !!sessions)
             } catch{
