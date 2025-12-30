@@ -188,29 +188,29 @@ export const en = {
         createPassword: "Create password"
     },
     oAuthSection: {
-      loadError: "Failed to load OAuth accounts",
-      authServiceUrlNotConfigured: "Auth service URL is not configured",
-      linkError: "Failed to link account",
+        loadError: "Failed to load OAuth accounts",
+        authServiceUrlNotConfigured: "Auth service URL is not configured",
+        linkError: "Failed to link account",
 
-      connectWithGoogle: "Connect with Google",
-      connectWithApple: "Connect with Apple",
+        connectWithGoogle: "Connect with Google",
+        connectWithApple: "Connect with Apple",
 
-      disconnectGoogle: "Disconnect Google",
-      disconnectApple: "Disconnect Apple",
+        disconnectGoogle: "Disconnect Google",
+        disconnectApple: "Disconnect Apple",
 
-      disconnectGoogleTitle: "Disconnect Google account?",
-      disconnectAppleTitle: "Disconnect Apple account?",
+        disconnectGoogleTitle: "Disconnect Google account?",
+        disconnectAppleTitle: "Disconnect Apple account?",
 
-      disconnectGoogleDescription: "Are you sure you want to disconnect your Google account?",
-      disconnectAppleDescription: "Are you sure you want to disconnect your Apple account?",
+        disconnectGoogleDescription: "Are you sure you want to disconnect your Google account?",
+        disconnectAppleDescription: "Are you sure you want to disconnect your Apple account?",
 
-      connectedGoogleDescription: "Your Google account is connected. You can login your account via Google",
-      connectGoogleDescription: "Connect your Google account to simplify login in the future.",
+        connectedGoogleDescription: "Your Google account is connected. You can login your account via Google",
+        connectGoogleDescription: "Connect your Google account to simplify login in the future.",
 
-      connectedAppleDescription: "Your Apple account is connected.",
-      connectAppleDescription: "Connect your Apple account to simplify login in the future.",
+        connectedAppleDescription: "Your Apple account is connected.",
+        connectAppleDescription: "Connect your Apple account to simplify login in the future.",
 
-      cancel: "Cancel"
+        cancel: "Cancel"
     },
 
     /////////////
@@ -302,6 +302,9 @@ export const en = {
     //Pages
     /////////////
 
+    logInPage: {
+        thisGoogleAccountEmailIsAlredyConnected: "To link this Google account you need to login with it`s email via password" 
+    },
     homePage: {
         welcome: "Welcome",
         homeMessage: "Some very cool features that will be created here but later :)"
@@ -360,7 +363,8 @@ export const en = {
         
         personRegisteredToast: "Person registered",
         companyRegisteredToast: "Person registered",
-        unexpectedErrorToast: "Registration failed"
+        unexpectedErrorToast: "Registration failed",
+
     },
     changeEmailPage: {
         title: "Change Email",
@@ -418,7 +422,16 @@ export const en = {
         twoFactorAuth: "Two-Factor Authentication",
         deleteAccount: "Delete account",
         changePassword: "Change password",
-        createPassword: "Create password"
+        createPassword: "Create password",
+        externalAuthMethods: "External Auth Methods",
+
+        toastGoogleAccountConnectedSuccessfully: "Google account connected suceesfully!",
+        toastGoogleAccountConnectedToOtherUser: "This Google account is connected to other user",
+
+        toastAppleAccountConnectedSuccessfully: "Apple account connected suceesfully!",
+        toastAppleAccountConnectedToOtherUser: "This Apple account is connected to other user",
+
+        toastUnkownError: "Uknown error occured",
     },
     restoreAccountPage: {
         title: "Account Recovery",
@@ -435,7 +448,7 @@ export const en = {
         deleteLoading: "Deleting...",
         deleteSuccess: "Account successfully deleted",
         deleteError: "Failed to delete account",
-        cancel: "Cancel"
+        cancel: "External login methods"
     },
     twoFactorAuthPage: {
       title: "Two factor authentication",

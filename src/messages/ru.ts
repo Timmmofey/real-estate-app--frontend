@@ -188,29 +188,29 @@ export const ru = {
         createPassword: "Создать пароль"
     },
     oAuthSection: {
-      loadError: "Не удалось загрузить OAuth аккаунты",
-      authServiceUrlNotConfigured: "URL сервиса аутентификации не настроен",
-      linkError: "Не удалось подключить аккаунт",
+        loadError: "Не удалось загрузить OAuth аккаунты",
+        authServiceUrlNotConfigured: "URL сервиса аутентификации не настроен",
+        linkError: "Не удалось подключить аккаунт",
 
-      connectWithGoogle: "Подключить Google",
-      connectWithApple: "Подключить Apple",
+        connectWithGoogle: "Подключить Google",
+        connectWithApple: "Подключить Apple",
 
-      disconnectGoogle: "Отключить Google",
-      disconnectApple: "Отключить Apple",
+        disconnectGoogle: "Отключить Google",
+        disconnectApple: "Отключить Apple",
 
-      disconnectGoogleTitle: "Отключить аккаунт Google?",
-      disconnectAppleTitle: "Отключить аккаунт Apple?",
+        disconnectGoogleTitle: "Отключить аккаунт Google?",
+        disconnectAppleTitle: "Отключить аккаунт Apple?",
 
-      disconnectGoogleDescription: "Вы уверены, что хотите отключить свой аккаунт Google?",
-      disconnectAppleDescription: "Вы уверены, что хотите отключить свой аккаунт Apple?",
+        disconnectGoogleDescription: "Вы уверены, что хотите отключить свой аккаунт Google?",
+        disconnectAppleDescription: "Вы уверены, что хотите отключить свой аккаунт Apple?",
 
-      connectedGoogleDescription: "Ваш аккаунт Google подключен. Вы можете войти через Google",
-      connectGoogleDescription: "Подключите ваш аккаунт Google, чтобы упростить вход в будущем.",
+        connectedGoogleDescription: "Ваш аккаунт Google подключен. Вы можете войти через Google",
+        connectGoogleDescription: "Подключите ваш аккаунт Google, чтобы упростить вход в будущем.",
 
-      connectedAppleDescription: "Ваш аккаунт Apple подключен.",
-      connectAppleDescription: "Подключите ваш аккаунт Apple, чтобы упростить вход в будущем.",
+        connectedAppleDescription: "Ваш аккаунт Apple подключен.",
+        connectAppleDescription: "Подключите ваш аккаунт Apple, чтобы упростить вход в будущем.",
 
-      cancel: "Отмена"
+        cancel: "Отмена"
     },
 
     /////////////
@@ -302,6 +302,9 @@ export const ru = {
     //Pages
     /////////////
 
+    logInPage: {
+        thisGoogleAccountEmailIsAlredyConnected: "Чтобы привязать данный Google аккаунт сначала войдите по его эл. почте через пароль" 
+    },
     homePage : {
         welcome: "Добро пожаловать",
         homeMessage: "Сюда будет добавлен классный контетнет, но позже :)"
@@ -360,7 +363,8 @@ export const ru = {
         
         personRegisteredToast: "Пользователь зарегистрирован",
         companyRegisteredToast: "Компания заргистрирована",
-        unexpectedErrorToast: "Регистрация не удалась"
+        unexpectedErrorToast: "Регистрация не удалась",
+
     },
     changeEmailPage: {
         title: "Смена email",
@@ -418,7 +422,16 @@ export const ru = {
         twoFactorAuth: "Двухфакторная аутентификация",
         deleteAccount: "Удаление аккаунта",
         changePassword: "Изменить пароль",
-        createPassword: "Создать пароль"
+        createPassword: "Создать пароль",
+        externalAuthMethods: "Внешние сервисы входа",
+        
+        toastGoogleAccountConnectedSuccessfully: "Google аккаунт подключен успешно!",
+        toastGoogleAccountConnectedToOtherUser: "Данный Google аккаунт подключен к другому пользователю",
+
+        toastAppleAccountConnectedSuccessfully: "Apple аккаунт подключен успешно!",
+        toastAppleAccountConnectedToOtherUser: "Данный Apple аккаунт подключен к другому пользователю",
+
+        toastUnkownError: "Возникла неизвестная ошибка"
     },
     restoreAccountPage: {
         title: "Восстановление аккаунта",

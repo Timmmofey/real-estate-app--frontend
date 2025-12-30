@@ -3,13 +3,25 @@ import { GalleryVerticalEnd } from "lucide-react"
 import { LoginForm } from "@/components/login-form"
 import { useEffect } from "react";
 import { useAuthStore } from "@/stores/authStore";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { toast } from "sonner";
 
 export default function LoginPage() {
   const checkAuth = useAuthStore((state) => state.checkAuth)
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn)
   const router = useRouter();
-  
+  const nt = useTranslations()
+
+  const searchParams = useSearchParams()
+  const toastMsg = searchParams.get('toast')
+
+  useEffect(()=>{
+    if (toastMsg){
+      toast.error(`${nt(`logInPage.${toastMsg}`)}`)
+    }
+  }, [])
+
   useEffect(() => {
     const run = async () => {
       await checkAuth();

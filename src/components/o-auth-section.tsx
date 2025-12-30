@@ -64,7 +64,7 @@ export function OAuthSection() {
     window.location.href = `${authBaseUrl}/auth/${path}`
   }
 
-  const handleDeleteOAuthAccount = async (provider: OAuthProvider) => {
+  const handleUnlinkOAuthAccount = async (provider: OAuthProvider) => {
     try {
       await axiosUser.post("/Users/unlink-oauth-account-from-me", null, { params: { provider } })
       await loadOAuthAccounts()
@@ -140,7 +140,7 @@ export function OAuthSection() {
                         <DialogFooter>
                           <DialogClose asChild><Button variant="outline">{t("cancel")}</Button></DialogClose>
                           <DialogClose asChild>
-                            <Button variant="destructive" onClick={async () => { await handleDeleteOAuthAccount(provider); setOpenDialogProvider(null) }}>
+                            <Button variant="destructive" onClick={async () => { await handleUnlinkOAuthAccount(provider); setOpenDialogProvider(null) }}>
                               {disconnectLabel}
                             </Button>
                           </DialogClose>

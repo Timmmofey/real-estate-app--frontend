@@ -360,6 +360,7 @@ export default function RegisterUserForm() {
 
   const mainPhoto = watch('MainPhoto')
 
+
   useEffect(() => {
     let url: string | undefined
     if (mainPhoto && mainPhoto.length > 0) {
