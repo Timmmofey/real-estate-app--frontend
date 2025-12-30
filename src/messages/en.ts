@@ -187,6 +187,31 @@ export const en = {
         createPasswordHint: "You can create additional way to sign in via password",
         createPassword: "Create password"
     },
+    oAuthSection: {
+      loadError: "Failed to load OAuth accounts",
+      authServiceUrlNotConfigured: "Auth service URL is not configured",
+      linkError: "Failed to link account",
+
+      connectWithGoogle: "Connect with Google",
+      connectWithApple: "Connect with Apple",
+
+      disconnectGoogle: "Disconnect Google",
+      disconnectApple: "Disconnect Apple",
+
+      disconnectGoogleTitle: "Disconnect Google account?",
+      disconnectAppleTitle: "Disconnect Apple account?",
+
+      disconnectGoogleDescription: "Are you sure you want to disconnect your Google account?",
+      disconnectAppleDescription: "Are you sure you want to disconnect your Apple account?",
+
+      connectedGoogleDescription: "Your Google account is connected. You can login your account via Google",
+      connectGoogleDescription: "Connect your Google account to simplify login in the future.",
+
+      connectedAppleDescription: "Your Apple account is connected.",
+      connectAppleDescription: "Connect your Apple account to simplify login in the future.",
+
+      cancel: "Cancel"
+    },
 
     /////////////
     //Constants

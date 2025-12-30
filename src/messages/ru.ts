@@ -187,6 +187,31 @@ export const ru = {
         createPasswordHint: "Вы можете добавить дополнительный способ входа через пароль, создав его",
         createPassword: "Создать пароль"
     },
+    oAuthSection: {
+      loadError: "Не удалось загрузить OAuth аккаунты",
+      authServiceUrlNotConfigured: "URL сервиса аутентификации не настроен",
+      linkError: "Не удалось подключить аккаунт",
+
+      connectWithGoogle: "Подключить Google",
+      connectWithApple: "Подключить Apple",
+
+      disconnectGoogle: "Отключить Google",
+      disconnectApple: "Отключить Apple",
+
+      disconnectGoogleTitle: "Отключить аккаунт Google?",
+      disconnectAppleTitle: "Отключить аккаунт Apple?",
+
+      disconnectGoogleDescription: "Вы уверены, что хотите отключить свой аккаунт Google?",
+      disconnectAppleDescription: "Вы уверены, что хотите отключить свой аккаунт Apple?",
+
+      connectedGoogleDescription: "Ваш аккаунт Google подключен. Вы можете войти через Google",
+      connectGoogleDescription: "Подключите ваш аккаунт Google, чтобы упростить вход в будущем.",
+
+      connectedAppleDescription: "Ваш аккаунт Apple подключен.",
+      connectAppleDescription: "Подключите ваш аккаунт Apple, чтобы упростить вход в будущем.",
+
+      cancel: "Отмена"
+    },
 
     /////////////
     //Constants

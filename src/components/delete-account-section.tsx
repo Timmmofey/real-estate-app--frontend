@@ -13,7 +13,7 @@ export default function DeleteAccountSection(){
     const deleteAccount = useUserStore(state => state.deleteAccount)
     
     const handleDeleteAccount = async () => {
-    try {
+        try {
             deleteAccount()
             router.replace("/login")
             toast.success(t("succesToast"))

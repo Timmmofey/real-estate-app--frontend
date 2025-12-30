@@ -11,7 +11,7 @@ import { ContactCard } from "@/components/сontact-сard"
 import { useProfileLoader } from "@/hooks/useProfileLoader"
 import { DeviceAndActivitySection } from "@/components/device-and-activity-section"
 import { useAuthGuard } from "@/hooks/useAuthGuard"
-import { IdCard, Lock, Mail, Phone, RotateCcwKey } from "lucide-react"
+import { IdCard, KeyRound, Lock, Mail, Phone, RotateCcwKey } from "lucide-react"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useRouter } from "next/navigation"
 import { useTypedTranslations } from "@/hooks/useTypedTranslations"
@@ -19,6 +19,7 @@ import DeleteAccountSection from "@/components/delete-account-section"
 import TwoFactorAuthSection from "@/components/two-factor-auth-section"
 import ChangePasswordSection from "@/components/сhange-password-section"
 import CreatePasswordSection from "@/components/create-password-section"
+import { OAuthSection } from "@/components/o-auth-section"
 
 
 
@@ -120,11 +121,20 @@ export default function SettingsPage() {
                 
                     <TabsContent value="security">
                         <div className="flex items-center gap-2 mb-5">
-                            <RotateCcwKey className="h-5 w-5" />
+                            { user.isOAuthOnly ? <KeyRound className="h-5 w-5"/> : <RotateCcwKey className="h-5 w-5" />}
                             <h2 className="text-lg font-semibold">{user.isOAuthOnly ? t("createPassword") : t("changePassword")}</h2>
                         </div>
                             { user.isOAuthOnly ? <CreatePasswordSection /> : <ChangePasswordSection /> }
                         <Separator className="my-7"/>
+
+                        <div className="flex items-center gap-2 mb-5">
+                            <IdCard className="h-5 w-5" />
+                            <h2 className="text-lg font-semibold">External login methods</h2>
+                        </div>
+                        <OAuthSection/>
+                        
+                        <Separator className="my-7"/>
+
 
                         <div className="flex items-center gap-2 mb-5">
                             <IdCard className="h-5 w-5" />

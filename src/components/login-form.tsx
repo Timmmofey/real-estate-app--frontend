@@ -79,21 +79,21 @@ export function LoginForm({
   }
 
   const handleGoogleLogin = () => {
-  if (loading) return
+    if (loading) return
 
-  setLoading(true)
+    setLoading(true)
 
-  const authBaseUrl = process.env.NEXT_PUBLIC_API_AUTH_SERVICE_URL
+    const authBaseUrl = process.env.NEXT_PUBLIC_API_AUTH_SERVICE_URL
 
-  if (!authBaseUrl) {
-    toast.error("Auth service URL is not configured")
-    setLoading(false)
-    return
+    if (!authBaseUrl) {
+      toast.error("Auth service URL is not configured")
+      setLoading(false)
+      return
+    }
+
+    // ВАЖНО: обычный redirect, не axios
+    window.location.href = `${authBaseUrl}/auth/google`
   }
-
-  // ВАЖНО: обычный redirect, не axios
-  window.location.href = `${authBaseUrl}/auth/google`
-}
 
 
 

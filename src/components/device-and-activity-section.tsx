@@ -1,3 +1,4 @@
+"use client"
 import axiosAuth from "@/lib/axiosAuth"
 import { Bot, CircleQuestionMark, Monitor, OctagonX, Smartphone, Tablet, Tv } from "lucide-react"
 import { useEffect, useState } from "react"
