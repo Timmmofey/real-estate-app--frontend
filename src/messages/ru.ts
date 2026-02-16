@@ -1,4 +1,6 @@
-export const ru = {
+import { TranslationKeys } from "./en";
+
+export const ru: TranslationKeys = {
     tabTitle: {
         classified: "Classified App"
     },
@@ -461,4 +463,4 @@ export const ru = {
       invalidCodeMessage: "Неверный код подтверждения.",
       genericError: "Что-то пошло не так. Попробуйте еще раз."
     }
-}as const
+}

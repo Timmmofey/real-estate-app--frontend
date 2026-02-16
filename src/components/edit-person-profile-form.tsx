@@ -36,12 +36,12 @@ export default function EditPersonProfileForm() {
 
     const { register, handleSubmit, watch, setValue, clearErrors, formState: { errors } } = useForm<FormValues>({
         defaultValues: user && user.userRole === 'Person' ? {
-            FirstName: user.firstName || '',
-            LastName: user.lastName || '',
-            Country: user.country || '',
-            Region: user.region || '',
-            Settlement: user.settlement || '',
-            ZipCode: user.zipCode || '',
+            FirstName: user.firstName,
+            LastName: user.lastName,
+            Country: user.country,
+            Region: user.region,
+            Settlement: user.settlement,
+            ZipCode: user.zipCode,
             DeleteMainPhoto: false,
         } : {
             FirstName: '',

@@ -74,7 +74,7 @@ export default function SettingsPage() {
                             <TabsTrigger value={TabsNames.payments} className="shrink-0">{t("payments")}</TabsTrigger>
                             <TabsTrigger value={TabsNames.subscriptions} className="shrink-0">{t("subscriptions")}</TabsTrigger>
                         </TabsList>
-                        <ScrollBar  orientation="horizontal" />
+                        <ScrollBar className="hidden" orientation="horizontal" />
                     </ScrollArea>
 
                     <TabsContent value="account">
@@ -147,6 +147,13 @@ export default function SettingsPage() {
                 
                     <TabsContent value="security">
                         <div className="flex items-center gap-2 mb-5">
+                            <IdCard className="h-5 w-5" />
+                            <h2 className="text-lg font-semibold">{t("twoFactorAuth")}</h2>
+                        </div>
+                        <TwoFactorAuthSection/>
+
+                        <Separator className="my-7"/>
+                        <div className="flex items-center gap-2 mb-5">
                             { user.isOAuthOnly ? <KeyRound className="h-5 w-5"/> : <RotateCcwKey className="h-5 w-5" />}
                             <h2 className="text-lg font-semibold">{user.isOAuthOnly ? t("createPassword") : t("changePassword")}</h2>
                         </div>
@@ -159,15 +166,6 @@ export default function SettingsPage() {
                         </div>
                         <OAuthSection/>
                         
-                        <Separator className="my-7"/>
-
-
-                        <div className="flex items-center gap-2 mb-5">
-                            <IdCard className="h-5 w-5" />
-                            <h2 className="text-lg font-semibold">{t("twoFactorAuth")}</h2>
-                        </div>
-                        <TwoFactorAuthSection/>
-
                         <Separator className="my-7"/>
 
                         <div className="flex items-center gap-2 mb-5">

@@ -45,26 +45,28 @@ export default function EditCompanyProfileForm() {
       EstimatedAt: '',
       Description: '',
       DeleteMainPhoto: false
-    }
+    },
+
   })
 
   useEffect(() => {
-        if (user && user.userRole === 'Company') {
-        reset({
-            Name: user.name,
-            Country: user.country,
-            Region: user.region,
-            Settlement: user.settlement,
-            ZipCode: user.zipCode,
-            RegistrationAdress: user.registrationAdress,
-            СompanyRegistrationNumber: user.сompanyRegistrationNumber,
-            EstimatedAt: user.estimatedAt,
-            Description: user.description ?? '',
-            DeleteMainPhoto: false
-        })
-        setPreview(user.mainPhotoUrl || null)
-        }
-    }, [user, reset])
+    if (user && user.userRole === 'Company') {
+      reset({
+        Name: user.name,
+        Country: user.country,
+        Region: user.region,
+        Settlement: user.settlement,
+        ZipCode: user.zipCode,
+        RegistrationAdress: user.registrationAdress,
+        СompanyRegistrationNumber: user.сompanyRegistrationNumber,
+        EstimatedAt: user.estimatedAt,
+        Description: user.description ?? '',
+        DeleteMainPhoto: false
+      })
+      
+      setPreview(user.mainPhotoUrl || null)
+    }
+  }, [user, reset])
 
   const mainPhoto = watch('MainPhoto')
 

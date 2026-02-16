@@ -462,3 +462,9 @@ export const en = {
       genericError: "Something went wrong. Please try again."
     }
 } as const
+
+type RecursiveStringify<T> = {
+  [K in keyof T]: T[K] extends string ? string : RecursiveStringify<T[K]>;
+};
+
+export type TranslationKeys = RecursiveStringify<typeof en>;

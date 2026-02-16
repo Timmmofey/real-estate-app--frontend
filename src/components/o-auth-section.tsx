@@ -105,7 +105,7 @@ export function OAuthSection() {
           return (
             <div
               key={provider}
-              className="flex flex-col items-start sm:flex-row sm:items-center justify-between rounded border p-4 gap-2"
+              className="flex flex-col sm:flex-row sm:items-center justify-between rounded border p-4 gap-2"
             >
               <div className="flex items-center gap-3">
                 {provider === OAuthProvider.Apple && (
