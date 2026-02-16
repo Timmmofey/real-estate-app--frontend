@@ -1,8 +1,8 @@
-import { TranslationKeys } from "./en";
+import { TranslationKeys } from "./translationKeys";
 
 export const ru: TranslationKeys = {
     tabTitle: {
-        classified: "Classified App"
+        classified: "Classified App",
     },
 
     /////////////

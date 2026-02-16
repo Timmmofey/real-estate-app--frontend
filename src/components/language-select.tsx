@@ -26,8 +26,10 @@ export function LocaleSelect() {
         } 
         else {
             const browserLocale= navigator.language.slice(0,2);
-            if (browserLocale && availableLanguages.includes(browserLocale as Languages))
-            setLocale(browserLocale as Languages) 
+            if (browserLocale && availableLanguages.includes(browserLocale as Languages)){
+                setLocale(browserLocale as Languages) 
+                setCookie("classified_app_locale", browserLocale, { path: "/", maxAge: 60 * 60 * 24 * 365 }) 
+            }
             else {
                     setLocale(Languages.EN)
                 }
