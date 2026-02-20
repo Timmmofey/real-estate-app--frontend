@@ -16,6 +16,8 @@ import { useState } from "react"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { useTypedTranslations } from "@/hooks/useTypedTranslations"
+import { LoginStatus } from "@/constants/loginStatus"
+
 
 export function LoginForm({
   className,
@@ -41,30 +43,49 @@ export function LoginForm({
     console.log("[login] started", { emailOrPhone })
 
     try {
-      const res = await login(emailOrPhone, password)
-      console.log("[login] login() returned:", res)
+      // const res = await login(emailOrPhone, password)
+      // console.log("[login] login() returned:", res)
 
-      if (!res) {
-        toast.error(t("toastNoReasponse"))
-        return
-      }
+      // if (!res) {
+      //   toast.error(t("toastNoReasponse"))
+      //   return
+      // }
 
-      if ("restore" in res && res.restore) {
-        toast.info(t("toastResorationMode"))
-        router.push("/restoreaccount")
-        return
-      }
+      // if ("restore" in res && res.restore) {
+      //   toast.info(t("toastResorationMode"))
+      //   router.push("/restoreaccount")
+      //   return
+      // }
 
-      if ("twoFactorAuth" in res && res.twoFactorAuth) {
-        toast.info(t("toast2FA"))
-        router.push("/twofactorauth")
-        return
-      }
+      // if ("twoFactorAuth" in res && res.twoFactorAuth) {
+      //   toast.info(t("toast2FA"))
+      //   router.push("/twofactorauth")
+      //   return
+      // }
 
-      if ("success" in res && res.success) {
-        toast.success(t("toastLoginSuccess"))
-        router.push("/home")
-        return
+      // if ("success" in res && res.success) {
+      //   toast.success(t("toastLoginSuccess"))
+      //   router.push("/home")
+      //   return
+      // }
+
+      const status = await login(emailOrPhone, password) as LoginStatus
+
+      console.log( status)
+
+      switch (status) {
+        case "Restore":
+          toast.info(t("toastResorationMode"))
+          router.push("/restoreaccount")
+          break
+        case "TwoFactor":
+          toast.info(t("toast2FA"))
+          router.push("/twofactorauth")
+          break
+        case "Success":
+          toast.success(t("toastLoginSuccess"))
+          router.push("/home")
+          break
       }
 
     } catch (err) {
