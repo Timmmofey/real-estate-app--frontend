@@ -24,7 +24,7 @@ export default function TwoFactorAuthPage() {
 
         setLoading(true)
         try {
-            await axiosAuth.post('/Auth/Login-via-two-factor-auth', `"${confirmationCode}"`, {
+            await axiosAuth.post('/auth/login/2fa', `"${confirmationCode}"`, {
                 headers: { 'Content-Type': 'application/json' }
             })
 

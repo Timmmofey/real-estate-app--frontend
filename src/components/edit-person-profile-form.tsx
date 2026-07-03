@@ -99,7 +99,7 @@ export default function EditPersonProfileForm() {
         try {
             setIsSubmitting(true)
 
-            await axiosUser.patch('/Users/edit-person-profile-main-info', formData)
+            await axiosUser.patch('/users/me/profile/person', formData)
             await useUserStore.getState().fetchProfile()
             toast.success(t("successToast"))
         } catch (err) {

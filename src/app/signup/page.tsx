@@ -111,7 +111,7 @@
 
 //     setLoading(true)
 //     try {
-//       const endpoint = userType === 'Person' ? '/Users/add-Person-user' : '/Users/add-company-user'
+//       const endpoint = userType === 'Person' ? '/users/add-Person-user' : '/users/add-company-user'
 //       await axiosUser.post(endpoint, formData, {
 //         headers: { 'Content-Type': 'multipart/form-data' },
 //       })
@@ -347,6 +347,7 @@ export default function RegisterUserForm() {
     watch,
     setValue,
     reset,
+    setError,
     formState: { errors },
     clearErrors,
   } = useForm<PersonSignUpFormValues & CompanySignUpFormValues>({
@@ -430,10 +431,10 @@ export default function RegisterUserForm() {
     setLoading(true)
     try {
       const endpoint = isOAuth
-        ? '/Users/complete-oauth-registration'
+        ? '/users/oauth/complete'
         : userRole === 'Person'
-          ? '/Users/add-Person-user'
-          : '/Users/add-company-user'
+          ? '/users/person'
+          : '/users/company'
 
 
       await axiosUser.post(endpoint, formData, {
@@ -453,6 +454,25 @@ export default function RegisterUserForm() {
           message = data.message.value
         } else {
           message = data?.error || data?.message || message
+        }
+
+        if (data.errors) {
+          const fieldMap: Record<string, keyof typeof errors> = {
+            email: 'Email',
+            phoneNumber: 'PhoneNumber',
+          }
+
+          Object.entries(data.errors).forEach(([field, messages]) => {
+            const mappedField = fieldMap[field]
+            if (!mappedField) return
+
+            const message = Array.isArray(messages) ? messages[0] : String(messages)
+
+            setError(mappedField as any, {
+              type: 'server',
+              message,
+            })
+          })
         }
 
         console.error(data || err.message)
@@ -491,6 +511,9 @@ export default function RegisterUserForm() {
           <div className="grid gap-1">
             <Label>{t("email")}</Label>
             <Input required type="email" {...register('Email')} />
+            {errors.Email && (
+              <p className="text-sm text-red-500">{errors.Email.message}</p>
+            )}
           </div>
         )}
 
@@ -498,6 +521,9 @@ export default function RegisterUserForm() {
         <div className="grid gap-1">
           <Label>{t("phoneNumber")}</Label>
           <Input required type="tel" {...register('PhoneNumber', { required: true })} />
+          {errors.PhoneNumber && (
+            <p className="text-sm text-red-500">{errors.PhoneNumber.message}</p>
+          )}
         </div>
 
         <div className="grid gap-1">

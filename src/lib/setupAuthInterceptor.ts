@@ -28,7 +28,7 @@ export function createSetupAuthInterceptor() {
         const originalRequest = error.config
         const url = originalRequest?.url ?? ""
 
-        const excludedPaths = ['/Auth/Login-via-two-factor-auth', '/Auth/Login', '/Auth/Refresh']
+        const excludedPaths = ['/auth/Login-via-two-factor-auth', '/auth/login', '/auth/refresh']
         if (excludedPaths.some(path => url.includes(path))) {
           return Promise.reject(error)
         }
@@ -47,7 +47,7 @@ export function createSetupAuthInterceptor() {
           globalIsRefreshing = true
 
           try {
-            await refreshClient.post('/Auth/Refresh', {}, { withCredentials: true })
+            await refreshClient.post('/auth/refresh', {}, { withCredentials: true })
             processQueue(null)
             return client(originalRequest)
           } catch (err) {

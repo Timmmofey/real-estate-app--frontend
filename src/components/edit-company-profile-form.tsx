@@ -108,7 +108,7 @@ export default function EditCompanyProfileForm() {
 
     setLoading(true)
     try {
-      await axiosUser.patch('/Users/edit-company-profile-main-info', formData)
+      await axiosUser.patch('/users/me/profile/сompany', formData)
       await useUserStore.getState().fetchProfile()
     } finally {
       setLoading(false)

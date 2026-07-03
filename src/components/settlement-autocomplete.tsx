@@ -93,7 +93,7 @@
 //     const loadInitialLabel = async () => {
 //       try {
 //         const { data } = await axios.get(
-//           `${process.env.NEXT_PUBLIC_API_GEO_SERVICE_URL}/Geo/suggestsettlements?query=${v}&countryCode=${country}&regionCode=${region}&type=city`
+//           `${process.env.NEXT_PUBLIC_API_GEO_SERVICE_URL}/geo/suggestsettlements?query=${v}&countryCode=${country}&regionCode=${region}&type=city`
 //         )
 
 
@@ -173,7 +173,7 @@
 //       if (cancelled || !region) return
 
 //       try {
-//         const {data} = await axios.get(`${process.env.NEXT_PUBLIC_API_GEO_SERVICE_URL}/Geo/suggestsettlements?query=${debouncedInput}&countryCode=${country}&regionCode=${region}&type=city`)
+//         const {data} = await axios.get(`${process.env.NEXT_PUBLIC_API_GEO_SERVICE_URL}/geo/suggestsettlements?query=${debouncedInput}&countryCode=${country}&regionCode=${region}&type=city`)
         
 //         console.log(data)
 //         const results = data ?? []
@@ -521,7 +521,7 @@ export function SettlementAutocomplete({
       if (cancelled || !region) return
 
       try {
-        const {data} = await axios.get(`${process.env.NEXT_PUBLIC_API_GEO_SERVICE_URL}/Geo/suggestsettlements?query=${debouncedInput}&countryCode=${country}&regionCode=${region}&type=city`)
+        const {data} = await axios.get(`${process.env.NEXT_PUBLIC_API_GEO_SERVICE_URL}/geo/settlements/suggestions?query=${debouncedInput}&countryCode=${country}&regionCode=${region}&type=city`)
         
         console.log(data)
         const results = data ?? []
@@ -623,7 +623,7 @@ export function SettlementAutocomplete({
     const loadTranslatedLabel = async () => {
       try {
         const { data } = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_GEO_SERVICE_URL}/Geo/suggestsettlements`,
+          `${process.env.NEXT_PUBLIC_API_GEO_SERVICE_URL}/geo/suggestsettlements`,
           {
             params: {
               query: committed,
@@ -785,7 +785,7 @@ export function SettlementAutocomplete({
                 key="__clear__"
                 role="option"
                 aria-selected={false}
-                onMouseDown={(e) => {
+                onClick={(e) => {
                   e.preventDefault()
                   selectOption(null)
                 }}
@@ -802,7 +802,7 @@ export function SettlementAutocomplete({
                     key={opt.value + idx}
                     role="option"
                     aria-selected={isHighlighted}
-                    onMouseDown={(e) => {
+                    onClick={(e) => {
                       e.preventDefault()
                       selectOption(opt)
                     }}

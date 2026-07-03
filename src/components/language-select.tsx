@@ -58,5 +58,5 @@ export function LocaleSelect() {
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
-  )
+    )
 }

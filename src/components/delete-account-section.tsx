@@ -6,15 +6,18 @@ import { useTypedTranslations } from "@/hooks/useTypedTranslations";
 import { useUserStore } from "@/stores/userStore";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
 import { buttonVariants } from "./ui/button";
+import { useState } from "react";
 
 export default function DeleteAccountSection(){
     const router = useRouter();
     const t = useTypedTranslations("deleteAccountSection")
     const deleteAccount = useUserStore(state => state.deleteAccount)
-    
+    const [loading, setLoading] = useState(false)
+
     const handleDeleteAccount = async () => {
+        setLoading(true)
         try {
-            deleteAccount()
+            await deleteAccount()
             router.replace("/login")
             toast.success(t("succesToast"))
         } catch (err: unknown) {
@@ -22,16 +25,19 @@ export default function DeleteAccountSection(){
                 console.error(err.response?.data || err.message)
                 toast.error(t("errorToast"))
             }
-        } 
+        } finally{
+            setLoading(false)
+        }
     }
 
     return(
         <Dialog>
             <DialogTrigger
                 className={buttonVariants({ variant: "destructive", className:"w-full" })}
+                disabled={loading}
             >
                 <OctagonX />
-                {t("deleteAccount")}
+                {loading ? t("deletingAccount"): t("deleteAccount")}
             </DialogTrigger>
 
             <DialogContent>

@@ -43,32 +43,6 @@ export function LoginForm({
     console.log("[login] started", { emailOrPhone })
 
     try {
-      // const res = await login(emailOrPhone, password)
-      // console.log("[login] login() returned:", res)
-
-      // if (!res) {
-      //   toast.error(t("toastNoReasponse"))
-      //   return
-      // }
-
-      // if ("restore" in res && res.restore) {
-      //   toast.info(t("toastResorationMode"))
-      //   router.push("/restoreaccount")
-      //   return
-      // }
-
-      // if ("twoFactorAuth" in res && res.twoFactorAuth) {
-      //   toast.info(t("toast2FA"))
-      //   router.push("/twofactorauth")
-      //   return
-      // }
-
-      // if ("success" in res && res.success) {
-      //   toast.success(t("toastLoginSuccess"))
-      //   router.push("/home")
-      //   return
-      // }
-
       const status = await login(emailOrPhone, password) as LoginStatus
 
       console.log( status)
@@ -86,6 +60,7 @@ export function LoginForm({
           toast.success(t("toastLoginSuccess"))
           router.push("/home")
           break
+          
       }
 
     } catch (err) {

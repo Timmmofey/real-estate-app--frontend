@@ -23,7 +23,7 @@ export default function ChangeEmailPage(){
         e.preventDefault()
         setLoading(true)
         try {
-            await axiosUser.post('/Users/start-email-change-via-email')
+            await axiosUser.post('/users/me/email-change/request')
             toast.success(t("step1_success"))
             setStep(2)
         } catch (err: unknown) {
@@ -40,7 +40,7 @@ export default function ChangeEmailPage(){
         e.preventDefault()
         setLoading(true)
         try {
-            await axiosUser.post('/Users/confirm-current-email', {verificationCode: currentEmailCofirmationCode})
+            await axiosUser.post('/users/me/email-change/confirm-current', {code: currentEmailCofirmationCode})
             toast.success(t("step2_success"))
             setStep(3)
         } catch (err: unknown) {
@@ -57,7 +57,7 @@ export default function ChangeEmailPage(){
         e.preventDefault()    
         setLoading(true)
         try {
-            await axiosUser.post('/Users/send-new-email-cofirmation-code', {email: newEmail})
+            await axiosUser.post('/users/me/email-change/send-new-code', {email: newEmail})
             toast.success(t("step3_success"))
             setStep(4)
         } catch (err: unknown) {
@@ -74,7 +74,7 @@ export default function ChangeEmailPage(){
         e.preventDefault()
         setLoading(true)
         try {
-            await axiosUser.post('/Users/confirm-new-email', {verificationCode: newEmailCofirmationCode})
+            await axiosUser.post('/users/me/email-change/confirm-new', {code: newEmailCofirmationCode})
             toast.success(t("step4_success"))
             setStep(5)
         } catch (err: unknown) {
@@ -91,7 +91,7 @@ export default function ChangeEmailPage(){
         e.preventDefault()
         setLoading(true)
         try {
-            await axiosUser.post('/Users/complete-email-change-via-email', {verificationCode: newEmailCofirmationCode})
+            await axiosUser.put('/users/me/email-change/complete', {verificationCode: newEmailCofirmationCode})
             toast.success(t("step5_success"))
             router.back()
         } catch (err: unknown) {

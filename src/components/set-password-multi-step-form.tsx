@@ -23,6 +23,7 @@ export default function SetPasswordMultiStepForm({formType}: Props) {
   const [code, setCode] = useState('')
   const [newPassword, setNewPassword] = useState('')
   const [loading, setLoading] = useState(false)
+  
   const router = useRouter()
   const t = useTypedTranslations("setPasswordMultiStepFormwordPage")
 
@@ -30,7 +31,7 @@ export default function SetPasswordMultiStepForm({formType}: Props) {
     e.preventDefault()    
     setLoading(true)
     try {
-      await axiosUser.post('/Users/start-password-reset-via-email', new URLSearchParams({ email }))
+      await axiosUser.post('/users/password-reset/request', new URLSearchParams({ email }))
       toast.success(t("toastSendSuccess"))
       setStep(2)
     } catch (err: unknown) {
@@ -47,7 +48,7 @@ export default function SetPasswordMultiStepForm({formType}: Props) {
     e.preventDefault()    
     setLoading(true)
     try {
-        await axiosUser.post('/Users/get-password-reset-token-via-email', { email, verificationCode: code })
+        await axiosUser.post('/users/password-reset/verify', { email, verificationCode: code })
         toast.success(t("toastVerifySuccess"))
         setStep(3)
     } catch (err: unknown) {
@@ -64,8 +65,8 @@ export default function SetPasswordMultiStepForm({formType}: Props) {
     e.preventDefault()    
     setLoading(true)
     try {
-      await axiosUser.post(
-        '/Users/complete-password-restoration-via-email',
+      await axiosUser.put(
+        '/users/password-reset/complete',
         new URLSearchParams({ newPassword })
       )
       toast.success(formType == "ResetPassword" ? t("toastResetSuccess") : t("toastCreationSuccess"))

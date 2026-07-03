@@ -1,5 +1,4 @@
 "use client"
-
 import { OAuthProvider, providerOrder } from "@/constants/oAuthProvider"
 import axiosUser from "@/lib/axiosUser"
 import { useEffect, useState } from "react"
@@ -39,7 +38,7 @@ export function OAuthSection() {
   const loadOAuthAccounts = async () => {
     try {
       setLoading(true)
-      const res = await axiosUser.get("Users/get-my-o-auth-accounts")
+      const res = await axiosUser.get("users/me/oauth-accounts")
       const providers = res.data.map((p: OAuthProviderResponseDto) => p.oAuthProviderName)
       setConnectedProvider(providers)
     } catch (e) {
@@ -66,7 +65,7 @@ export function OAuthSection() {
 
   const handleUnlinkOAuthAccount = async (provider: OAuthProvider) => {
     try {
-      await axiosUser.post("/Users/unlink-oauth-account-from-me", null, { params: { provider } })
+      await axiosUser.delete(`/users/me/oauth-accounts/${provider}`)
       await loadOAuthAccounts()
     } catch (error) {
       console.error(error)

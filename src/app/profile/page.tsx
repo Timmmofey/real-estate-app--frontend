@@ -12,8 +12,6 @@ import { Tooltip, TooltipProvider, TooltipTrigger } from '@/components/ui/toolti
 import { TooltipContent } from '@radix-ui/react-tooltip'
 import { useAuthGuard } from '@/hooks/useAuthGuard'
 import { Container } from '@/components/container'
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
 import FsLightbox from 'fslightbox-react'
 import { Skeleton } from '@/components/ui/skeleton'
 import { cn } from '@/lib/utils'
@@ -128,8 +126,10 @@ export default function ProfilePage() {
 
         <FsLightbox
           toggler={avatarToggler}
-          sources={[user.mainPhotoUrl]}
+          sources={[user.mainPhotoUrl ?? <div/>]}
           type="image"
+          exitFullscreenOnClose
+          
         />
 
       </Card>

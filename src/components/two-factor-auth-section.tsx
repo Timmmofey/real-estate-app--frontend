@@ -36,7 +36,7 @@ export default function TwoFactorAuthSection() {
   const requestCode = async () => {
     setLoadingRequest(true)
     try {
-      await axiosUser.post("/Users/request-toggle-two-factor-authentication-code")
+      await axiosUser.post("/users/me/2fa/toggle-request")
       toast.success(t("codeSentToast"))
       setStep("requested")
     } catch (e: unknown) {
@@ -55,7 +55,7 @@ export default function TwoFactorAuthSection() {
 
     setLoadingToggle(true)
     try {
-      await axiosUser.post("/Users/toggle-two-factor-authentication", { code: code.trim() })
+      await axiosUser.put("/users/me/2fa-toggle", { code: code.trim() })
       toast.success(
         isEnabled ? t("disabledSuccessToast") : t("enabledSuccessToast")
       )

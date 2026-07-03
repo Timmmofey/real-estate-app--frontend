@@ -50,7 +50,7 @@ export default function ChangePasswordSection() {
       formData.append("oldPassword", oldPassword)
       formData.append("newPassword", newPassword)
 
-      await axiosUser.post("/Users/change-user-password", formData)
+      await axiosUser.put("/users/me/password", formData)
       toast.success(t("successToast"))
 
       setOldPassword("")

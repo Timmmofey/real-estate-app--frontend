@@ -14,6 +14,7 @@ import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, Di
 import { buttonVariants } from "./ui/button"
 import { cn } from "@/lib/utils"
 import { useLocaleStore } from "@/stores/localeStore"
+import { useUserStore } from "@/stores/userStore"
 
 type DeviceAndSessionResponceDto = {
     sessionId: string,
@@ -32,19 +33,24 @@ export function DeviceAndActivitySection(){
     const [showAllOtherSessions, setShowAllOtherSessions] = useState(false)
     const router = useRouter()
     const logoutAll = useAuthStore((s) => s.logoutAll)
-    const checkAuth = useAuthStore(state => state.checkAuth)
+    // const checkAuth = useAuthStore(state => state.checkAuth)
     const t = useTypedTranslations("deviceAndActivitySection")
     const nt = useTranslations()
     const locale = useLocaleStore(state => state.locale)
+    const setUser = useUserStore(state => state.setUser)
     
     useEffect(()=>{
         const load = async () => {
             try{
-                const res = await axiosAuth.get("Auth/get-current-user-sessions")
-                setSessions(res.data)
-                console.log("[sessions DeviceAndActivitySection]", !!sessions)
-            } catch{
+                const res = await axiosAuth.get("auth/sessions")
 
+                const data = Array.isArray(res.data) ? res.data : []
+
+                setSessions(data)
+
+            } catch{
+                setUser(null)
+                router.replace("/")
             } finally{
                 setLoading(false)
             }
@@ -53,11 +59,14 @@ export function DeviceAndActivitySection(){
         load()
     }, [])
 
-    if (!sessions && !loading){
-        console.log("[sessions DeviceAndActivitySection] checkAuth called")
-        checkAuth()
-        return
-    }
+    
+
+    // if (!sessions && !loading){
+    //     console.log("[sessions DeviceAndActivitySection] checkAuth called")
+    //     //!!! ОШИБКА ПРИ КОТОРОЙ РЕКУРСИЯ ЗАПРОСА НАЧИНАЕТСЯ
+    //     // checkAuth() 
+    //     return
+    // }
 
     const filteredSessions = sessions
         ?.filter((s) => !s.isCurrentSession)
@@ -119,10 +128,10 @@ export function DeviceAndActivitySection(){
         }
     }
 
-    if(loading) return <Skeleton className="w-full h-15 rounded"/> 
+    if (loading) return <Skeleton className="w-full h-15 rounded"/> 
 
     
-    const currentSession= sessions?.find((s) => s.isCurrentSession === true)
+    const currentSession = sessions?.find((s) => s.isCurrentSession === true)
 
     return(
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">

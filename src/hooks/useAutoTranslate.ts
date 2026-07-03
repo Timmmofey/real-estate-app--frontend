@@ -33,7 +33,7 @@ export function useAutoTranslate(text?: string | null, targetLang: string = "en"
 
       try {
         const { data } = await axios.get(
-          "http://localhost:5229/api/Translation/translate",
+          "http://localhost:5229/api/translations/single",
           {
             params:{
               text: text,

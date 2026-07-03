@@ -33,7 +33,7 @@ export const useUserStore = create<UserState>((set) => ({
     currentFetchProfile = (async () => {
         set({ userLoading: true })
         try {
-            const res = await axiosUser.get("/Users/get-current-user-info")
+            const res = await axiosUser.get("/users/me")
             const data = res.data
             const userRole: UserRole = 'firstName' in data ? 'Person' : 'Company'
             set({ user: { ...data, userRole }})
@@ -55,11 +55,12 @@ export const useUserStore = create<UserState>((set) => ({
 
   deleteAccount: async () => {
     try {
-        await axiosUser.delete("/Users/delete-account")
+        await axiosUser.delete("/users/me")
         set({ user: null })
         useAuthStore.getState().setIsLoggedIn(false)
     } catch (err) {
         console.warn("Logout failed or already invalidated", err)
+        throw err
     }
   }
 }))

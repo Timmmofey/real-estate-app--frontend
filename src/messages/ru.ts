@@ -136,6 +136,7 @@ export const ru: TranslationKeys = {
         succesToast: "Аккаунт успешно удален",
         errorToast: "Возникла ошибка при удалении аккаунта",
         deleteAccount: "Удалить аккаунт",
+        deletingAccount: "Удаление аккаунта...",
         deleteAccountConfirmTitle: "Вы уверены что хотите удалить аккаунт?",
         deleteAccountConfirmDescription: "Ваш аккаунт будет полность удален через 6 месяцев без возможности восстановления, чтобы восстановить или полностью удалить аккаунт войдите в него через форму лоигна.",
         cancelDelete: "Отмена",

@@ -13,8 +13,6 @@ interface AuthStore {
   setIsLoggedIn: (state: boolean) => void
 }
 
-
-
 export const useAuthStore = create<AuthStore>((set) => ({
   isLoggedIn: false,
   authLoading: true,
@@ -24,31 +22,11 @@ export const useAuthStore = create<AuthStore>((set) => ({
     set({ authLoading: true })
 
     try {
-      const res = await axiosAuth.post("/Auth/login", {
+      const res = await axiosAuth.post("/auth/login", {
         phoneOrEmail: emailOrPhone,
         password,
       })
-
-      // console.log("[authStore] axios res:", res?.status, res?.data)
-
-      // if (res.data?.restore === true) {
-      //   console.log("[authStore] restore true")
-      //   return { restore: true }
-      // }
-
-      // if (res.data?.isTwoFactorAuth === true) {
-      //   console.log("[authStore] two factor")
-      //   return { twoFactorAuth: true }
-      // }
-
-      // await useUserStore.getState().fetchProfile()
-      // set({ isLoggedIn: true })
-
-      // console.log("[authStore] login success")
-      // return { success: true }
-
-    
-      // Если успешно, получаем профиль и ставим флаг isLoggedIn
+      
       if (res.data.status === "Success") {
         await useUserStore.getState().fetchProfile()
         set({ isLoggedIn: true })
@@ -77,7 +55,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
 
   logout: async () => {
     try {
-      await axiosAuth.post("/Auth/logout")
+      await axiosAuth.delete("/auth/sessions/current")
       set({ isLoggedIn: false })
       useUserStore.getState().setUser(null)
     } catch (err) {
@@ -88,7 +66,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
 
   logoutAll: async () => {
     try {
-      await axiosAuth.post("/Auth/logout-all")
+      await axiosAuth.delete("/auth/sessions")
       set({ isLoggedIn: false })
       useUserStore.getState().setUser(null)
     } catch (err) {
